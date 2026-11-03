@@ -52,12 +52,34 @@ python -X utf8 -m model.visual_demo --output-dir outputs/m1_visual
 
 Saída observada: ROI `x=40, y=30, largura=240, altura=180`, fatores `(2,2)` e `T=128`.
 
-| Arquivo local | Dimensões | Modo | Mínimo/máximo |
+| Imagem versionada | Dimensões | Modo | Mínimo/máximo |
 |---|---:|---|---|
-| `outputs/m1_visual/01_original_rgb.png` | 320×240 | RGB | 0/255 |
-| `outputs/m1_visual/02_grayscale.png` | 320×240 | L | 0/255 |
-| `outputs/m1_visual/03_crop.png` | 240×180 | L | 0/255 |
-| `outputs/m1_visual/04_resize_nearest.png` | 120×90 | L | 0/255 |
-| `outputs/m1_visual/05_threshold.png` | 120×90 | L | 0/255 |
+| [Original RGB](../imagens/m1/01_original_rgb.png) | 320×240 | RGB | 0/255 |
+| [Grayscale](../imagens/m1/02_grayscale.png) | 320×240 | L | 0/255 |
+| [Crop](../imagens/m1/03_crop.png) | 240×180 | L | 0/255 |
+| [Resize nearest-neighbor](../imagens/m1/04_resize_nearest.png) | 120×90 | L | 0/255 |
+| [Threshold](../imagens/m1/05_threshold.png) | 120×90 | L | 0/255 |
 
-O script comparou numericamente cada etapa às equações e conferiu os valores de todos os pixels dos PNGs após reabertura; os cinco arquivos foram também inspecionados visualmente. O teste automatizado verificou que a imagem binária contém apenas 0 e 255 e que uma segunda execução não sobrescreve os PNGs existentes. Esses resultados não substituem verificação de RTL ou simulação ciclo a ciclo. Os PNGs permanecem locais e são ignorados pelo Git.
+O script comparou numericamente cada etapa às equações e conferiu os valores de todos os pixels dos PNGs após reabertura; os cinco arquivos foram também inspecionados visualmente. O teste automatizado verificou que a imagem binária contém apenas 0 e 255 e que uma segunda execução não sobrescreve os PNGs existentes. Esses resultados não substituem verificação de RTL ou simulação ciclo a ciclo. Os arquivos originais em `outputs/` permanecem ignorados pelo Git; cópias idênticas das cinco imagens sintéticas foram versionadas em `docs/imagens/m1/`.
+
+### Imagens da demonstração
+
+Original RGB:
+
+![Imagem RGB original com faixas coloridas, gradiente e formas](../imagens/m1/01_original_rgb.png)
+
+Grayscale:
+
+![Resultado da conversão para grayscale](../imagens/m1/02_grayscale.png)
+
+Crop:
+
+![Região após crop](../imagens/m1/03_crop.png)
+
+Resize nearest-neighbor:
+
+![Resultado após redução nearest-neighbor](../imagens/m1/04_resize_nearest.png)
+
+Threshold:
+
+![Resultado binário após threshold](../imagens/m1/05_threshold.png)
