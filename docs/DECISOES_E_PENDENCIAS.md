@@ -28,6 +28,8 @@ Atualização inicial: 2026-10-28. **Este arquivo registra o estado do projeto e
 
 ## Sugestões técnicas iniciais
 
+Registro histórico: as sugestões desta seção e da revisão de 2026-10-28 foram atualizadas pela decisão interna de 2026-11-03, registrada ao final deste documento.
+
 | Tema | Status | Sugestão inicial | Risco/observação |
 |---|---|---|---|
 | Crop bypass | PROPOSTO | `crop_enable`, desligado por padrão | O PDF define crop configurável, mas não exige bypass explícito para crop |
@@ -93,3 +95,42 @@ A V1 documenta limite de resolução, fatores 1/2 com piso, ausência de ready, 
 | Data | Mudança/decisão | Responsável | Evidência/arquivo | Status |
 |---|---|---|---|---|
 | 2026-10-28 | Leitura do PDF e proposta de interface, políticas e plano V1 | Codex | `docs/spec_v1.md`, `docs/plano_de_execucao.md` | PROPOSTO; testes EDA NÃO EXECUTADOS |
+
+## Revisão final de M0 — 2026-11-03
+
+**Status: análise e recomendações; nenhuma nova decisão validada.** Fontes: `spec_v1.md`, `plano_de_execucao.md` e PDF oficial §§6.3–6.9. As opções abaixo mantêm a distinção entre a referência oficial e as escolhas de engenharia. A disponibilidade do PDK e das ferramentas é uma pendência para o fluxo EDA, não um bloqueio para o modelo funcional Python.
+
+| Ponto | Recomendação e alternativa | Consequência e evidência |
+|---|---|---|
+| Resolução | Manter 1–2047 por eixo com campos de 11 bits; alternativa: outro limite ou 12 bits para 2048. | 2048 não cabe em 11 bits; custo/timing do limite não foram medidos. A resolução máxima é omitida pelo PDF. |
+| Crop | Manter bypass por `crop_enable`; alternativa: ROI integral, sem sinal de bypass. | Bypass adiciona controle e teste; não é exigência oficial. |
+| Resize | Fatores independentes 1 ou 2 e saída `floor(N/F)`; alternativa: dimensões de saída configuráveis genericamente. | Seleção sem divisor genérico para o subconjunto proposto. O PDF prevê parâmetros de dimensões de saída; o uso exclusivo de fatores e dimensões derivadas é uma restrição de interface e escopo a considerar. Para N ímpar, a última amostra de saída não necessariamente alcança a borda da ROI. |
+| Streaming e marcadores | Apenas `valid`; SOF/SOL/EOL/EOF coincidem com pixels; regenerar os quatro na saída. Alternativa: `valid/ready`. | O destino deve aceitar cada saída e não pode interromper o IP; bolhas de entrada são aceitas. EOF de saída pode ocorrer antes de EOF de entrada. |
+| Reset e latência | Reset síncrono ativo baixo; um ciclo de transferência borda a borda. Alternativas: reset assíncrono ou mais estágios de pipeline. | O reset exige clock; DFT deve avaliar controlabilidade. Um ciclo pode não fechar 10 ns; a frequência só será conhecida por relatórios. Transferência de saída já válida na borda de reset deve ser tratada de forma inequívoca no contrato e no testbench. |
+| Configuração | Capturar parâmetros no SOF e usar a configuração nova no primeiro pixel; alternativa: interface de configuração separada. | Mudanças externas no quadro são ignoradas. Controles e metadados de quadros consecutivos não podem se misturar. |
+| Erros | Configuração inválida no SOF: pulso de `cfg_error` e quadro sem saída; alternativa: erro persistente com reconhecimento. | Pulso precisa ser observado pelo sistema. Quadro inválido não tem marcador de saída e a interface não informa por si só quando ele termina. |
+| Fluxo malformado | Recomenda-se tratar marcadores incoerentes como violação de contrato da fonte, sem garantia de detecção; aceitar SOF inesperado como início de novo quadro. Alternativa: adicionar sinal de erro/aborto e lógica de detecção. | A saída pode ter sido parcialmente ou completamente consumida antes da descoberta de erro de entrada; marcadores de saída isolados não permitem desfazer nem identificar sempre o quadro corrompido. Definir responsabilidade do sistema e comportamento após reset antes do RTL. |
+
+Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde, azul e branco: 0, 76, 149, 28 e 255. Para resize fator 2, um cálculo em Python comparou `floor(k*N/floor(N/2))` com `2*k` em 1.047.552 índices, N de 2 a 2047, sem divergências. Estes cálculos não constituem verificação de RTL, síntese ou prova de timing. Nenhum fluxo EDA foi executado nesta revisão.
+
+## Decisão interna M0 — 2026-11-03
+
+**M0 concluído internamente; decisões V1 aprovadas pelo usuário para implementação.** Evidência: instrução explícita do usuário nesta sessão; especificação atualizada em `docs/spec_v1.md`. Histórico anterior preservado. A aprovação interna não comprova resultados de ferramentas nem substitui a validação do professor.
+
+| Tema | Decisão aprovada para V1 | Pendência/limitação |
+|---|---|---|
+| Dimensões | 1–2047 por eixo; 11 bits; somas de limites com largura suficiente, no mínimo 12 bits | O PDF não fixa resolução máxima; custo e timing não medidos. |
+| Crop | `crop_enable`; bypass usa quadro integral, sem framebuffer ou duas imagens no IP | Bypass não é exigência explícita do PDF. |
+| Resize | Fatores 1 ou 2 independentes; saída `floor(N/F)`; mapeamento nearest conforme fórmula oficial | Restrição de fatores e interface derivada ainda sujeitas à validação do professor. |
+| Fluxo e flags | `pixel_valid` sem `ready`; bolhas; SOF/SOL/EOL/EOF reconstruídos sobre pixels efetivos | Destino deve aceitar toda saída válida. |
+| Reset e latência | Reset síncrono ativo baixo; transferências somente com `reset_n=1`; aguardar SOF. Meta inicial: um ciclo | Se timing exigir pipeline, documentar e atualizar contrato e testes antes de alterar. |
+| Configuração | Captura no SOF, incluindo o primeiro pixel; cópia interna constante no quadro | Mudanças externas durante o quadro não alteram a configuração capturada. |
+| Configuração inválida | Pulso `cfg_error` e descarte do quadro, inclusive saída de dimensão zero | Sistema deve observar o pulso; quadro sem pixels não tem marcadores de saída. |
+| Quadros malformados | Violam contrato da fonte; recuperação no SOF seguinte, sem promessa de detecção completa | Pixels já transferidos não podem ser retirados; o sistema trata o quadro incompleto. |
+
+**Infraestrutura A DEFINIR:** PDK, bibliotecas, versões, licenças e executor Synopsys; DFT, ATPG e físico dependem da disponibilidade e do escopo pertinente. Nenhum resultado EDA é presumido.
+
+| Data | Mudança | Evidência | Status |
+|---|---|---|---|
+| 2026-11-03 | Golden Model por quadro, testes e vetor funcional inicial | `model/README.md`, `docs/evidencias/M1_modelo_python.md` | 16 testes Python passaram; RTL e EDA não executados; M2 temporal pendente |
+| 2026-11-03 | Regressão e demonstração visual por etapas; proposta de responsáveis | `docs/evidencias/M1_modelo_python.md`, `docs/plano_de_execucao.md` | 18 testes Python passaram; divisão de responsáveis pendente de alinhamento com Thiago; RTL e EDA não executados |

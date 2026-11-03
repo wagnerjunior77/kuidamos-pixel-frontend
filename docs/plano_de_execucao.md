@@ -1,16 +1,36 @@
 # Plano de execução — Grupo 6C
 
-Data: 2026-10-28. Plano **proposto**; horizonte aproximado de cinco meses, sujeito a revisão e disponibilidade do CIExpert. A especificação `spec_v1.md` é a base proposta. Nenhum comando futuro abaixo foi executado nesta sessão. Caminhos futuros são sugestões, não arquivos já existentes.
+Data: 2026-10-28. Horizonte aproximado de cinco meses, sujeito a revisão e disponibilidade do CIExpert. A especificação `spec_v1.md` é a base da V1. Caminhos de etapas futuras são sugestões; resultados executados estão identificados nas respectivas evidências.
+
+Atualização em 2026-11-03: **M0 concluído internamente**, por decisão explícita do usuário; restrição de resize sujeita à validação do professor. **M1 funcional executado**, com 18 testes Python aprovados e evidência em `docs/evidencias/M1_modelo_python.md`. O gerador oferece vetor funcional inicial; a ampliação e os vetores temporais pertencem a M2. As etapas EDA dependem de infraestrutura identificada e evidências reais.
 
 ## Dependências e evidências
 
 `M0 especificação → M1 modelo → M2 vetores → M3 passagem/grayscale → M4 crop → M5 resize → M6 threshold/integração → M7 regressão → M8 síntese → M9 DFT → M10 físico → M11 documentação`. Scoreboard e assertions crescem desde M3; M7 consolida. Diagnóstico de ferramentas pode ocorrer cedo, sem pressupor licenças ou bibliotecas. Cada marco registra versões, comando, data, configurações, código de saída, logs e limitações; dados protegidos ficam fora do versionamento.
 
+## Responsáveis propostos
+
+Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; não é requisito do PDF oficial.
+
+| Marco | Responsável e colaboração | Situação |
+|---|---|---|
+| M0 | Wagner (DFT), com revisão de Thiago | Concluído internamente |
+| M1 | Wagner (DFT), com revisão de Thiago | Implementação inicial concluída |
+| M2 | Wagner, com revisão de Thiago | A realizar |
+| M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | A realizar |
+| M7 | Thiago (RTL), com apoio de Wagner | A realizar |
+| M8 | Wagner (DFT), com apoio de Thiago | A realizar |
+| M9 | Wagner (DFT) | A realizar |
+| M10 | Wagner e Thiago | A realizar |
+| M11 | Wagner e Thiago | A realizar |
+
+As atribuições de revisão descrevem a proposta de organização; não afirmam que a revisão já ocorreu.
+
 | Marco | Entrega e dependência | Comando indicativo e PASS | Evidência esperada |
 |---|---|---|---|
-| M0 — especificação | `docs/spec_v1.md`, registro de decisões e plano; definição dos limites e protocolo | PASS = especificação, limites e protocolo documentados | Decisões registradas em `docs/DECISOES_E_PENDENCIAS.md` |
-| M1 — Golden Model | `model/golden.py`, testes `model/tests/` após M0; operações inteiras e fórmula geral independente | Após criação, `python -m unittest discover -s model/tests -v`; PASS = todos os testes dirigidos e independentes passam | Log com versão Python/NumPy, saída, seed e resultado |
-| M2 — vetores | `model/generate_vectors.py`, formato documentado, `vectors/` e entradas pequenas/PNG licenciadas | Após criação, `python model/generate_vectors.py --help`, depois comando documentado pelo próprio gerador; PASS = regeneração idêntica com seed fixa e contagens/flags conferidas | Comandos exatos, seed, hashes e exemplos de entrada/saída |
+| M0 — especificação — CONCLUÍDO INTERNAMENTE | `docs/spec_v1.md`, registro de decisões e plano; definição dos limites e protocolo | Decisões internas V1 aprovadas pelo usuário | Decisões registradas em `docs/DECISOES_E_PENDENCIAS.md`; validação do professor para resize pendente |
+| M1 — Golden Model | `model/golden.py`, `model/tests/`, `model/README.md`; operações inteiras e fórmula geral independente | `python -m unittest discover -s model/tests -v`; 18 testes passaram na execução registrada | `docs/evidencias/M1_modelo_python.md` |
+| M2 — vetores | `model/generate_vectors.py`, formato documentado, `vectors/` e entradas pequenas/PNG licenciadas | `python -m model.generate_vectors --help`; ampliar conjunto de vetores e documentar o comando de geração; PASS = regeneração idêntica com seed fixa e contagens/flags conferidas | Comandos exatos, seed, hashes e exemplos de entrada/saída |
 | M3 — passagem e grayscale | `rtl/`, `tb/` iniciais após M2; caminho RGB para cinza; passagem é marco temporário de infraestrutura | Em Linux CIExpert, comando VCS exato será documentado após versão e arquivos existirem; PASS = compilação e scoreboard de valores, flags, latência, bolhas e reset | Logs de compilação e simulação, versão VCS, cenários e divergências |
 | M4 — crop | M3 + seleção ROI e bypass conforme a especificação | Regressão VCS documentada no marco; PASS = contagens, bordas, ROI 1×1 e flags corretos; inválidos rejeitados | Logs e vetores centro/borda/bypass/inválidos |
 | M5 — resize NN | M4 + fatores especificados | Regressão VCS; PASS = seleção conforme fórmula geral, casos pares/ímpares, eixos independentes, contagens e marcadores | Log comparando cada pixel e flags com modelo independente |
