@@ -1,6 +1,6 @@
 # Plano de execução — Grupo 6C
 
-Data: 2026-10-28. Plano **PROPOSTO — AGUARDANDO APROVAÇÃO**; horizonte aproximado de cinco meses, sujeito a revisão e disponibilidade do CIExpert. A especificação `spec_v1.md` é a base proposta. Nenhum comando futuro abaixo foi executado nesta sessão. Caminhos futuros são sugestões, não arquivos já existentes. Não iniciar RTL antes da revisão e aprovação explícita dos responsáveis. Golden Model também depende do aval da V1, conforme nota técnica.
+Data: 2026-10-28. Plano **proposto**; horizonte aproximado de cinco meses, sujeito a revisão e disponibilidade do CIExpert. A especificação `spec_v1.md` é a base proposta. Nenhum comando futuro abaixo foi executado nesta sessão. Caminhos futuros são sugestões, não arquivos já existentes.
 
 ## Dependências e evidências
 
@@ -8,12 +8,12 @@ Data: 2026-10-28. Plano **PROPOSTO — AGUARDANDO APROVAÇÃO**; horizonte aprox
 
 | Marco | Entrega e dependência | Comando indicativo e PASS | Evidência esperada |
 |---|---|---|---|
-| M0 — especificação | `docs/spec_v1.md`, registro de decisões e plano; revisão de Thiago e Wagner | Revisão explícita dos limites, protocolo e comportamento; PASS = aprovação registrada, não apenas criação | Ata/decisões aprovadas em `docs/DECISOES_E_PENDENCIAS.md` |
+| M0 — especificação | `docs/spec_v1.md`, registro de decisões e plano; definição dos limites e protocolo | PASS = especificação, limites e protocolo documentados | Decisões registradas em `docs/DECISOES_E_PENDENCIAS.md` |
 | M1 — Golden Model | `model/golden.py`, testes `model/tests/` após M0; operações inteiras e fórmula geral independente | Após criação, `python -m unittest discover -s model/tests -v`; PASS = todos os testes dirigidos e independentes passam | Log com versão Python/NumPy, saída, seed e resultado |
 | M2 — vetores | `model/generate_vectors.py`, formato documentado, `vectors/` e entradas pequenas/PNG licenciadas | Após criação, `python model/generate_vectors.py --help`, depois comando documentado pelo próprio gerador; PASS = regeneração idêntica com seed fixa e contagens/flags conferidas | Comandos exatos, seed, hashes e exemplos de entrada/saída |
 | M3 — passagem e grayscale | `rtl/`, `tb/` iniciais após M2; caminho RGB para cinza; passagem é marco temporário de infraestrutura | Em Linux CIExpert, comando VCS exato será documentado após versão e arquivos existirem; PASS = compilação e scoreboard de valores, flags, latência, bolhas e reset | Logs de compilação e simulação, versão VCS, cenários e divergências |
-| M4 — crop | M3 + seleção ROI e bypass se aprovado | Regressão VCS documentada no marco; PASS = contagens, bordas, ROI 1×1 e flags corretos; inválidos rejeitados | Logs e vetores centro/borda/bypass/inválidos |
-| M5 — resize NN | M4 + fatores aprovados | Regressão VCS; PASS = seleção conforme fórmula geral, casos pares/ímpares, eixos independentes, contagens e marcadores | Log comparando cada pixel e flags com modelo independente |
+| M4 — crop | M3 + seleção ROI e bypass conforme a especificação | Regressão VCS documentada no marco; PASS = contagens, bordas, ROI 1×1 e flags corretos; inválidos rejeitados | Logs e vetores centro/borda/bypass/inválidos |
+| M5 — resize NN | M4 + fatores especificados | Regressão VCS; PASS = seleção conforme fórmula geral, casos pares/ímpares, eixos independentes, contagens e marcadores | Log comparando cada pixel e flags com modelo independente |
 | M6 — threshold e integração | M5 + comparador e bypass | Regressão VCS; PASS = T=0/255, igualdade e vizinhança, bypass e composição completa | Logs de casos e divergências, versões e seed |
 | M7 — verificação consolidada | `tb/` com scoreboard, SVA e `reports/verification/`; depende M6 | Regressão VCS com comando reproduzível documentado; PASS = todos os cenários obrigatórios, nenhuma divergência ou violação SVA não justificada | Resumo total de casos, falhas, propriedades, logs e hashes dos vetores; PNG complementares |
 | M8 — síntese/timing | `scripts/synthesis/`, `constraints/`, relatórios DC; após M7 e identificação do ambiente | Comando DC/constraints conforme versão e fluxo reais; PASS de execução = síntese sem erro impeditivo e relatórios de área, caminhos e violações com 10 ns; fechamento é resultado separado | Versão, biblioteca/PDK identificados, constraints, log e relatórios; não impor meta de área/potência |

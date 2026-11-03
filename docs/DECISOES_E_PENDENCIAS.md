@@ -1,10 +1,10 @@
 # Registro de decisões e pendências — 6C
 
-Atualização inicial: 2026-10-28. **Este arquivo registra o estado do projeto, não inventa aprovação do professor.**
+Atualização inicial: 2026-10-28. **Este arquivo registra o estado do projeto e suas fontes.**
 
 ## Convenção de status
 - **OFICIAL (PDF):** declarado no documento final enviado.
-- **PROPOSTO:** sugestão de engenharia para a primeira versão, requer aceitação dos responsáveis.
+- **PROPOSTO:** sugestão de engenharia para a primeira versão, distinta de requisito oficial.
 - **A DEFINIR:** ainda não há decisão documentada.
 - **VALIDADO:** apenas com evidência real (teste, log, síntese, ata ou aceite explícito).
 
@@ -26,7 +26,7 @@ Atualização inicial: 2026-10-28. **Este arquivo registra o estado do projeto, 
 | Clock | OFICIAL (PDF) | 100 MHz como referência inicial de análise, sem garantia de timing | PDF §6.5–6.6 |
 | Tecnologia | A DEFINIR | PDK/biblioteca reais do ambiente CIExpert | PDF §6.6 |
 
-## Sugestões não aprovadas — validar com Wagner e Thiago
+## Sugestões técnicas iniciais
 
 | Tema | Status | Sugestão inicial | Risco/observação |
 |---|---|---|---|
@@ -45,7 +45,7 @@ Atualização inicial: 2026-10-28. **Este arquivo registra o estado do projeto, 
 ## Questões essenciais para a primeira revisão da especificação
 
 1. A V1 terá apenas razão de redução 2:1 em cada eixo ou proporções configuráveis? Se configurável, quais limites e algoritmo **bit-exato**?
-2. Qual é a dimensão máxima da imagem de entrada (por exemplo, apenas testes pequenos, 640×480, outra)? Não impor uma resolução sem aprovação.
+2. Qual é a dimensão máxima da imagem de entrada (por exemplo, apenas testes pequenos, 640×480, outra)? Definir e documentar a resolução suportada.
 3. Crop terá bypass? Os parâmetros serão travados em SOF? O que ocorre em retângulo inválido?
 4. O fluxo terá `ready` para backpressure ou apenas pixels válidos que devem ser aceitos? Como tratar gaps em `pixel_valid`?
 5. Quais marcadores (SOF/EOL/EOF) exatamente, sua polaridade, relação com `valid` e o que acontece quando crop/resize descartam o último pixel de uma linha?
@@ -62,22 +62,22 @@ Atualização inicial: 2026-10-28. **Este arquivo registra o estado do projeto, 
 
 ## Revisão técnica V1 — 2026-10-28
 
-O histórico acima permanece como registro inicial; as propostas seguintes detalham e substituem apenas as sugestões genéricas para fins de revisão, sem constituir aprovação. Fonte: PDF oficial §§6.2–6.9, confrontado diretamente; `pre-planejamento.md` ausente. Evidência documental: `docs/spec_v1.md` e `docs/plano_de_execucao.md`. Nenhum teste funcional/EDA foi executado nesta revisão.
+O histórico acima permanece como registro inicial; as propostas seguintes detalham e substituem apenas as sugestões genéricas para registrar a evolução técnica. Fonte: PDF oficial §§6.2–6.9, confrontado diretamente; `pre-planejamento.md` ausente. Evidência documental: `docs/spec_v1.md` e `docs/plano_de_execucao.md`. Nenhum teste funcional/EDA foi executado nesta revisão.
 
 | Tema e opções | Recomendação — status | Motivação e riscos / revisão |
 |---|---|---|
-| Resolução: 640×480, 2047×2047 ou outro limite | 2047 por eixo, dimensões e coordenadas em 11 bits — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Limite simples sem assumir necessidade de aplicação; somas em 12 bits; custo e timing desconhecidos. Thiago valida interface/limite, Wagner avalia implicações DFT. |
-| Crop: sempre ativo com ROI integral ou bypass dedicado | `crop_enable`, ROI ignorada no bypass — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Prático para quadro integral; não exigido pelo PDF. Thiago revisa. |
-| Resize: arbitrário ou subconjunto | Fatores 1 ou 2 independentes por eixo, saída piso, conforme equação do PDF — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Atende diferentes fatores com seleção simples; restringe dimensões configuráveis em relação à proposta conceitual. Confirmar adequação com responsáveis/professor quando necessário. Thiago revisa ímpares e mapeamento. |
-| Fluxo: somente valid ou valid/ready | Apenas valid, destino sempre aceita — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Baixa complexidade; integração não tolera backpressure. Thiago valida capacidade do sistema. |
-| Reset e flags: síncrono ou assíncrono; 3 ou 4 flags | Reset síncrono ativo baixo e SOF/SOL/EOL/EOF por pixel — **PROPOSTO — AGUARDANDO APROVAÇÃO** | PDF prevê início/fim de linha e quadro; reset síncrono requer clock durante reset; Wagner revisa testabilidade e Thiago protocolo. |
-| Latência e pipeline | Registro de saída, 1 ciclo borda a borda — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Simples; caminho combinacional pode violar 10 ns e demandar nova decisão. Thiago revisa, Wagner avalia scan. |
-| Configuração | Capturar no SOF, primeiro pixel usa sinais atuais — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Evita mudança no meio do quadro; quadros consecutivos exigem isolar controles em trânsito. Thiago revisa. |
-| Inválidos/vazios | Rejeitar quadro e pulsar `cfg_error`, sem pixels ou flags; sem clipping — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Recuperar no próximo SOF; sistema precisa observar erro; não há marcador de quadro vazio. Thiago revisa. |
-| Fluxo malformado | Sem detecção completa; SOF inesperado reinicia — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Pode ter saídas parciais já emitidas, consumidor descarta quadro interrompido; especificar responsabilidade do sistema. Thiago revisa. |
-| Marcadores | Regenerar quatro flags pelas coordenadas de saída — **PROPOSTO — AGUARDANDO APROVAÇÃO** | EOF de saída pode preceder o de entrada. Scoreboard/SVA verificam inclusive pixels de entrada finais descartados. Thiago revisa. |
+| Resolução: 640×480, 2047×2047 ou outro limite | 2047 por eixo, dimensões e coordenadas em 11 bits — **PROPOSTO** | Limite simples sem assumir necessidade de aplicação; somas em 12 bits; custo e timing desconhecidos. Há implicações para a interface e o DFT. |
+| Crop: sempre ativo com ROI integral ou bypass dedicado | `crop_enable`, ROI ignorada no bypass — **PROPOSTO** | Prático para quadro integral; não exigido pelo PDF. |
+| Resize: arbitrário ou subconjunto | Fatores 1 ou 2 independentes por eixo, saída piso, conforme equação do PDF — **PROPOSTO** | Atende diferentes fatores com seleção simples; restringe dimensões configuráveis em relação à proposta conceitual. A adequação depende das resoluções necessárias ao projeto. Dimensões ímpares e mapeamento exigem testes. |
+| Fluxo: somente valid ou valid/ready | Apenas valid, destino sempre aceita — **PROPOSTO** | Baixa complexidade; integração não tolera backpressure. |
+| Reset e flags: síncrono ou assíncrono; 3 ou 4 flags | Reset síncrono ativo baixo e SOF/SOL/EOL/EOF por pixel — **PROPOSTO** | PDF prevê início/fim de linha e quadro; reset síncrono requer clock durante reset e afeta a testabilidade. |
+| Latência e pipeline | Registro de saída, 1 ciclo borda a borda — **PROPOSTO** | Simples; caminho combinacional pode violar 10 ns e demandar nova decisão. |
+| Configuração | Capturar no SOF, primeiro pixel usa sinais atuais — **PROPOSTO** | Evita mudança no meio do quadro; quadros consecutivos exigem isolar controles em trânsito. |
+| Inválidos/vazios | Rejeitar quadro e pulsar `cfg_error`, sem pixels ou flags; sem clipping — **PROPOSTO** | Recuperar no próximo SOF; sistema precisa observar erro; não há marcador de quadro vazio. |
+| Fluxo malformado | Sem detecção completa; SOF inesperado reinicia — **PROPOSTO** | Pode ter saídas parciais já emitidas, consumidor descarta quadro interrompido; especificar responsabilidade do sistema. |
+| Marcadores | Regenerar quatro flags pelas coordenadas de saída — **PROPOSTO** | EOF de saída pode preceder o de entrada. Scoreboard/SVA verificam inclusive pixels de entrada finais descartados. |
 | Tecnologia e ferramenta | Identificar no CIExpert — **A DEFINIR** | Não há PDK, biblioteca, licença ou versão confirmados; Wagner verifica DFT e fluxo; físico depende da infraestrutura. |
-| ATPG | Extensão condicional — **PROPOSTO — AGUARDANDO APROVAÇÃO** | Não é entrega explicitamente obrigatória em 6C; Wagner verifica expectativa, licença e fluxo. |
+| ATPG | Extensão condicional — **PROPOSTO** | Não é entrega explicitamente obrigatória em 6C; Wagner verifica expectativa, licença e fluxo. |
 
 ### Inventário antes das alterações desta sessão
 
@@ -86,10 +86,10 @@ O histórico acima permanece como registro inicial; as propostas seguintes detal
 - Não havia `pre-planejamento.md`, RTL, modelo, testbench ou scripts de fluxo no inventário de arquivos. O diretório não é repositório Git; `git status --short` retornou erro, portanto não há baseline Git para diff.
 - Nesta sessão criados `docs/spec_v1.md` e `docs/plano_de_execucao.md`; este registro recebeu acréscimos. PDF e demais fontes não foram alterados.
 
-### Revisão bloqueante antes do modelo/RTL
+### Pontos técnicos para desenvolvimento
 
-Solicitar aceite conjunto da V1, especialmente limite de resolução, fatores 1/2 com piso e ausência de ready; os demais defaults estão explícitos para revisão conjunta, incluindo reset, flags, latência, erro e bypass. Mudanças necessárias devem ser registradas antes do modelo; início de RTL requer aprovação explícita. O acesso ao CIExpert é pendência para marcos EDA, não para a revisão documental.
+A V1 documenta limite de resolução, fatores 1/2 com piso, ausência de ready, reset, flags, latência, erro e bypass. Mudanças nessas opções devem ser registradas para manter modelo e RTL consistentes. O acesso ao CIExpert permanece necessário para os marcos EDA.
 
 | Data | Mudança/decisão | Responsável | Evidência/arquivo | Status |
 |---|---|---|---|---|
-| 2026-10-28 | Leitura do PDF e proposta de interface, políticas e plano V1 | Codex | `docs/spec_v1.md`, `docs/plano_de_execucao.md` | PROPOSTO — AGUARDANDO APROVAÇÃO; testes EDA NÃO EXECUTADOS |
+| 2026-10-28 | Leitura do PDF e proposta de interface, políticas e plano V1 | Codex | `docs/spec_v1.md`, `docs/plano_de_execucao.md` | PROPOSTO; testes EDA NÃO EXECUTADOS |

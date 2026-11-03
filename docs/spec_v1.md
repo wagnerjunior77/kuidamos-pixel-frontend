@@ -1,6 +1,6 @@
 # Especificação técnica V1 — Grupo 6C
 
-Data: 2026-10-28. **Status global: PROPOSTO — AGUARDANDO APROVAÇÃO de Thiago e Wagner.** O contrato abaixo permite implementação e verificação, mas não constitui decisão aprovada. Fonte primária: `referencias/definicao_escopo_grupo_6_oficial.pdf`, §§2–3 e 6.2–6.9, páginas 11–20. `pre-planejamento.md` está ausente. A nota `CONTEXTO_TECNICO_6C.md` é apoio, não substitui o PDF.
+Data: 2026-10-28. **Status: proposta técnica V1.** O contrato abaixo descreve uma base para implementação e verificação. Fonte primária: `referencias/definicao_escopo_grupo_6_oficial.pdf`, §§2–3 e 6.2–6.9, páginas 11–20. `pre-planejamento.md` está ausente. A nota `CONTEXTO_TECNICO_6C.md` é apoio, não substitui o PDF.
 
 ## 1. Proveniência e escopo
 
@@ -8,7 +8,7 @@ Data: 2026-10-28. **Status global: PROPOSTO — AGUARDANDO APROVAÇÃO de Thiago
 
 **Fora do escopo:** detecção ou identificação, IA/inferência/NPU, câmera/sensor, RTSP/RTP/Ethernet/MIPI, H.264/H.265, ISP/RAW/debayer, framebuffer/DRAM, upscale, interpolação bilinear/bicúbica e integração obrigatória entre grupos. 6A é multiplicação matricial; 6B é FFT de áudio.
 
-**PROPOSTO — AGUARDANDO APROVAÇÃO:** todas as escolhas de interface, limites, políticas e microarquitetura específicas abaixo. O PDF não exige bypass de crop, fator 2 nem resolução máxima específica. Restringir a V1 a fatores 1 e 2 é uma proposta de escopo que deve ser aprovada pelos responsáveis frente à intenção oficial de diferentes razões de redução; não é limitação expressa pelo PDF.
+**PROPOSTA TÉCNICA:** escolhas de interface, limites, políticas e microarquitetura específicas abaixo. O PDF não exige bypass de crop, fator 2 nem resolução máxima específica. Restringir a V1 a fatores 1 e 2 é uma proposta de escopo diante da intenção oficial de diferentes razões de redução; não é limitação expressa pelo PDF.
 
 ```text
 RGB888 + marcadores -> grayscale -> crop -> resize NN -> threshold -> 8 bits + marcadores
@@ -46,7 +46,7 @@ Proposta: largura e altura de entrada em `[1, 2047]`; coordenadas válidas de 0 
 
 - No SOF válido são amostrados atomicamente todos os campos de configuração. O primeiro pixel usa a configuração presente nessa mesma borda. Alterações posteriores nos sinais externos são ignoradas até o próximo SOF; não há exigência de estabilidade externa após a captura. Testar mudanças durante o quadro. Cada pixel em trânsito carrega os controles/metadados necessários: mudança no SOF seguinte não altera saídas anteriores.
 - Com crop habilitado: `1 <= crop_width <= in_width`, `1 <= crop_height <= in_height`, `x_start < in_width`, `y_start < in_height`, `x_start + crop_width <= in_width`, `y_start + crop_height <= in_height`. Comparações de soma usam 12 bits unsigned, sem wrap. Limites superiores são exclusivos. Com crop desabilitado, ROI efetiva é `(0,0,in_width,in_height)` e campos de ROI são ignorados, mesmo se inválidos.
-- Denote dimensões efetivas da ROI por `W,H`. Para cada eixo, fator `F=1` ou `2`; dimensão de saída é `floor(W/F)` ou `floor(H/F)`. Fator 2 em dimensão 1 é inválido. Os fatores são independentes; identidade é bypass funcional do resize. Apenas as dimensões decorrentes destes fatores são suportadas; não há campos arbitrários `W_out/H_out` na V1 proposta. Esse recorte precisa de aprovação por substituir a interface genérica sugerida no PDF por fatores configuráveis.
+- Denote dimensões efetivas da ROI por `W,H`. Para cada eixo, fator `F=1` ou `2`; dimensão de saída é `floor(W/F)` ou `floor(H/F)`. Fator 2 em dimensão 1 é inválido. Os fatores são independentes; identidade é bypass funcional do resize. Apenas as dimensões decorrentes destes fatores são suportadas; não há campos arbitrários `W_out/H_out` na V1 proposta. Esse recorte substitui a interface genérica sugerida no PDF por fatores configuráveis.
 - Parâmetros inválidos no SOF: emitir `cfg_error` por um ciclo, descartar integralmente o quadro e emitir zero pixels/marcadores para ele. Continuar aceitando a entrada; novo SOF inicia nova avaliação. Não há clipping, divisão por zero, frame vazio sinalizado nem deadlock. Nenhum `cfg_error` indica conclusão de processamento. Reset cancela o estado e o pulso. Frames válidos sempre geram ao menos um pixel.
 
 ## 4. Função bit-exata

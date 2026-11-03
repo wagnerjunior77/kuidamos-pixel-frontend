@@ -10,7 +10,7 @@
 Ao longo deste texto:
 
 - **[PDF]** = requisito, intenção ou limite literalmente documentado no planejamento final submetido.
-- **[ENG]** = consequência técnica, interpretação ou recomendação derivada da especificação; **ainda não é uma decisão aprovada**.
+- **[ENG]** = consequência técnica, interpretação ou recomendação derivada da especificação; **não é requisito oficial**.
 - **[ABERTO]** = questão que precisa ser documentada na especificação V1.
 - **[EXTENSÃO]** = recurso possível após cumprir a entrega principal e verificar ambiente/licenças.
 
@@ -97,7 +97,7 @@ AND
 
 Apenas pixels de dentro passam; os demais são **descartados** do fluxo. Crop não detecta placas, rostos, pessoas ou objetos: não existe IA nessa etapa. Se a janela errar, pode remover conteúdo importante; sua utilidade depende de ROI conhecida ou informada pelo sistema externo.
 
-**[ENG]** Em fluxo contínuo, a seleção usa contadores de X/Y + comparadores + sinal de validade e marcadores regenerados; **não** é necessário armazenar duas imagens (nem mesmo uma imagem inteira). Se estiver habilitado, fluxo de saída representa a subimagem. Se bypass for aprovado, o circuito encaminha o quadro integral, sem uma segunda cópia de dados.
+**[ENG]** Em fluxo contínuo, a seleção usa contadores de X/Y + comparadores + sinal de validade e marcadores regenerados; **não** é necessário armazenar duas imagens (nem mesmo uma imagem inteira). Se estiver habilitado, fluxo de saída representa a subimagem. Com bypass, o circuito encaminha o quadro integral, sem uma segunda cópia de dados.
 
 **[ABERTO]** Definir largura e validação das coordenadas; origin `(0,0)`; caso `W_crop/H_crop = 0`; ROI ultrapassando borda; possibilidade de região fora da imagem; bypass; transição de parâmetros no meio de frame. Não implementar clipping silencioso ou frame vazio sem documentar a política.
 
@@ -143,7 +143,7 @@ O documento final é deliberadamente conceitual; por isso os pontos abaixo **nã
 | Backpressure `ready` | Não | Comparar opções (sem ready vs. ready) e recomendar uma V1 |
 | Início/fim de linha/quadro | Mencionados | Semântica exata no ciclo do primeiro/último pixel **emitido** |
 | Configuração | Parametrizável em sinais/regs | Propor interface simples e sampling no início de quadro |
-| Largura de contadores e resolução máxima | Não | Propor limite viável; pedir aprovação |
+| Largura de contadores e resolução máxima | Não | Propor e documentar limite viável |
 | Crop habilitado/desabilitado | Bypass de crop não explícito | Recomendar bypass, registrar como proposta |
 | Threshold habilitado/desabilitado | Sim | Definir comportamento bit-exato |
 | Resize fator 2 vs genérico | Prioridade downscale apenas | Comparar esforço/risco; propor milestone simples |
@@ -178,7 +178,7 @@ O documento final é deliberadamente conceitual; por isso os pontos abaixo **nã
 | Crop centro/borda | 8×8 ROI x=2 y=1 w=4 h=5 | Quantidade, bordas, origem de saída |
 | ROI de tamanho 1 | ROI 1×1 | Não emitir pixel extra; markers corretos |
 | ROI inválida | dimensões zero ou fora da imagem | Política documentada, não crash/hang |
-| Crop bypass (se aprovado) | full frame com `crop_enable=0` | Passar tudo sem cópia de framebuffer |
+| Crop bypass (proposto) | full frame com `crop_enable=0` | Passar tudo sem cópia de framebuffer |
 | Resize fator 2 | 8×8→4×4 | Posição-fonte, perda controlada de pixels |
 | Dimensões ímpares | 5×3→? admissível | Regra clara para piso/último pixel |
 | Downscale assimétrico | 8×6→4×2, se suportado | Índices X/Y independentes |
@@ -237,7 +237,7 @@ O documento final é deliberadamente conceitual; por isso os pontos abaixo **nã
 
 - Grayscale bate exatamente com o Golden Model nos vetores obrigatórios.
 - Crop só emite pixels na ROI; bordas explicitamente exercitadas.
-- Resize bate com a convenção de nearest-neighbor do Golden Model para as resoluções aprovadas.
+- Resize bate com a convenção de nearest-neighbor do Golden Model para as resoluções especificadas.
 - Threshold 0/255 quando ligado, passthrough de cinza quando desligado.
 - Marcadores de linha/quadro refletem a imagem realmente produzida; não há pixels válidos além dos limites.
 - Scoreboard compara todos os pixels válidos; SVA sem violações obrigatórias não justificadas.
@@ -279,7 +279,7 @@ Esta **é uma proposta**, não parte da especificação oficial; adaptar à past
 │   ├── plano_de_execucao.md           # Codex criará na PRIMEIRA SESSÃO
 │   └── referencias/
 │       └── definicao_escopo_grupo_6_oficial.pdf
-├── rtl/                                # apenas após aprovação da spec
+├── rtl/                                # implementação RTL
 ├── tb/
 ├── model/
 ├── scripts/
@@ -298,8 +298,8 @@ A primeira sessão deve **criar `docs/spec_v1.md`, `docs/plano_de_execucao.md` e
 | M0 — Spec V1 | Interface ciclo a ciclo; dimensões; bypass; saída e flags; riscos | Wagner/Thiago revisaram decisões abertas |
 | M1 — Python | Modelo inteiro bit-exato + dados pequenos | Testes independentes do RTL passam |
 | M2 — RTL pass-through / grayscale | DUT sintetizável + TB | VCS compara vetores e flags |
-| M3 — Crop | ROI/bordas/bypass se aprovado | Check de pixels e markers por frame |
-| M4 — Resize | Downscaling NN validado | Testes pares/ímpares/fatores aprovados |
+| M3 — Crop | ROI/bordas/bypass conforme especificação | Check de pixels e markers por frame |
+| M4 — Resize | Downscaling NN validado | Testes pares/ímpares/fatores especificados |
 | M5 — Threshold / full pipeline | Bypass e composição correta | Regressão e scoreboard/SVA passam |
 | M6 — Síntese | DC/constraints/relatórios reais | Sem erro bloqueador, violações documentadas |
 | M7 — DFT | DRC, scan, reports (ou limitação documentada) | Execução reproduzível e logs coletados |
@@ -317,11 +317,11 @@ A primeira resposta de trabalho deve entregar:
 - Uma proposta concreta de `docs/spec_v1.md` com tabela completa de I/O, timing, contadores, configurações, comportamentos e casos inválidos, distinguindo itens confirmados/abertos.
 - `docs/plano_de_execucao.md` com implementação modular e evidências de aceite por marco.
 - Atualização de `docs/DECISOES_E_PENDENCIAS.md` com recomendações justificadas e perguntas **apenas de decisões que realmente bloqueiam a implementação**.
-- Não implementar RTL, golden model ou TCL definitivo até a especificação V1 receber aval explícito; não declarar ferramentas testadas sem executar.
+- Manter consistência entre especificação, modelo, RTL e fluxo; não declarar ferramentas testadas sem executar.
 
 ## 13. Resumo de frases que o agente NÃO deve dizer sem evidência
 
-- "Já está aprovado o crop bypass" (não está explícito no PDF).
+- "O PDF exige crop bypass" (não está explícito no PDF).
 - "O projeto precisa identificar placas" (não é tarefa do IP 6C).
 - "Temos que integrar 6C→6B→6A" (6B trabalha com FFT de áudio; integração não é obrigatória).
 - "ATPG stuck-at/transition é entrega obrigatória" (é extensão possível; confirmar escopo).
