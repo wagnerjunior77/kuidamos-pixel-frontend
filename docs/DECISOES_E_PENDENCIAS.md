@@ -59,7 +59,7 @@ Registro histórico: as sugestões desta seção e da revisão de 2026-10-28 for
 
 | Data | Mudança/decisão | Responsável | Evidência/arquivo | Status |
 |---|---|---|---|---|
-| 2026-10-28 | Documentos de orientação para início do 6C preparados a partir do PDF oficial | Assistente | `AGENTS.md`, `docs/CONTEXTO_TECNICO_6C.md` | Documentação inicial |
+| 2026-10-28 | Documentos de orientação para início do 6C preparados a partir do PDF oficial | Assistente de IA | `AGENTS.md`, `docs/CONTEXTO_TECNICO_6C.md` | Documentação inicial |
 
 
 ## Revisão técnica V1 — 2026-10-28
@@ -81,12 +81,12 @@ O histórico acima permanece como registro inicial; as propostas seguintes detal
 | Tecnologia e ferramenta | Identificar no CIExpert — **A DEFINIR** | Não há PDK, biblioteca, licença ou versão confirmados; Wagner verifica DFT e fluxo; físico depende da infraestrutura. |
 | ATPG | Extensão condicional — **PROPOSTO** | Não é entrega explicitamente obrigatória em 6C; Wagner verifica expectativa, licença e fluxo. |
 
-### Inventário antes das alterações desta sessão
+### Inventário inicial — 2026-10-28
 
 - Raiz: `AGENTS.md`, `PROMPT_INICIAL_CODEX.md`, `README_COMO_COMECAR.md`, `VERIFIQUE_ARQUIVOS.txt`.
 - `docs/`: `CONTEXTO_TECNICO_6C.md`, `DECISOES_E_PENDENCIAS.md`, `referencias/definicao_escopo_grupo_6_oficial.pdf` (20 páginas).
-- Não havia `pre-planejamento.md`, RTL, modelo, testbench ou scripts de fluxo no inventário de arquivos. O diretório não é repositório Git; `git status --short` retornou erro, portanto não há baseline Git para diff.
-- Nesta sessão criados `docs/spec_v1.md` e `docs/plano_de_execucao.md`; este registro recebeu acréscimos. PDF e demais fontes não foram alterados.
+- No inventário inicial não havia `pre-planejamento.md`, RTL, modelo, testbench ou scripts de fluxo. Naquela data, o diretório ainda não era um repositório Git; `git status --short` retornou erro e não havia baseline Git para diff.
+- Na etapa inicial foram criados `docs/spec_v1.md` e `docs/plano_de_execucao.md` e acrescentadas informações a este registro. O PDF e as demais fontes permaneceram inalterados.
 
 ### Pontos técnicos para desenvolvimento
 
@@ -94,11 +94,11 @@ A V1 documenta limite de resolução, fatores 1/2 com piso, ausência de ready, 
 
 | Data | Mudança/decisão | Responsável | Evidência/arquivo | Status |
 |---|---|---|---|---|
-| 2026-10-28 | Leitura do PDF e proposta de interface, políticas e plano V1 | Codex | `docs/spec_v1.md`, `docs/plano_de_execucao.md` | PROPOSTO; testes EDA NÃO EXECUTADOS |
+| 2026-10-28 | Leitura do PDF e proposta de interface, políticas e plano V1 | Codex (ferramenta de IA) | `docs/spec_v1.md`, `docs/plano_de_execucao.md` | PROPOSTO; testes EDA NÃO EXECUTADOS |
 
 ## Revisão final de M0 — 2026-11-03
 
-**Status: análise e recomendações; nenhuma nova decisão validada.** Fontes: `spec_v1.md`, `plano_de_execucao.md` e PDF oficial §§6.3–6.9. As opções abaixo mantêm a distinção entre a referência oficial e as escolhas de engenharia. A disponibilidade do PDK e das ferramentas é uma pendência para o fluxo EDA, não um bloqueio para o modelo funcional Python.
+**Status à época da revisão: análise e recomendações; nenhuma nova decisão validada.** Fontes: `spec_v1.md`, `plano_de_execucao.md` e PDF oficial §§6.3–6.9. As opções abaixo mantêm a distinção entre a referência oficial e as escolhas de engenharia. A disponibilidade do PDK e das ferramentas é uma pendência para o fluxo EDA, não um bloqueio para o modelo funcional Python.
 
 | Ponto | Recomendação e alternativa | Consequência e evidência |
 |---|---|---|
@@ -111,11 +111,11 @@ A V1 documenta limite de resolução, fatores 1/2 com piso, ausência de ready, 
 | Erros | Configuração inválida no SOF: pulso de `cfg_error` e quadro sem saída; alternativa: erro persistente com reconhecimento. | Pulso precisa ser observado pelo sistema. Quadro inválido não tem marcador de saída e a interface não informa por si só quando ele termina. |
 | Fluxo malformado | Recomenda-se tratar marcadores incoerentes como violação de contrato da fonte, sem garantia de detecção; aceitar SOF inesperado como início de novo quadro. Alternativa: adicionar sinal de erro/aborto e lógica de detecção. | A saída pode ter sido parcialmente ou completamente consumida antes da descoberta de erro de entrada; marcadores de saída isolados não permitem desfazer nem identificar sempre o quadro corrompido. Definir responsabilidade do sistema e comportamento após reset antes do RTL. |
 
-Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde, azul e branco: 0, 76, 149, 28 e 255. Para resize fator 2, um cálculo em Python comparou `floor(k*N/floor(N/2))` com `2*k` em 1.047.552 índices, N de 2 a 2047, sem divergências. Estes cálculos não constituem verificação de RTL, síntese ou prova de timing. Nenhum fluxo EDA foi executado nesta revisão.
+Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde, azul e branco: 0, 76, 149, 28 e 255. Para resize fator 2, um cálculo em Python comparou `floor(k*N/floor(N/2))` com `2*k` em 1.047.552 índices, N de 2 a 2047, sem divergências. Estes cálculos não constituem verificação de RTL, síntese ou prova de timing. Nenhum fluxo EDA foi executado na revisão.
 
 ## Decisão interna M0 — 2026-11-03
 
-**M0 concluído internamente; decisões V1 aprovadas pelo usuário para implementação.** Evidência: instrução explícita do usuário nesta sessão; especificação atualizada em `docs/spec_v1.md`. Histórico anterior preservado. A aprovação interna não comprova resultados de ferramentas nem substitui a validação do professor.
+**M0 concluído internamente; decisões V1 aprovadas pelo responsável pelo projeto para implementação.** Evidência: aprovação explícita do usuário em conversa de 2026-11-03; especificação atualizada em `docs/spec_v1.md`. Histórico anterior preservado. A aprovação interna não comprova resultados de ferramentas nem substitui a validação do professor.
 
 | Tema | Decisão aprovada para V1 | Pendência/limitação |
 |---|---|---|

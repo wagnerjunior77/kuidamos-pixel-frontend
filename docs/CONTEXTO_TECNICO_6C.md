@@ -3,7 +3,7 @@
 **Versão desta nota:** 0.1 — 2026-10-28  
 **Status:** documento de apoio para implementação; **não substitui a proposta oficial**.  
 **Fonte primária:** `docs/referencias/definicao_escopo_grupo_6_oficial.pdf`, 20 páginas; foco nas páginas 11–20 (seção 6). Se existir `pre-planejamento.md` completo extraído fielmente do Overleaf, consultá-lo em paralelo.  
-**Público:** Codex, Wagner (DFT) e Thiago (RTL).
+**Público:** equipe do Grupo 6C e colaboradores técnicos.
 
 ## 0. Como ler esta nota
 
@@ -14,7 +14,7 @@ Ao longo deste texto:
 - **[ABERTO]** = questão que precisa ser documentada na especificação V1.
 - **[EXTENSÃO]** = recurso possível após cumprir a entrega principal e verificar ambiente/licenças.
 
-Não tratar `[ENG]`, `[ABERTO]` ou `[EXTENSÃO]` como exigência oficial. Esta distinção é crítica para que a IA não modifique silenciosamente o escopo do grupo.
+Não tratar `[ENG]`, `[ABERTO]` ou `[EXTENSÃO]` como exigência oficial. Essa distinção preserva a rastreabilidade do escopo e das decisões de engenharia.
 
 ## 1. Projeto geral e papel de cada grupo
 
@@ -135,7 +135,7 @@ se pixel <  T: saída =   0
 
 O documento final é deliberadamente conceitual; por isso os pontos abaixo **não podem ser deixados implícitos** antes do RTL:
 
-| Assunto | Definido no PDF? | Ação do Codex no primeiro ciclo |
+| Assunto | Definido no PDF? | Ação de especificação |
 |---|---|---|
 | Barramento RGB888 e output 8 bits | Sim | Formalizar nomes e temporização sem redefinir bits |
 | `clk`, `reset_n` | Mencionados | Propor sincronicidade, polaridade, tempos e reset de marcadores |
@@ -263,35 +263,29 @@ O documento final é deliberadamente conceitual; por isso os pontos abaixo **nã
 | Scan difícil | Pré-DFT DRC incremental, circuitos registradores simples |
 | Cobertura de casos fraca | Testes sintéticos, extremos, resoluções, ROI, thresholds, reais complementares |
 
-## 10. Organização sugerida do repositório
+## 10. Organização do repositório
 
-Esta **é uma proposta**, não parte da especificação oficial; adaptar à pasta já criada sem apagar arquivos.
+A estrutura atual está descrita no [README principal](../README.md). A organização de diretórios é uma decisão de engenharia, não uma exigência do PDF oficial. A estrutura proposta no planejamento inicial incluía diretórios de RTL, testbench, scripts, constraints, DFT, implementação física e relatórios, a serem incorporados conforme o avanço do projeto.
 
 ```text
 .
-├── AGENTS.md                          # Codex lê primeiro
-├── PROMPT_INICIAL_CODEX.md             # mensagem para a primeira sessão
-├── pre-planejamento.md                 # usuário adicionará a versão FINAL do Overleaf
+├── AGENTS.md                          # instruções para ferramentas de desenvolvimento
 ├── docs/
 │   ├── CONTEXTO_TECNICO_6C.md         # esta nota
 │   ├── DECISOES_E_PENDENCIAS.md       # registro de decisões
-│   ├── spec_v1.md                     # Codex criará na PRIMEIRA SESSÃO
-│   ├── plano_de_execucao.md           # Codex criará na PRIMEIRA SESSÃO
+│   ├── spec_v1.md                     # especificação V1
+│   ├── plano_de_execucao.md            # marcos atualizados
 │   └── referencias/
 │       └── definicao_escopo_grupo_6_oficial.pdf
-├── rtl/                                # implementação RTL
-├── tb/
-├── model/
-├── scripts/
-├── constraints/
-├── dft/
-├── physical/
-└── reports/
+├── model/                              # modelo, geradores e testes Python
+└── vectors/                            # vetores de referência
 ```
 
-A primeira sessão deve **criar `docs/spec_v1.md`, `docs/plano_de_execucao.md` e atualizar `docs/DECISOES_E_PENDENCIAS.md`**. As outras pastas podem ser criadas vazias se for útil, mas não gerar centenas de arquivos antes de a especificação estar fechada.
+O inventário do início do projeto e as alterações documentais estão preservados em `docs/DECISOES_E_PENDENCIAS.md`.
 
-## 11. Caminho de execução em marcos
+## 11. Marcos do planejamento preliminar
+
+Esta tabela preserva a numeração do planejamento inicial. Para a sequência atual M0–M11 e o estado de cada entrega, consulte [plano_de_execucao.md](plano_de_execucao.md); em particular, o M2 atual corresponde à geração de vetores.
 
 | Marco | Resultado verificável | Pode avançar quando... |
 |---|---|---|
@@ -306,20 +300,20 @@ A primeira sessão deve **criar `docs/spec_v1.md`, `docs/plano_de_execucao.md` e
 | M8 — Físico | Fusion Compiler e relatórios possíveis | Limitações explícitas se licença/PDK impedir |
 | M9 — Final | Manual, resultados, scripts, versões, riscos | Outro integrante reproduz resultados |
 
-**[ENG]** O Codex deve poder executar a maior parte das tarefas, mas os responsáveis humanos revisam interfaces, conclusões e aceitação, especialmente licenças, timing, DFT e estimativas físicas.
+**[ENG]** Interfaces, conclusões e critérios de aceitação requerem supervisão dos responsáveis humanos, especialmente nas análises de licenças, timing, DFT e implementação física. O uso de ferramentas de IA como apoio ao desenvolvimento é registrado no histórico de decisões.
 
-## 12. Checklist para a resposta inicial do Codex
+## 12. Checklist das entregas iniciais
 
-A primeira resposta de trabalho deve entregar:
+O planejamento inicial estabeleceu as seguintes entregas:
 
 - Inventário dos arquivos presentes e detecção de planejamento parcial versus final.
 - Resumo curto do escopo oficial do grupo 6C e das diferenças 6A/6B.
-- Uma proposta concreta de `docs/spec_v1.md` com tabela completa de I/O, timing, contadores, configurações, comportamentos e casos inválidos, distinguindo itens confirmados/abertos.
+- Especificação `docs/spec_v1.md` com tabela de I/O, timing, contadores, configurações, comportamentos e casos inválidos, distinguindo itens confirmados e abertos.
 - `docs/plano_de_execucao.md` com implementação modular e evidências de aceite por marco.
-- Atualização de `docs/DECISOES_E_PENDENCIAS.md` com recomendações justificadas e perguntas **apenas de decisões que realmente bloqueiam a implementação**.
+- Registro de recomendações e decisões em `docs/DECISOES_E_PENDENCIAS.md`.
 - Manter consistência entre especificação, modelo, RTL e fluxo; não declarar ferramentas testadas sem executar.
 
-## 13. Resumo de frases que o agente NÃO deve dizer sem evidência
+## 13. Limites de interpretação e evidência
 
 - "O PDF exige crop bypass" (não está explícito no PDF).
 - "O projeto precisa identificar placas" (não é tarefa do IP 6C).

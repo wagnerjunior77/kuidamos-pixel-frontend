@@ -1,6 +1,6 @@
 # Especificação técnica V1 — Grupo 6C
 
-Data inicial: 2026-10-28; atualização: 2026-11-03. **Status: decisões de implementação V1 aprovadas internamente pelo usuário.** A restrição do resize permanece sujeita à validação do professor. Fonte primária: `referencias/definicao_escopo_grupo_6_oficial.pdf`, §§2–3 e 6.2–6.9. A nota `CONTEXTO_TECNICO_6C.md` é apoio, não substitui o PDF.
+Data inicial: 2026-10-28; atualização: 2026-11-03. **Status: decisões de implementação V1 aprovadas internamente pelo responsável pelo projeto.** A restrição do resize permanece sujeita à validação do professor. Fonte primária: `referencias/definicao_escopo_grupo_6_oficial.pdf`, §§2–3 e 6.2–6.9. A nota `CONTEXTO_TECNICO_6C.md` é apoio, não substitui o PDF.
 
 ## 1. Proveniência e escopo
 
@@ -8,7 +8,7 @@ Data inicial: 2026-10-28; atualização: 2026-11-03. **Status: decisões de impl
 
 **Fora do escopo:** detecção ou identificação, IA/inferência/NPU, câmera/sensor, RTSP/RTP/Ethernet/MIPI, H.264/H.265, ISP/RAW/debayer, framebuffer/DRAM, upscale, interpolação bilinear/bicúbica e integração obrigatória entre grupos. 6A é multiplicação matricial; 6B é FFT de áudio.
 
-**DECISÕES INTERNAS V1:** escolhas de interface, limites e políticas abaixo foram aprovadas pelo usuário em 2026-11-03. O PDF não exige bypass de crop, fator 2 nem resolução máxima específica. A restrição a fatores 1 e 2 é escolha de escopo da V1, sujeita à validação do professor; não é limitação expressa pelo PDF. A microarquitetura e a latência inicial permanecem sujeitas aos resultados de timing.
+**DECISÕES INTERNAS V1:** escolhas de interface, limites e políticas abaixo foram aprovadas pelo responsável pelo projeto em 2026-11-03. O PDF não exige bypass de crop, fator 2 nem resolução máxima específica. A restrição a fatores 1 e 2 é escolha de escopo da V1, sujeita à validação do professor; não é limitação expressa pelo PDF. A microarquitetura e a latência inicial permanecem sujeitas aos resultados de timing.
 
 ```text
 RGB888 + marcadores -> grayscale -> crop -> resize NN -> threshold -> 8 bits + marcadores

@@ -18,6 +18,8 @@ python -m unittest discover -s model/tests -v
 python -m model.generate_vectors --seed 603 --output vetor_603.json
 ```
 
+O gerador recusa sobrescrever um arquivo existente. Sem `--output`, grava JSON no stdout; com `--output`, usa UTF-8 e LF. JSON tem `format_version`, `seed`, `config`, `input_rgb`, `input_pixels` em ordem raster com RGB e SOF/SOL/EOL/EOF, dimensões de saída e `output_pixels` com valor e os quatro marcadores. Cada registro representa um pixel válido; esse formato **não representa ciclos, bolhas, reset, `cfg_error` nem latência**. Os vetores temporais de M2 utilizam uma camada separada.
+
 ## Demonstração visual
 
 Na raiz do projeto, gere os cinco PNGs com uma imagem sintética:
@@ -33,8 +35,6 @@ python -X utf8 -m model.visual_demo --input CAMINHO_DA_IMAGEM --output-dir outpu
 ```
 
 A entrada é convertida para RGB888 e deve ter entre 1 e 2047 pixels por eixo. O script escolhe uma ROI central retirando `floor(N/8)` pixels de cada borda, usa fator 2 nos eixos cuja ROI tenha pelo menos dois pixels e aplica `T=128`. Cada etapa é obtida por uma chamada ao Golden Model com configuração apropriada. O script compara os arrays a cálculos numéricos das equações, grava os PNGs e os relê para comparar dimensão e cada valor de pixel. A saída em `outputs/` é ignorada pelo Git. Arquivos de mesmo nome não são sobrescritos; use outro diretório para uma nova execução. A análise visual complementa os testes numéricos e não verifica o futuro RTL.
-
-O gerador recusa sobrescrever um arquivo existente. Sem `--output`, grava JSON no stdout; com `--output`, usa UTF-8 e LF. JSON tem `format_version`, `seed`, `config`, `input_rgb`, `input_pixels` em ordem raster com RGB e SOF/SOL/EOL/EOF, dimensões de saída e `output_pixels` com valor e os quatro marcadores. Cada registro representa um pixel válido; o formato **não representa ciclos, bolhas, reset, `cfg_error` nem latência**. A expansão em vetores temporais e os casos adicionais constituem M2.
 
 ## API
 
