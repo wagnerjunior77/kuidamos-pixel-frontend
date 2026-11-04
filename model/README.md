@@ -53,3 +53,5 @@ pixels = list(result.pixels)  # Pixel(value, sof, sol, eol, eof), ordem raster
 Configuração inválida gera `ConfigError` antes de resultado, inclusive dimensão de saída zero; a exceção representa a rejeição funcional do quadro, sem simular o pulso de hardware. Campos de ROI são ignorados com crop desabilitado. Imagem com dtype ou formato incompatível gera `ValueError`, pois representa erro de estímulo, não um campo de configuração do IP. O threshold é validado como inteiro 0–255 mesmo no bypass. Não há suporte a upscale nem a fatores além de 1 e 2.
 
 O modelo aplica grayscale inteiro em `uint32`, ROI com limites superiores exclusivos, seleção pela fórmula geral `floor(k*N/N_out)` e threshold `>= T`. Marcadores correspondem ao quadro produzido, incluindo a coincidência de todas as flags no quadro 1×1. Não é modelo ciclo a ciclo e não comprova comportamento de reset, stalls, `cfg_error` ou timing do futuro RTL.
+
+Os vetores funcionais e temporais M2 utilizam uma camada separada: veja `docs/evidencias/M2_vetores.md` e `python -m model.m2_vectors --help`.

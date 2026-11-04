@@ -1,0 +1,4 @@
+# cycle pixel_out_valid pixel_out out_sof out_sol out_eol out_eof cfg_error consume_valid
+0 0 0 0 0 0 0 0 0
+1 1 0 1 1 1 1 0 0
+2 0 0 0 0 0 0 0 1

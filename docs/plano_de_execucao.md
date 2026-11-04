@@ -4,6 +4,8 @@ Data: 2026-10-28. Horizonte aproximado de cinco meses, sujeito a revisão e disp
 
 Atualização em 2026-11-03: **M0 concluído internamente**, por decisão explícita do usuário; restrição de resize sujeita à validação do professor. **M1 funcional executado**, com 18 testes Python aprovados e evidência em `docs/evidencias/M1_modelo_python.md`. O gerador oferece vetor funcional inicial; a ampliação e os vetores temporais pertencem a M2. As etapas EDA dependem de infraestrutura identificada e evidências reais.
 
+Atualização em 2026-11-04: **M2 implementado e validado localmente** com nove cenários e 29 testes Python na regressão completa. Os arquivos, formato e limitações estão em `docs/evidencias/M2_vetores.md`. A integração com o futuro testbench e VCS ainda não foi executada; M3 não foi iniciado.
+
 ## Dependências e evidências
 
 `M0 especificação → M1 modelo → M2 vetores → M3 passagem/grayscale → M4 crop → M5 resize → M6 threshold/integração → M7 regressão → M8 síntese → M9 DFT → M10 físico → M11 documentação`. Scoreboard e assertions crescem desde M3; M7 consolida. Diagnóstico de ferramentas pode ocorrer cedo, sem pressupor licenças ou bibliotecas. Cada marco registra versões, comando, data, configurações, código de saída, logs e limitações; dados protegidos ficam fora do versionamento.
@@ -16,7 +18,7 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 |---|---|---|
 | M0 | Wagner (DFT), com revisão de Thiago | Concluído internamente |
 | M1 | Wagner (DFT), com revisão de Thiago | Implementação inicial concluída |
-| M2 | Wagner, com revisão de Thiago | A realizar |
+| M2 | Wagner, com revisão de Thiago | Implementado e validado localmente; revisão de Thiago pendente |
 | M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | A realizar |
 | M7 | Thiago (RTL), com apoio de Wagner | A realizar |
 | M8 | Wagner (DFT), com apoio de Thiago | A realizar |
@@ -30,7 +32,7 @@ As atribuições de revisão descrevem a proposta de organização; não afirmam
 |---|---|---|---|
 | M0 — especificação — CONCLUÍDO INTERNAMENTE | `docs/spec_v1.md`, registro de decisões e plano; definição dos limites e protocolo | Decisões internas V1 aprovadas pelo usuário | Decisões registradas em `docs/DECISOES_E_PENDENCIAS.md`; validação do professor para resize pendente |
 | M1 — Golden Model | `model/golden.py`, `model/tests/`, `model/README.md`; operações inteiras e fórmula geral independente | `python -m unittest discover -s model/tests -v`; 18 testes passaram na execução registrada | `docs/evidencias/M1_modelo_python.md` |
-| M2 — vetores | `model/generate_vectors.py`, formato documentado, `vectors/` e entradas pequenas/PNG licenciadas | `python -m model.generate_vectors --help`; ampliar conjunto de vetores e documentar o comando de geração; PASS = regeneração idêntica com seed fixa e contagens/flags conferidas | Comandos exatos, seed, hashes e exemplos de entrada/saída |
+| M2 — vetores | `model/m2_vectors.py`, `model/tests/test_m2_vectors.py`, nove casos em `vectors/m2/` | `python -m model.m2_vectors --output-dir vectors/m2 --check` e regressão Python; 28 arquivos idênticos e 29 testes passaram localmente | `docs/evidencias/M2_vetores.md`; integração VCS ainda não executada |
 | M3 — passagem e grayscale | `rtl/`, `tb/` iniciais após M2; caminho RGB para cinza; passagem é marco temporário de infraestrutura | Em Linux CIExpert, comando VCS exato será documentado após versão e arquivos existirem; PASS = compilação e scoreboard de valores, flags, latência, bolhas e reset | Logs de compilação e simulação, versão VCS, cenários e divergências |
 | M4 — crop | M3 + seleção ROI e bypass conforme a especificação | Regressão VCS documentada no marco; PASS = contagens, bordas, ROI 1×1 e flags corretos; inválidos rejeitados | Logs e vetores centro/borda/bypass/inválidos |
 | M5 — resize NN | M4 + fatores especificados | Regressão VCS; PASS = seleção conforme fórmula geral, casos pares/ímpares, eixos independentes, contagens e marcadores | Log comparando cada pixel e flags com modelo independente |

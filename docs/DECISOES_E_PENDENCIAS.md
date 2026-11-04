@@ -134,3 +134,7 @@ Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde,
 |---|---|---|---|
 | 2026-11-03 | Golden Model por quadro, testes e vetor funcional inicial | `model/README.md`, `docs/evidencias/M1_modelo_python.md` | 16 testes Python passaram; RTL e EDA não executados; M2 temporal pendente |
 | 2026-11-03 | Regressão e demonstração visual por etapas; proposta de responsáveis | `docs/evidencias/M1_modelo_python.md`, `docs/plano_de_execucao.md` | 18 testes Python passaram; divisão de responsáveis pendente de alinhamento com Thiago; RTL e EDA não executados |
+
+## Progresso M2 — 2026-11-04
+
+Vetores funcionais e temporais gerados por `model/m2_vectors.py`, com valores e marcadores de quadro do Golden Model e associação independente às coordenadas de entrada; nove casos em `vectors/m2/`. A convenção por borda, inclusive saída pós-borda, transferência na borda seguinte e cancelamento pelo reset, está descrita em `docs/evidencias/M2_vetores.md` sem alteração da especificação V1. A regressão local registrou 29 testes Python aprovados e a comparação de 28 arquivos gerados idênticos. A integração dos vetores ao futuro testbench VCS, o RTL e as ferramentas Synopsys permanecem não executados. A restrição dos fatores de resize continua sujeita à validação do professor.

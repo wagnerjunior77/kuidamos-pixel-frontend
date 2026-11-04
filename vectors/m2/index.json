@@ -1,0 +1,86 @@
+{
+  "cases": [
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 3,
+      "input_valid": 1,
+      "name": "01_minimo_1x1",
+      "output_consumed": 1,
+      "output_registered": 1,
+      "seed": 101
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 18,
+      "input_valid": 16,
+      "name": "02_primarias_4x4",
+      "output_consumed": 16,
+      "output_registered": 16,
+      "seed": 102
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 66,
+      "input_valid": 64,
+      "name": "03_centro_f12_t0",
+      "output_consumed": 8,
+      "output_registered": 8,
+      "seed": 103
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 66,
+      "input_valid": 64,
+      "name": "04_borda_f21_t255",
+      "output_consumed": 8,
+      "output_registered": 8,
+      "seed": 104
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 22,
+      "input_valid": 15,
+      "name": "05_impar_f22_t128_bolhas",
+      "output_consumed": 2,
+      "output_registered": 2,
+      "seed": 105
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 258,
+      "input_valid": 256,
+      "name": "06_aleatorio_16x16",
+      "output_consumed": 256,
+      "output_registered": 256,
+      "seed": 606
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 34,
+      "input_valid": 32,
+      "name": "07_config_e_quadros_consecutivos",
+      "output_consumed": 32,
+      "output_registered": 32,
+      "seed": 107
+    },
+    {
+      "cfg_error_pulses": 0,
+      "cycles": 35,
+      "input_valid": 32,
+      "name": "08_reset_e_recuperacao",
+      "output_consumed": 18,
+      "output_registered": 19,
+      "seed": 109
+    },
+    {
+      "cfg_error_pulses": 2,
+      "cycles": 20,
+      "input_valid": 18,
+      "name": "09_invalidos_e_recuperacao",
+      "output_consumed": 1,
+      "output_registered": 1,
+      "seed": 111
+    }
+  ],
+  "format_version": 1
+}
