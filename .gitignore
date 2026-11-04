@@ -65,6 +65,8 @@ work/
 build/
 outputs/
 results/
+# Fotografia local usada no experimento; não é um vetor versionado.
+/docs/assets/input/carro.jpeg
 *.ddc
 *.svf
 *.db
