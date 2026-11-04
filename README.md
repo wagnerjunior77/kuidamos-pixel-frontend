@@ -26,6 +26,12 @@ RGB888 → Grayscale → Crop → Resize nearest-neighbor → Threshold → saí
 
 O IP não inclui câmera ou sensor, decodificação de vídeo, protocolos de rede, ISP, framebuffer completo, inferência de IA ou integração obrigatória com os grupos 6A e 6B. O Golden Model usa matrizes por quadro no computador de teste; isso não implica framebuffer no IP.
 
+## Experimento com imagem real
+
+O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação entre a saída em tons de cinza e cinco limiares. A imagem de origem foi reduzida externamente para respeitar o limite de entrada V1. O [relatório do experimento](docs/experimentos/analise_preprocessamento_imagens.md) apresenta parâmetros, imagens e resultados; essa demonstração não valida o RTL nem o desempenho de modelos de IA.
+
+![Comparação das etapas e dos cinco limiares aplicados à imagem de estacionamento](docs/experimentos/estacionamento/comparativo_thresholds.png)
+
 ## Marcos e status
 
 | Marco | Entrega | Status |
@@ -43,7 +49,7 @@ O IP não inclui câmera ou sensor, decodificação de vídeo, protocolos de red
 | M10 | Implementação física | Não executado |
 | M11 | Documentação final | Não iniciado |
 
-Na última regressão registrada, **29 testes Python passaram** e os **28 arquivos de referência M2 foram reproduzidos byte a byte**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md) e [M2](docs/evidencias/M2_vetores.md). VCS, síntese, DFT e físico ainda não foram executados. A referência inicial de 100 MHz (10 ns) é uma restrição de análise, não uma garantia de fechamento de timing. PDK, bibliotecas, versões e licenças do ambiente CIExpert ainda precisam ser identificados.
+Na última regressão registrada, **32 testes Python passaram** e os **28 arquivos de referência M2 foram reproduzidos byte a byte**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md) e de [M2](docs/evidencias/M2_vetores.md). VCS, síntese, DFT e físico ainda não foram executados. A referência inicial de 100 MHz (10 ns) é uma restrição de análise, não uma garantia de fechamento de timing. PDK, bibliotecas, versões e licenças do ambiente CIExpert ainda precisam ser identificados.
 
 ## Estrutura atual
 
@@ -56,6 +62,7 @@ Na última regressão registrada, **29 testes Python passaram** e os **28 arquiv
 │   ├── DECISOES_E_PENDENCIAS.md
 │   ├── plano_de_execucao.md
 │   ├── evidencias/             # resultados de M1 e M2
+│   ├── experimentos/           # relatório e imagens do experimento real
 │   ├── imagens/m1/             # demonstração visual sintética
 │   └── referencias/            # documento oficial
 ├── model/                       # Golden Model, geradores e testes Python

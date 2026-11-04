@@ -39,7 +39,7 @@ A entrada é convertida para RGB888 e deve ter entre 1 e 2047 pixels por eixo. O
 Para imagem externa de qualquer resolução, incluindo maiores que 2047 por eixo, há um fluxo de teste dedicado:
 
 ```text
-python -X utf8 -m model.real_image_demo --input docs/assets/input/carro.jpeg --output-dir outputs/real_image_test_novo
+python -X utf8 -m model.real_image_demo --input docs/experimentos/estacionamento/carro.jpeg --output-dir outputs/real_image_test_novo
 ```
 
 O arquivo indicado deve existir localmente. Se exceder o limite V1, o script prepara externamente uma imagem RGB proporcional com Pillow/Lanczos antes de chamar o modelo; essa preparação não faz parte do IP nem substitui o resize nearest-neighbor do pipeline. `00_original_rgb.png` preserva a resolução da imagem RGB de origem, `01_original_rgb.png` é a entrada preparada efetivamente processada pelo modelo, e os arquivos `02` a `05` mostram as etapas. `06_comparativo.png` reúne as etapas, com imagens reduzidas apenas para apresentação; `resultado.json` registra parâmetros e dimensões. O script não sobrescreve arquivos existentes. Os resultados e as limitações do teste com a imagem local estão em `docs/evidencias/M1_imagem_real.md`.
@@ -47,7 +47,7 @@ O arquivo indicado deve existir localmente. Se exceder o limite V1, o script pre
 Para comparar a saída sem threshold com os limiares 64, 96, 128, 160 e 192, use um diretório novo:
 
 ```text
-python -X utf8 -m model.threshold_sweep --input docs/assets/input/carro.jpeg --output-dir outputs/real_image_threshold_sweep_novo
+python -X utf8 -m model.threshold_sweep --input docs/experimentos/estacionamento/carro.jpeg --output-dir outputs/real_image_threshold_sweep_novo
 ```
 
 O script usa os mesmos parâmetros do fluxo externo, gera PNGs separados e `comparativo_thresholds.png`, verifica cada saída contra o pixel após resize e registra as contagens em `sweep_result.json`. A montagem é ilustrativa; os PNGs individuais mantêm as dimensões e valores dos resultados do modelo.
