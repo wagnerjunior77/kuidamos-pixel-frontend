@@ -138,3 +138,9 @@ Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde,
 ## Progresso M2 — 2026-11-04
 
 Vetores funcionais e temporais gerados por `model/m2_vectors.py`, com valores e marcadores de quadro do Golden Model e associação independente às coordenadas de entrada; nove casos em `vectors/m2/`. A convenção por borda, inclusive saída pós-borda, transferência na borda seguinte e cancelamento pelo reset, está descrita em `docs/evidencias/M2_vetores.md` sem alteração da especificação V1. A regressão local registrou 29 testes Python aprovados e a comparação de 28 arquivos gerados idênticos. A integração dos vetores ao futuro testbench VCS, o RTL e as ferramentas Synopsys permanecem não executados. A restrição dos fatores de resize continua sujeita à validação do professor.
+
+## Teste complementar com imagem real — 2026-11-04
+
+O Golden Model foi executado com uma imagem JPEG local, após redução proporcional externa de 2268×4032 para 1151×2047 para respeitar o limite V1. Parâmetros, resultados e distinção entre preparação externa e resize do modelo constam em `docs/evidencias/M1_imagem_real.md`. A regressão Python registrou 31 testes aprovados; RTL e ferramentas EDA não foram executados.
+
+Uma análise complementar comparou a saída sem threshold com os limiares 64, 96, 128, 160 e 192; as contagens e verificações estão em `docs/evidencias/M1_imagem_real.md`. A regressão registrou 32 testes aprovados; as imagens permanecem locais em `outputs/`.

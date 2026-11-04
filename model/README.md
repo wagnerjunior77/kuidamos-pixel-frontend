@@ -36,6 +36,22 @@ python -X utf8 -m model.visual_demo --input CAMINHO_DA_IMAGEM --output-dir outpu
 
 A entrada é convertida para RGB888 e deve ter entre 1 e 2047 pixels por eixo. O script escolhe uma ROI central retirando `floor(N/8)` pixels de cada borda, usa fator 2 nos eixos cuja ROI tenha pelo menos dois pixels e aplica `T=128`. Cada etapa é obtida por uma chamada ao Golden Model com configuração apropriada. O script compara os arrays a cálculos numéricos das equações, grava os PNGs e os relê para comparar dimensão e cada valor de pixel. A saída em `outputs/` é ignorada pelo Git. Arquivos de mesmo nome não são sobrescritos; use outro diretório para uma nova execução. A análise visual complementa os testes numéricos e não verifica o futuro RTL.
 
+Para imagem externa de qualquer resolução, incluindo maiores que 2047 por eixo, há um fluxo de teste dedicado:
+
+```text
+python -X utf8 -m model.real_image_demo --input docs/assets/input/carro.jpeg --output-dir outputs/real_image_test_novo
+```
+
+O arquivo indicado deve existir localmente. Se exceder o limite V1, o script prepara externamente uma imagem RGB proporcional com Pillow/Lanczos antes de chamar o modelo; essa preparação não faz parte do IP nem substitui o resize nearest-neighbor do pipeline. `00_original_rgb.png` preserva a resolução da imagem RGB de origem, `01_original_rgb.png` é a entrada preparada efetivamente processada pelo modelo, e os arquivos `02` a `05` mostram as etapas. `06_comparativo.png` reúne as etapas, com imagens reduzidas apenas para apresentação; `resultado.json` registra parâmetros e dimensões. O script não sobrescreve arquivos existentes. Os resultados e as limitações do teste com a imagem local estão em `docs/evidencias/M1_imagem_real.md`.
+
+Para comparar a saída sem threshold com os limiares 64, 96, 128, 160 e 192, use um diretório novo:
+
+```text
+python -X utf8 -m model.threshold_sweep --input docs/assets/input/carro.jpeg --output-dir outputs/real_image_threshold_sweep_novo
+```
+
+O script usa os mesmos parâmetros do fluxo externo, gera PNGs separados e `comparativo_thresholds.png`, verifica cada saída contra o pixel após resize e registra as contagens em `sweep_result.json`. A montagem é ilustrativa; os PNGs individuais mantêm as dimensões e valores dos resultados do modelo.
+
 ## API
 
 ```python
