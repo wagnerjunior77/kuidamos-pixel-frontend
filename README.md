@@ -39,10 +39,10 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M0 | Especificação | Concluído internamente; resize sujeito à validação do professor |
 | M1 | Golden Model Python | Implementação inicial e testes executados |
 | M2 | Vetores funcionais e temporais | Validados localmente; revisão de Thiago pendente |
-| M3 | RTL pass-through e grayscale | Não iniciado |
-| M4 | RTL crop | Não iniciado |
-| M5 | RTL resize nearest-neighbor | Não iniciado |
-| M6 | Threshold e integração | Não iniciado |
+| M3 | RTL pass-through e grayscale | RTL implementado em `rtl/`; VCS não executado |
+| M4 | RTL crop | RTL implementado em `rtl/`; VCS não executado |
+| M5 | RTL resize nearest-neighbor | RTL implementado em `rtl/`; VCS não executado |
+| M6 | Threshold e integração | RTL implementado em `rtl/`; VCS não executado |
 | M7 | Testbench, scoreboard, SVA e regressão | Não iniciado |
 | M8 | Síntese e análise de timing | Não executado |
 | M9 | DFT e scan | Não executado |
@@ -66,6 +66,7 @@ Na última regressão registrada, **32 testes Python passaram** e os **28 arquiv
 │   ├── imagens/m1/             # demonstração visual sintética
 │   └── referencias/            # documento oficial
 ├── model/                       # Golden Model, geradores e testes Python
+├── rtl/                         # Módulos RTL SystemVerilog sintetizáveis (M3–M6)
 ├── vectors/m2/                  # referências funcionais e temporais
 ├── .gitattributes
 └── .gitignore

@@ -144,3 +144,7 @@ Vetores funcionais e temporais gerados por `model/m2_vectors.py`, com valores e 
 O Golden Model foi executado com uma imagem JPEG local, após redução proporcional externa de 2268×4032 para 1151×2047 para respeitar o limite V1. Parâmetros, resultados e distinção entre preparação externa e resize do modelo constam em `docs/evidencias/M1_imagem_real.md`. A regressão Python registrou 31 testes aprovados; RTL e ferramentas EDA não foram executados.
 
 Uma análise complementar comparou a saída sem threshold com os limiares 64, 96, 128, 160 e 192; as contagens e verificações estão em `docs/evidencias/M1_imagem_real.md`. A regressão registrou 32 testes aprovados; as imagens permanecem locais em `outputs/`.
+
+## Implementação RTL M3–M6 — 2026-11-05
+
+Os módulos RTL sintetizáveis em SystemVerilog (`rtl/grayscale_core.sv`, `rtl/crop_core.sv`, `rtl/resize_nn_core.sv`, `rtl/threshold_core.sv` e o topo `rtl/kuidamos_pixel_frontend.sv`) foram implementados conforme `docs/spec_v1.md`, com captura e validação atômica de configuração em `in_sof`, pulso `cfg_error`, contadores de coordenadas de 11 bits, aritmética de 12/16 bits sem overflow, regeneração dos marcadores `out_sof/sol/eol/eof` e registro de saída com 1 ciclo de latência. Testbench SystemVerilog (`tb/`), compilação/simulação em VCS e demais ferramentas Synopsys **NÃO EXECUTADOS**.

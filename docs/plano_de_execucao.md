@@ -6,6 +6,8 @@ Atualização em 2026-11-03: **M0 concluído internamente**, por decisão explí
 
 Atualização em 2026-11-04: **M2 implementado e validado localmente** com nove cenários e 29 testes Python na regressão completa. Os arquivos, formato e limitações estão em `docs/evidencias/M2_vetores.md`. A integração com o futuro testbench e VCS ainda não foi executada; M3 não foi iniciado.
 
+Atualização em 2026-11-05: **RTL de M3–M6 implementado em `rtl/`** (`grayscale_core.sv`, `crop_core.sv`, `resize_nn_core.sv`, `threshold_core.sv`, `kuidamos_pixel_frontend.sv`). Testbench SystemVerilog (`tb/`), simulação em VCS e ferramentas Synopsys ainda **NÃO EXECUTADOS**.
+
 ## Dependências e evidências
 
 `M0 especificação → M1 modelo → M2 vetores → M3 passagem/grayscale → M4 crop → M5 resize → M6 threshold/integração → M7 regressão → M8 síntese → M9 DFT → M10 físico → M11 documentação`. Scoreboard e assertions crescem desde M3; M7 consolida. Diagnóstico de ferramentas pode ocorrer cedo, sem pressupor licenças ou bibliotecas. Cada marco registra versões, comando, data, configurações, código de saída, logs e limitações; dados protegidos ficam fora do versionamento.
@@ -19,7 +21,7 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 | M0 | Wagner (DFT), com revisão de Thiago | Concluído internamente |
 | M1 | Wagner (DFT), com revisão de Thiago | Implementação inicial concluída |
 | M2 | Wagner, com revisão de Thiago | Implementado e validado localmente; revisão de Thiago pendente |
-| M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | A realizar |
+| M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | RTL implementado em `rtl/`; verificação em VCS pendente |
 | M7 | Thiago (RTL), com apoio de Wagner | A realizar |
 | M8 | Wagner (DFT), com apoio de Thiago | A realizar |
 | M9 | Wagner (DFT) | A realizar |
