@@ -103,8 +103,8 @@ module kuidamos_pixel_frontend (
             sof_roi_h   = cfg_in_height;
         end
 
-        sof_out_w       = cfg_resize_x2 ? {1'b0, sof_roi_w[10:1]} : sof_roi_w;
-        sof_out_h       = cfg_resize_y2 ? {1'b0, sof_roi_h[10:1]} : sof_roi_h;
+        sof_out_w       = cfg_resize_x2 ? (sof_roi_w >> 1) : sof_roi_w;
+        sof_out_h       = cfg_resize_y2 ? (sof_roi_h >> 1) : sof_roi_h;
         sof_out_dims_ok = (sof_out_w != 11'd0) && (sof_out_h != 11'd0);
 
         sof_cfg_valid   = sof_in_dims_ok && sof_crop_ok && sof_out_dims_ok;

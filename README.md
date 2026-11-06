@@ -39,11 +39,11 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M0 | Especificação | Concluído internamente; resize sujeito à validação do professor |
 | M1 | Golden Model Python | Implementação inicial e testes executados |
 | M2 | Vetores funcionais e temporais | Validados localmente; revisão de Thiago pendente |
-| M3 | RTL pass-through e grayscale | RTL implementado em `rtl/`; VCS não executado |
-| M4 | RTL crop | RTL implementado em `rtl/`; VCS não executado |
-| M5 | RTL resize nearest-neighbor | RTL implementado em `rtl/`; VCS não executado |
-| M6 | Threshold e integração | RTL implementado em `rtl/`; VCS não executado |
-| M7 | Testbench, scoreboard, SVA e regressão | Não iniciado |
+| M3 | RTL pass-through e grayscale | RTL e TB implementados; pré-validados localmente; VCS não executado |
+| M4 | RTL crop | RTL e TB implementados; pré-validados localmente; VCS não executado |
+| M5 | RTL resize nearest-neighbor | RTL e TB implementados; pré-validados localmente; VCS não executado |
+| M6 | Threshold e integração | RTL e TB implementados; pré-validados localmente; VCS não executado |
+| M7 | Testbench, scoreboard, SVA e regressão | Implementados em `tb/` e pré-validados localmente; VCS não executado |
 | M8 | Síntese e análise de timing | Não executado |
 | M9 | DFT e scan | Não executado |
 | M10 | Implementação física | Não executado |
@@ -67,6 +67,8 @@ Na última regressão registrada, **32 testes Python passaram** e os **28 arquiv
 │   └── referencias/            # documento oficial
 ├── model/                       # Golden Model, geradores e testes Python
 ├── rtl/                         # Módulos RTL SystemVerilog sintetizáveis (M3–M6)
+├── scripts/verification/        # Script de compilação e regressão Synopsys VCS
+├── tb/                          # Testbench, Scoreboard e SVA SystemVerilog (M3–M7)
 ├── vectors/m2/                  # referências funcionais e temporais
 ├── .gitattributes
 └── .gitignore

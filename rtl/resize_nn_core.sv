@@ -40,19 +40,19 @@ module resize_nn_core (
     logic        is_last_y;
 
     always_comb begin
-        out_width  = resize_x2 ? {1'b0, roi_width[10:1]}  : roi_width;
-        out_height = resize_y2 ? {1'b0, roi_height[10:1]} : roi_height;
+        out_width  = resize_x2 ? (roi_width  >> 1) : roi_width;
+        out_height = resize_y2 ? (roi_height >> 1) : roi_height;
 
         limit_x_12 = {out_width,  1'b0};
         limit_y_12 = {out_height, 1'b0};
 
-        sel_x      = !resize_x2 || ((u[0] == 1'b0) && ({1'b0, u} < limit_x_12));
-        sel_y      = !resize_y2 || ((v[0] == 1'b0) && ({1'b0, v} < limit_y_12));
+        sel_x      = !resize_x2 || (((u & 11'd1) == 11'd0) && ({1'b0, u} < limit_x_12));
+        sel_y      = !resize_y2 || (((v & 11'd1) == 11'd0) && ({1'b0, v} < limit_y_12));
 
         sel_pixel  = in_roi && sel_x && sel_y && (out_width != 11'd0) && (out_height != 11'd0);
 
-        x_out      = sel_pixel ? (resize_x2 ? {1'b0, u[10:1]} : u) : 11'd0;
-        y_out      = sel_pixel ? (resize_y2 ? {1'b0, v[10:1]} : v) : 11'd0;
+        x_out      = sel_pixel ? (resize_x2 ? (u >> 1) : u) : 11'd0;
+        y_out      = sel_pixel ? (resize_y2 ? (v >> 1) : v) : 11'd0;
 
         is_first_x = (x_out == 11'd0);
         is_first_y = (y_out == 11'd0);

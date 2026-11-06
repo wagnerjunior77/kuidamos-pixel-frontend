@@ -8,6 +8,8 @@ Atualização em 2026-11-04: **M2 implementado e validado localmente** com nove 
 
 Atualização em 2026-11-05: **RTL de M3–M6 implementado em `rtl/`** (`grayscale_core.sv`, `crop_core.sv`, `resize_nn_core.sv`, `threshold_core.sv`, `kuidamos_pixel_frontend.sv`). Testbench SystemVerilog (`tb/`), simulação em VCS e ferramentas Synopsys ainda **NÃO EXECUTADOS**.
 
+Atualização em 2026-11-06: **Testbench, Scoreboard, SVA e script VCS de M3–M7 implementados em `tb/` e `scripts/verification/run_vcs.sh`**. Em pré-validação local com Icarus Verilog 13.0 (`-DNO_CONCURRENT_SVA`), todos os 15 cenários (9 casos M2 + 6 casos dirigidos M7, totalizando 2.618 ciclos) passaram com 0 divergências de Scoreboard e 0 erros nos monitores procedurais de SVA, além de testes com injeção de falhas confirmando retorno diferente de zero (`$fatal(1, ...)`), detecção de vetores vazios/truncados/com linhas extras e detecção de truncamento de 11 bits nas somas de validação X/Y. As assertions concorrentes e a execução oficial no **Synopsys VCS** (no servidor CIExpert) permanecem **NÃO EXECUTADAS**.
+
 ## Dependências e evidências
 
 `M0 especificação → M1 modelo → M2 vetores → M3 passagem/grayscale → M4 crop → M5 resize → M6 threshold/integração → M7 regressão → M8 síntese → M9 DFT → M10 físico → M11 documentação`. Scoreboard e assertions crescem desde M3; M7 consolida. Diagnóstico de ferramentas pode ocorrer cedo, sem pressupor licenças ou bibliotecas. Cada marco registra versões, comando, data, configurações, código de saída, logs e limitações; dados protegidos ficam fora do versionamento.
@@ -21,8 +23,8 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 | M0 | Wagner (DFT), com revisão de Thiago | Concluído internamente |
 | M1 | Wagner (DFT), com revisão de Thiago | Implementação inicial concluída |
 | M2 | Wagner, com revisão de Thiago | Implementado e validado localmente; revisão de Thiago pendente |
-| M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | RTL implementado em `rtl/`; verificação em VCS pendente |
-| M7 | Thiago (RTL), com apoio de Wagner | A realizar |
+| M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | RTL implementado em `rtl/` e pré-validado localmente; execução em VCS pendente |
+| M7 | Thiago (RTL), com apoio de Wagner | TB/Scoreboard/SVA implementados em `tb/` e pré-validados localmente; execução em VCS pendente |
 | M8 | Wagner (DFT), com apoio de Thiago | A realizar |
 | M9 | Wagner (DFT) | A realizar |
 | M10 | Wagner e Thiago | A realizar |

@@ -25,7 +25,7 @@ module grayscale_core (
         prod_g  = 16'd150 * {8'd0, pixel_g};
         prod_b  = 16'd29  * {8'd0, pixel_b};
         sum_rgb = prod_r + prod_g + prod_b;
-        y_gray  = sum_rgb[15:8];
+        y_gray  = 8'(sum_rgb >> 8);
     end
 
 endmodule
