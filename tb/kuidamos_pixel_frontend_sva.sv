@@ -231,14 +231,38 @@ module kuidamos_pixel_frontend_sva (
         frame_active_q |-> ((x_q < cfg_in_width_q) && (y_q < cfg_in_height_q));
     endproperty
 
-    a_reset_clears_all:      assert property (p_reset_clears_all)      else $error("[SVA] a_reset_clears_all failed");
-    a_invalid_out_zero:      assert property (p_invalid_out_zero)      else $error("[SVA] a_invalid_out_zero failed");
-    a_sof_implies_sol:       assert property (p_sof_implies_sol)       else $error("[SVA] a_sof_implies_sol failed");
-    a_eof_implies_eol:       assert property (p_eof_implies_eol)       else $error("[SVA] a_eof_implies_eol failed");
-    a_cfg_error_exclusivity: assert property (p_cfg_error_exclusivity) else $error("[SVA] a_cfg_error_exclusivity failed");
-    a_bubble_freeze:         assert property (p_bubble_freeze)         else $error("[SVA] a_bubble_freeze failed");
-    a_cfg_stable_in_frame:   assert property (p_cfg_stable_in_frame)   else $error("[SVA] a_cfg_stable_in_frame failed");
-    a_coord_bounds:          assert property (p_coord_bounds)          else $error("[SVA] a_coord_bounds failed");
+    a_reset_clears_all: assert property (p_reset_clears_all) else begin
+        $error("[SVA] a_reset_clears_all failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_invalid_out_zero: assert property (p_invalid_out_zero) else begin
+        $error("[SVA] a_invalid_out_zero failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_sof_implies_sol: assert property (p_sof_implies_sol) else begin
+        $error("[SVA] a_sof_implies_sol failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_eof_implies_eol: assert property (p_eof_implies_eol) else begin
+        $error("[SVA] a_eof_implies_eol failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_cfg_error_exclusivity: assert property (p_cfg_error_exclusivity) else begin
+        $error("[SVA] a_cfg_error_exclusivity failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_bubble_freeze: assert property (p_bubble_freeze) else begin
+        $error("[SVA] a_bubble_freeze failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_cfg_stable_in_frame: assert property (p_cfg_stable_in_frame) else begin
+        $error("[SVA] a_cfg_stable_in_frame failed");
+        sva_error_count <= sva_error_count + 1;
+    end
+    a_coord_bounds: assert property (p_coord_bounds) else begin
+        $error("[SVA] a_coord_bounds failed");
+        sva_error_count <= sva_error_count + 1;
+    end
 `endif
 
 endmodule

@@ -62,4 +62,4 @@ iverilog -g2012 -DNO_CONCURRENT_SVA -f tb/filelist.f -s tb_kuidamos_pixel_fronte
 vvp outputs/local_sim/simv_iverilog
 ```
 
-> Nota: a execução local com `-DNO_CONCURRENT_SVA` valida os monitores procedurais equivalentes; as assertions concorrentes (`assert property`) e o fluxo oficial de simulação ainda precisam de validação no **Synopsys VCS** no ambiente CIExpert.
+> Nota: a execução local com `-DNO_CONCURRENT_SVA` valida os monitores procedurais equivalentes; as assertions concorrentes (`assert property`) e a regressão completa foram executadas e validadas no **Synopsys VCS `X-2025.06-SP2_Full64`** (`cases_passed=15/15`, `cycles_checked=2618`, `scoreboard_mismatches=0`, `sva_errors=0`). Consulte a evidência completa em [`../docs/evidencias/M3_M7_verificacao_vcs.md`](../docs/evidencias/M3_M7_verificacao_vcs.md).

@@ -39,17 +39,17 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M0 | Especificação | Concluído internamente; resize sujeito à validação do professor |
 | M1 | Golden Model Python | Implementação inicial e testes executados |
 | M2 | Vetores funcionais e temporais | Validados localmente; revisão de Thiago pendente |
-| M3 | RTL pass-through e grayscale | RTL e TB implementados; pré-validados localmente; VCS não executado |
-| M4 | RTL crop | RTL e TB implementados; pré-validados localmente; VCS não executado |
-| M5 | RTL resize nearest-neighbor | RTL e TB implementados; pré-validados localmente; VCS não executado |
-| M6 | Threshold e integração | RTL e TB implementados; pré-validados localmente; VCS não executado |
-| M7 | Testbench, scoreboard, SVA e regressão | Implementados em `tb/` e pré-validados localmente; VCS não executado |
+| M3 | RTL pass-through e grayscale | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M4 | RTL crop | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M5 | RTL resize nearest-neighbor | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M6 | Threshold e integração | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M7 | Testbench, scoreboard, SVA e regressão | Validado no Synopsys VCS (15/15 cenários, 2.618 ciclos, 0 falhas) |
 | M8 | Síntese e análise de timing | Não executado |
 | M9 | DFT e scan | Não executado |
 | M10 | Implementação física | Não executado |
 | M11 | Documentação final | Não iniciado |
 
-Na última regressão registrada, **32 testes Python passaram** e os **28 arquivos de referência M2 foram reproduzidos byte a byte**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md) e de [M2](docs/evidencias/M2_vetores.md). VCS, síntese, DFT e físico ainda não foram executados. A referência inicial de 100 MHz (10 ns) é uma restrição de análise, não uma garantia de fechamento de timing. PDK, bibliotecas, versões e licenças do ambiente CIExpert ainda precisam ser identificados.
+Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte** e a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 divergências no Scoreboard e 0 violações de SVA)**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md) e da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md). Síntese (Design Compiler), DFT (TestMAX) e implementação física (Fusion Compiler) ainda não foram executados. A referência inicial de 100 MHz (10 ns) é uma restrição de análise, não uma garantia de fechamento de timing. PDK e bibliotecas para síntese/físico ainda precisam ser identificados.
 
 ## Estrutura atual
 
