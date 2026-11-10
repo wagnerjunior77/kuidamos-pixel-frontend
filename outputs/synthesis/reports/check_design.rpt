@@ -1,0 +1,72 @@
+ 
+****************************************
+check_design summary:
+Version:     X-2025.06-SP2
+Date:        Mon Nov  9 00:29:49 2026
+****************************************
+
+                   Name                                            Total
+--------------------------------------------------------------------------------
+Inputs/Outputs                                                      2
+    Unconnected ports (LINT-28)                                     2
+
+Cells                                                               6
+    Cells do not drive (LINT-1)                                     6
+
+Nets                                                               44
+    Unloaded nets (LINT-2)                                         44
+--------------------------------------------------------------------------------
+
+Warning: In design 'kuidamos_pixel_frontend', cell 'B_21' does not drive any nets. (LINT-1)
+Warning: In design 'kuidamos_pixel_frontend', cell 'C1042' does not drive any nets. (LINT-1)
+Warning: In design 'kuidamos_pixel_frontend', cell 'C1043' does not drive any nets. (LINT-1)
+Warning: In design 'crop_core', cell 'B_4' does not drive any nets. (LINT-1)
+Warning: In design 'crop_core', cell 'B_5' does not drive any nets. (LINT-1)
+Warning: In design 'threshold_core', cell 'B_2' does not drive any nets. (LINT-1)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[0]' driven by pin 'u_resize_nn_core/y_out[0]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[1]' driven by pin 'u_resize_nn_core/y_out[1]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[2]' driven by pin 'u_resize_nn_core/y_out[2]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[3]' driven by pin 'u_resize_nn_core/y_out[3]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[4]' driven by pin 'u_resize_nn_core/y_out[4]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[5]' driven by pin 'u_resize_nn_core/y_out[5]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[6]' driven by pin 'u_resize_nn_core/y_out[6]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[7]' driven by pin 'u_resize_nn_core/y_out[7]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[8]' driven by pin 'u_resize_nn_core/y_out[8]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[9]' driven by pin 'u_resize_nn_core/y_out[9]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'y_out[10]' driven by pin 'u_resize_nn_core/y_out[10]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[0]' driven by pin 'u_resize_nn_core/x_out[0]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[1]' driven by pin 'u_resize_nn_core/x_out[1]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[2]' driven by pin 'u_resize_nn_core/x_out[2]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[3]' driven by pin 'u_resize_nn_core/x_out[3]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[4]' driven by pin 'u_resize_nn_core/x_out[4]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[5]' driven by pin 'u_resize_nn_core/x_out[5]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[6]' driven by pin 'u_resize_nn_core/x_out[6]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[7]' driven by pin 'u_resize_nn_core/x_out[7]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[8]' driven by pin 'u_resize_nn_core/x_out[8]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[9]' driven by pin 'u_resize_nn_core/x_out[9]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'x_out[10]' driven by pin 'u_resize_nn_core/x_out[10]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[0]' driven by pin 'u_resize_nn_core/out_height[0]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[1]' driven by pin 'u_resize_nn_core/out_height[1]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[2]' driven by pin 'u_resize_nn_core/out_height[2]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[3]' driven by pin 'u_resize_nn_core/out_height[3]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[4]' driven by pin 'u_resize_nn_core/out_height[4]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[5]' driven by pin 'u_resize_nn_core/out_height[5]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[6]' driven by pin 'u_resize_nn_core/out_height[6]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[7]' driven by pin 'u_resize_nn_core/out_height[7]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[8]' driven by pin 'u_resize_nn_core/out_height[8]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[9]' driven by pin 'u_resize_nn_core/out_height[9]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_height[10]' driven by pin 'u_resize_nn_core/out_height[10]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[0]' driven by pin 'u_resize_nn_core/out_width[0]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[1]' driven by pin 'u_resize_nn_core/out_width[1]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[2]' driven by pin 'u_resize_nn_core/out_width[2]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[3]' driven by pin 'u_resize_nn_core/out_width[3]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[4]' driven by pin 'u_resize_nn_core/out_width[4]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[5]' driven by pin 'u_resize_nn_core/out_width[5]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[6]' driven by pin 'u_resize_nn_core/out_width[6]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[7]' driven by pin 'u_resize_nn_core/out_width[7]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[8]' driven by pin 'u_resize_nn_core/out_width[8]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[9]' driven by pin 'u_resize_nn_core/out_width[9]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', net 'out_width[10]' driven by pin 'u_resize_nn_core/out_width[10]' has no loads. (LINT-2)
+Warning: In design 'kuidamos_pixel_frontend', port 'in_sol' is not connected to any nets. (LINT-28)
+Warning: In design 'kuidamos_pixel_frontend', port 'in_eol' is not connected to any nets. (LINT-28)
+1

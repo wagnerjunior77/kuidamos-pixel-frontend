@@ -1,0 +1,20 @@
+ 
+****************************************
+Report : clocks
+Design : kuidamos_pixel_frontend
+Version: X-2025.06-SP2
+Date   : Mon Nov  9 00:29:50 2026
+****************************************
+
+Attributes:
+    d - dont_touch_network
+    f - fix_hold
+    p - propagated_clock
+    G - generated_clock
+    g - lib_generated_clock
+
+Clock          Period   Waveform            Attrs     Sources
+--------------------------------------------------------------------------------
+clk             10.00   {0 5}                         {clk}
+--------------------------------------------------------------------------------
+1

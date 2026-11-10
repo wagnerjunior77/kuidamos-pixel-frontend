@@ -1,0 +1,50 @@
+Command: vcs -full64 -sverilog -timescale=1ns/1ps -debug_access+all -Mdir=outputs/vcs/csrc \
+-f tb/filelist.f -top tb_kuidamos_pixel_frontend -o outputs/vcs/simv -l outputs/vcs/vcs_compile.log \
+
+                         Chronologic VCS (TM)
+       Version X-2025.06-SP2_Full64 -- Sun Nov  8 09:05:05 2026
+
+                    Copyright (c) 1991 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Parsing design file 'rtl/grayscale_core.sv'
+Parsing design file 'rtl/crop_core.sv'
+Parsing design file 'rtl/resize_nn_core.sv'
+Parsing design file 'rtl/threshold_core.sv'
+Parsing design file 'rtl/kuidamos_pixel_frontend.sv'
+Parsing design file 'tb/kuidamos_pixel_frontend_sva.sv'
+Parsing design file 'tb/tb_kuidamos_pixel_frontend.sv'
+Top Level Modules:
+       tb_kuidamos_pixel_frontend
+TimeScale is 1 ns / 1 ps
+Starting vcs inline pass...
+1 module and 0 UDP read.
+recompiling module tb_kuidamos_pixel_frontend
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/vcs/simv \
+]; then chmod a-x /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/vcs/simv; \
+fi
+g++  -o /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/vcs/simv \
+-rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir -Wl,-rpath=/opt/synopsys/vcs/X-2025.06-SP2/linux64/lib \
+-L/opt/synopsys/vcs/X-2025.06-SP2/linux64/lib  -Wl,-rpath-link=./   objs/amcQw_d.o \
+_5537_archive_1.so   SIM_l.o       rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o \
+rmar_llvm_0_0.o            -lvirsim -lerrorinf -lsnpsmalloc -lvfs      -lvcsnew -ldistsimclient \
+-lsimprofile -luclinative /opt/synopsys/vcs/X-2025.06-SP2/linux64/lib/vcs_tls.o  \
+-Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive          /opt/synopsys/vcs/X-2025.06-SP2/linux64/lib/vcs_save_restore_new.o \
+-ldl  -lc -lm -lpthread -ldl 
+/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/vcs/simv up to date \
+
+CPU time: 1.690 seconds to compile + 1.198 seconds to elab + .658 seconds to link

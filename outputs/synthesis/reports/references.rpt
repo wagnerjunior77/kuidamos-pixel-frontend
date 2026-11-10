@@ -1,0 +1,148 @@
+ 
+****************************************
+Report : reference
+Design : kuidamos_pixel_frontend
+Version: X-2025.06-SP2
+Date   : Mon Nov  9 00:30:46 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1_RVT         saed32rvt_ss0p95v125c     2.033152      33    67.094019
+AND3X2_RVT         saed32rvt_ss0p95v125c     2.541440       1     2.541440
+AND4X1_RVT         saed32rvt_ss0p95v125c     2.541440       4    10.165760
+AO21X1_RVT         saed32rvt_ss0p95v125c     2.541440       2     5.082880
+AO22X1_RVT         saed32rvt_ss0p95v125c     2.541440     191   485.415042
+AO22X2_RVT         saed32rvt_ss0p95v125c     2.795584       2     5.591168
+AO221X1_RVT        saed32rvt_ss0p95v125c     3.049728       7    21.348095
+AO222X1_RVT        saed32rvt_ss0p95v125c     3.303872      14    46.254210
+AOI21X1_RVT        saed32rvt_ss0p95v125c     3.049728       3     9.149184
+AOI22X1_RVT        saed32rvt_ss0p95v125c     3.049728       2     6.099456
+DFFX1_RVT          saed32rvt_ss0p95v125c     6.607744     115   759.890585 n
+FADDX1_RVT         saed32rvt_ss0p95v125c     4.828736      19    91.745981 r
+HADDX1_RVT         saed32rvt_ss0p95v125c     3.303872       3     9.911616 r
+INVX0_RVT          saed32rvt_ss0p95v125c     1.270720      83   105.469760
+MUX21X1_RVT        saed32rvt_ss0p95v125c     3.303872       2     6.607744
+MUX41X1_RVT        saed32rvt_ss0p95v125c     5.591168       3    16.773504
+NAND2X0_RVT        saed32rvt_ss0p95v125c     1.524864      44    67.094014
+NAND3X0_RVT        saed32rvt_ss0p95v125c     1.779008      18    32.022145
+NAND4X0_RVT        saed32rvt_ss0p95v125c     2.033152       9    18.298369
+NBUFFX2_RVT        saed32rvt_ss0p95v125c     2.033152       8    16.265217
+NOR2X0_RVT         saed32rvt_ss0p95v125c     2.541440       2     5.082880
+NOR3X0_RVT         saed32rvt_ss0p95v125c     2.795584       4    11.182336
+NOR4X1_RVT         saed32rvt_ss0p95v125c     3.049728      10    30.497279
+OA21X1_RVT         saed32rvt_ss0p95v125c     2.541440       2     5.082880
+OA22X1_RVT         saed32rvt_ss0p95v125c     2.541440       8    20.331520
+OA221X1_RVT        saed32rvt_ss0p95v125c     3.049728      17    51.845375
+OAI21X1_RVT        saed32rvt_ss0p95v125c     3.049728       2     6.099456
+OAI221X1_RVT       saed32rvt_ss0p95v125c     3.558016       1     3.558016
+OAI222X1_RVT       saed32rvt_ss0p95v125c     3.812160       2     7.624320
+OR2X1_RVT          saed32rvt_ss0p95v125c     2.033152      17    34.563586
+OR3X1_RVT          saed32rvt_ss0p95v125c     2.541440       1     2.541440
+crop_core                       553.017345       1    553.017345  h
+grayscale_core                  479.061432       1    479.061432  h
+resize_nn_core                  471.182978       1    471.182978  h
+threshold_core                   58.961409       1     58.961409  h
+-----------------------------------------------------------------------------
+Total 35 references                                  3523.452439
+
+****************************************
+Design: crop_core 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1_RVT         saed32rvt_ss0p95v125c     2.033152      12    24.397825
+AND3X1_RVT         saed32rvt_ss0p95v125c     2.287296       2     4.574592
+AO22X1_RVT         saed32rvt_ss0p95v125c     2.541440      22    55.911680
+AO222X1_RVT        saed32rvt_ss0p95v125c     3.303872      24    79.292931
+FADDX1_RVT         saed32rvt_ss0p95v125c     4.828736      22   106.232188 r
+INVX0_RVT          saed32rvt_ss0p95v125c     1.270720      75    95.304000
+INVX2_RVT          saed32rvt_ss0p95v125c     1.524864       1     1.524864
+NAND2X0_RVT        saed32rvt_ss0p95v125c     1.524864      18    27.447551
+NAND3X0_RVT        saed32rvt_ss0p95v125c     1.779008       3     5.337024
+NBUFFX2_RVT        saed32rvt_ss0p95v125c     2.033152       1     2.033152
+NOR2X0_RVT         saed32rvt_ss0p95v125c     2.541440       4    10.165760
+OA22X1_RVT         saed32rvt_ss0p95v125c     2.541440      17    43.204480
+OA221X1_RVT        saed32rvt_ss0p95v125c     3.049728      16    48.795647
+OA222X1_RVT        saed32rvt_ss0p95v125c     3.303872      12    39.646465
+OR2X1_RVT          saed32rvt_ss0p95v125c     2.033152       2     4.066304
+OR3X1_RVT          saed32rvt_ss0p95v125c     2.541440       2     5.082880
+-----------------------------------------------------------------------------
+Total 16 references                                   553.017345
+
+****************************************
+Design: grayscale_core 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1_RVT         saed32rvt_ss0p95v125c     2.033152       2     4.066304
+AO21X1_RVT         saed32rvt_ss0p95v125c     2.541440       1     2.541440
+AO22X1_RVT         saed32rvt_ss0p95v125c     2.541440      13    33.038720
+AO222X1_RVT        saed32rvt_ss0p95v125c     3.303872       7    23.127105
+AOI222X1_RVT       saed32rvt_ss0p95v125c     3.812160       2     7.624320
+FADDX1_RVT         saed32rvt_ss0p95v125c     4.828736      58   280.066678 r
+HADDX1_RVT         saed32rvt_ss0p95v125c     3.303872       5    16.519361 r
+INVX0_RVT          saed32rvt_ss0p95v125c     1.270720      55    69.889600
+NAND2X0_RVT        saed32rvt_ss0p95v125c     1.524864      13    19.823231
+OA21X1_RVT         saed32rvt_ss0p95v125c     2.541440       3     7.624320
+OA22X1_RVT         saed32rvt_ss0p95v125c     2.541440       1     2.541440
+OAI222X1_RVT       saed32rvt_ss0p95v125c     3.812160       1     3.812160
+OR2X1_RVT          saed32rvt_ss0p95v125c     2.033152       2     4.066304
+XOR2X1_RVT         saed32rvt_ss0p95v125c     4.320448       1     4.320448
+-----------------------------------------------------------------------------
+Total 14 references                                   479.061432
+
+****************************************
+Design: resize_nn_core 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AND2X1_RVT         saed32rvt_ss0p95v125c     2.033152       8    16.265217
+AND4X1_RVT         saed32rvt_ss0p95v125c     2.541440       1     2.541440
+AO21X1_RVT         saed32rvt_ss0p95v125c     2.541440       2     5.082880
+AO22X1_RVT         saed32rvt_ss0p95v125c     2.541440      16    40.663040
+AO221X1_RVT        saed32rvt_ss0p95v125c     3.049728       6    18.298368
+AO222X1_RVT        saed32rvt_ss0p95v125c     3.303872      16    52.861954
+AOI22X1_RVT        saed32rvt_ss0p95v125c     3.049728       3     9.149184
+FADDX1_RVT         saed32rvt_ss0p95v125c     4.828736       4    19.314943 r
+HADDX1_RVT         saed32rvt_ss0p95v125c     3.303872      10    33.038721 r
+INVX0_RVT          saed32rvt_ss0p95v125c     1.270720      32    40.663040
+INVX2_RVT          saed32rvt_ss0p95v125c     1.524864       2     3.049728
+NAND2X0_RVT        saed32rvt_ss0p95v125c     1.524864      28    42.696191
+NAND3X0_RVT        saed32rvt_ss0p95v125c     1.779008      12    21.348096
+NAND4X0_RVT        saed32rvt_ss0p95v125c     2.033152       6    12.198913
+NOR3X0_RVT         saed32rvt_ss0p95v125c     2.795584       2     5.591168
+NOR4X1_RVT         saed32rvt_ss0p95v125c     3.049728      12    36.596735
+OA22X1_RVT         saed32rvt_ss0p95v125c     2.541440      26    66.077440
+OAI22X1_RVT        saed32rvt_ss0p95v125c     3.049728       8    24.397823
+OR2X1_RVT          saed32rvt_ss0p95v125c     2.033152       8    16.265217
+OR3X1_RVT          saed32rvt_ss0p95v125c     2.541440       2     5.082880
+-----------------------------------------------------------------------------
+Total 20 references                                   471.182978
+
+****************************************
+Design: threshold_core 
+****************************************
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+AO21X1_RVT         saed32rvt_ss0p95v125c     2.541440       8    20.331520
+AO22X1_RVT         saed32rvt_ss0p95v125c     2.541440       1     2.541440
+AO222X1_RVT        saed32rvt_ss0p95v125c     3.303872       5    16.519361
+AOI221X1_RVT       saed32rvt_ss0p95v125c     3.558016       1     3.558016
+INVX0_RVT          saed32rvt_ss0p95v125c     1.270720       9    11.436480
+OA21X1_RVT         saed32rvt_ss0p95v125c     2.541440       1     2.541440
+OR2X1_RVT          saed32rvt_ss0p95v125c     2.033152       1     2.033152
+-----------------------------------------------------------------------------
+Total 7 references                                     58.961409
+1

@@ -1,0 +1,496 @@
+Current time:       Mon Nov  9 00:29:47 2026
+Hostname:           ciexpert-rocky8
+CPU Model:          VirtualApple @ 2.50GHz
+CPU Details:        Cores = 6 : Sockets = 1 : Cache Size = 6144 KB : Freq = 2.50 GHz
+OS:                 Linux 7.0.0-42-generic
+RAM:                  7 GB (Free   4 GB)
+Swap:                 0 GB (Free   0 GB)
+Work Filesystem:    /Users/thigs mounted to lima-3b19af127b11fc77
+Tmp Filesystem:     / mounted to overlay
+Work Disk:          117870 GB (Free 15877 GB)
+Tmp Disk:           289 GB (Free 240 GB)
+# -----------------------------------------------------------------------------
+# Script: scripts/synthesis/dc_synth.tcl
+# Project: KUIDAMOS Pixel Front-End — Group 6C (Milestone M8)
+# Description:
+#   Reproducible logic synthesis and static timing/area/power analysis flow
+#   for Synopsys Design Compiler (dc_shell).
+#   All generated netlists, databases, and tool reports are written inside
+#   OUT_DIR (default: outputs/synthesis), outside Git tracking per AGENTS.md.
+# -----------------------------------------------------------------------------
+set TOP_MODULE "kuidamos_pixel_frontend"
+kuidamos_pixel_frontend
+if {[info exists ::env(REPO_ROOT)] && $::env(REPO_ROOT) ne ""} {
+    set REPO_ROOT $::env(REPO_ROOT)
+} else {
+    set REPO_ROOT [pwd]
+}
+/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend
+if {[info exists ::env(OUT_DIR)] && $::env(OUT_DIR) ne ""} {
+    set OUT_DIR $::env(OUT_DIR)
+} else {
+    set OUT_DIR "$REPO_ROOT/outputs/synthesis"
+}
+/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis
+if {[info exists ::env(TARGET_LIB)] && $::env(TARGET_LIB) ne ""} {
+    set TARGET_LIB $::env(TARGET_LIB)
+} else {
+    set TARGET_LIB "/opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db"
+}
+/opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db
+if {[info exists ::env(CLOCK_PERIOD_NS)] && $::env(CLOCK_PERIOD_NS) ne ""} {
+    set CLOCK_PERIOD_NS $::env(CLOCK_PERIOD_NS)
+} else {
+    set CLOCK_PERIOD_NS 10.0
+}
+10.0
+set RPT_DIR  "$OUT_DIR/reports"
+/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/reports
+set WORK_DIR "$OUT_DIR/work"
+/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/work
+file mkdir $OUT_DIR
+file mkdir $RPT_DIR
+file mkdir $WORK_DIR
+puts "======================================================================"
+======================================================================
+puts " KUIDAMOS 6C — Logic Synthesis Flow (Milestone M8)"
+ KUIDAMOS 6C ? Logic Synthesis Flow (Milestone M8)
+puts " Top Module   : $TOP_MODULE"
+ Top Module   : kuidamos_pixel_frontend
+puts " Target Lib   : $TARGET_LIB"
+ Target Lib   : /opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db
+puts " Clock Period : ${CLOCK_PERIOD_NS} ns"
+ Clock Period : 10.0 ns
+puts " Output Dir   : $OUT_DIR"
+ Output Dir   : /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis
+puts "======================================================================"
+======================================================================
+# -----------------------------------------------------------------------------
+# 1. Library and Environment Setup
+# -----------------------------------------------------------------------------
+set LIB_DIR [file dirname $TARGET_LIB]
+/opt/synopsys/saed32/DBs
+set LIB_FILE [file tail $TARGET_LIB]
+saed32rvt_ss0p95v125c.db
+set_app_var search_path       [list "." $LIB_DIR "$REPO_ROOT/rtl" "$REPO_ROOT/constraints"]
+. /opt/synopsys/saed32/DBs /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/constraints
+set_app_var target_library    [list $TARGET_LIB]
+/opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db
+set_app_var synthetic_library [list dw_foundation.sldb]
+dw_foundation.sldb
+set_app_var link_library      [list "*" $TARGET_LIB dw_foundation.sldb]
+* /opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db dw_foundation.sldb
+set_svf "$OUT_DIR/${TOP_MODULE}.svf"
+1
+define_design_lib WORK -path $WORK_DIR
+1
+# -----------------------------------------------------------------------------
+# 2. Read, Analyze, Elaborate, and Link RTL
+# -----------------------------------------------------------------------------
+set RTL_FILES [list \
+    "$REPO_ROOT/rtl/grayscale_core.sv" \
+    "$REPO_ROOT/rtl/crop_core.sv" \
+    "$REPO_ROOT/rtl/resize_nn_core.sv" \
+    "$REPO_ROOT/rtl/threshold_core.sv" \
+    "$REPO_ROOT/rtl/kuidamos_pixel_frontend.sv" \
+]
+/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/grayscale_core.sv /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/crop_core.sv /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/resize_nn_core.sv /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/threshold_core.sv /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/kuidamos_pixel_frontend.sv
+if {![analyze -format sverilog -work WORK $RTL_FILES]} {
+    puts "ERROR: RTL analyze failed."
+    exit 1
+}
+Running PRESTO HDLC
+Compiling source file /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/grayscale_core.sv
+Compiling source file /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/crop_core.sv
+Compiling source file /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/resize_nn_core.sv
+Compiling source file /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/threshold_core.sv
+Compiling source file /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/kuidamos_pixel_frontend.sv
+Presto compilation completed successfully.
+Loading db file '/opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db'
+Loading db file '/opt/synopsys/syn/X-2025.06-SP2/libraries/syn/dw_foundation.sldb'
+if {![elaborate $TOP_MODULE -work WORK]} {
+    puts "ERROR: RTL elaborate failed."
+    exit 1
+}
+Loading db file '/opt/synopsys/syn/X-2025.06-SP2/libraries/syn/gtech.db'
+Loading db file '/opt/synopsys/syn/X-2025.06-SP2/libraries/syn/standard.sldb'
+  Loading link library 'saed32rvt_ss0p95v125c'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+
+Inferred memory devices in process in routine 'kuidamos_pixel_frontend' in file
+         /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/rtl/kuidamos_pixel_frontend.sv'.
+=========================================================================================
+|       Register Name        |   Type    | Width | Bus | MB |  Set  | Reset | ST | Line |
+=========================================================================================
+|       cfg_error_reg        | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|     frame_active_q_reg     | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|          x_q_reg           | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|          y_q_reg           | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|     cfg_in_width_q_reg     | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|    cfg_in_height_q_reg     | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|   cfg_crop_enable_q_reg    | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|     cfg_x_start_q_reg      | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|     cfg_y_start_q_reg      | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|    cfg_crop_width_q_reg    | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|   cfg_crop_height_q_reg    | Flip-flop |  11   |  Y  | N  | None  | None  | N  | 292  |
+|    cfg_resize_x2_q_reg     | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|    cfg_resize_y2_q_reg     | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+| cfg_threshold_enable_q_reg | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|    cfg_threshold_q_reg     | Flip-flop |   8   |  Y  | N  | None  | None  | N  | 292  |
+|       pixel_out_reg        | Flip-flop |   8   |  Y  | N  | None  | None  | N  | 292  |
+|    pixel_out_valid_reg     | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|        out_sof_reg         | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|        out_sol_reg         | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|        out_eol_reg         | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+|        out_eof_reg         | Flip-flop |   1   |  N  | N  | None  | None  | N  | 292  |
+=========================================================================================
+Presto compilation completed successfully. (kuidamos_pixel_frontend)
+Module: kuidamos_pixel_frontend, Ports: 123, Input: 109, Output: 14, Inout: 0
+Module: kuidamos_pixel_frontend, Registers: 115, Async set/reset: 0, Sync set/reset: 0
+Information: Module kuidamos_pixel_frontend report end. (ELAB-965)
+Elaborated 1 design.
+Current design is now 'kuidamos_pixel_frontend'.
+Information: Building the design 'grayscale_core'. (HDL-193)
+Presto compilation completed successfully. (grayscale_core)
+Module: grayscale_core, Ports: 32, Input: 24, Output: 8, Inout: 0
+Module: grayscale_core, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Module grayscale_core report end. (ELAB-965)
+Information: Building the design 'crop_core'. (HDL-193)
+Presto compilation completed successfully. (crop_core)
+Module: crop_core, Ports: 134, Input: 89, Output: 45, Inout: 0
+Module: crop_core, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Module crop_core report end. (ELAB-965)
+Information: Building the design 'resize_nn_core'. (HDL-193)
+Presto compilation completed successfully. (resize_nn_core)
+Module: resize_nn_core, Ports: 96, Input: 47, Output: 49, Inout: 0
+Module: resize_nn_core, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Module resize_nn_core report end. (ELAB-965)
+Information: Building the design 'threshold_core'. (HDL-193)
+Presto compilation completed successfully. (threshold_core)
+Module: threshold_core, Ports: 25, Input: 17, Output: 8, Inout: 0
+Module: threshold_core, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Module threshold_core report end. (ELAB-965)
+current_design $TOP_MODULE
+Current design is 'kuidamos_pixel_frontend'.
+{kuidamos_pixel_frontend}
+if {![link]} {
+    puts "ERROR: Design link failed."
+    exit 1
+}
+
+  Linking design 'kuidamos_pixel_frontend'
+  Using the following designs and libraries:
+  --------------------------------------------------------------------------
+  * (5 designs)               /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/kuidamos_pixel_frontend.db, etc
+  saed32rvt_ss0p95v125c (library) /opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db
+  dw_foundation.sldb (library) /opt/synopsys/syn/X-2025.06-SP2/libraries/syn/dw_foundation.sldb
+
+Information: Summary of messages issued during linking: (LINK-1806)
+No messages were issued during linking.
+uniquify
+1
+# -----------------------------------------------------------------------------
+# 3. Pre-Synthesis Structural Checks
+# -----------------------------------------------------------------------------
+redirect "$RPT_DIR/check_design.rpt" { check_design }
+redirect "$RPT_DIR/units.rpt"        { report_units }
+# -----------------------------------------------------------------------------
+# 4. Apply Timing and Electrical Constraints (SDC)
+# -----------------------------------------------------------------------------
+source "$REPO_ROOT/constraints/kuidamos_pixel_frontend.sdc"
+1
+set_fix_multiple_port_nets -all -buffer_constants [get_designs *]
+1
+redirect "$RPT_DIR/check_timing.rpt" { check_timing }
+redirect "$RPT_DIR/clocks.rpt"       { report_clock -attributes }
+# -----------------------------------------------------------------------------
+# 5. Logic Synthesis & Optimization (preserving submodule hierarchy for area)
+# -----------------------------------------------------------------------------
+if {![compile_ultra -no_autoungroup]} {
+    puts "ERROR: compile_ultra failed."
+    exit 1
+}
+Information: Performing leakage power optimization. (PWR-850)
+Analyzing: "/opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db"
+Library analysis succeeded.
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | X-2025.06-DWBB_202506.2 |     *     |
+| Licensed DW Building Blocks        | X-2025.06-DWBB_202506.2 |     *     |
+============================================================================
+
+====================================================================================================
+| Flow Information                                                                                 |
+----------------------------------------------------------------------------------------------------
+| Flow         | Design Compiler WLM                                                               |
+| Command Line | compile_ultra -no_autoungroup                                                     |
+====================================================================================================
+| Design Information                                      | Value                                  |
+====================================================================================================
+| Number of Scenarios                                     | 0                                      |
+| Leaf Cell Count                                         | 416                                    |
+| Number of User Hierarchies                              | 4                                      |
+| Sequential Cell Count                                   | 115                                    |
+| Macro Count                                             | 0                                      |
+| Pad Count                                               | 0                                      |
+| Number of Power Domains                                 | 0                                      |
+| Number of Path Groups                                   | 2                                      |
+| Number of VT Class                                      | 1                                      |
+| Number of Clocks                                        | 1                                      |
+| Number of Dont Touch Cells                              | 48                                     |
+| Number of Dont Touch Nets                               | 0                                      |
+| Number of Size Only Cells                               | 0                                      |
+| Design with Target Library Subset (with clock_path)     | false  (false )                        |
+| Design with UPF Data                                    | false                                  |
+----------------------------------------------------------------------------------------------------
+| Variables                                               | Value                                  |
+----------------------------------------------------------------------------------------------------
+| set_fix_multiple_port_nets                              | -all -buffer_constants                 |
+====================================================================================================
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
+
+Information: There are 60 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+  Simplifying Design 'kuidamos_pixel_frontend'
+
+Loaded alib file './alib-52/saed32rvt_ss0p95v125c.db.alib'
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'kuidamos_pixel_frontend'
+ Implement Synthetic for 'kuidamos_pixel_frontend'.
+Information: Added key list 'DesignWare' to design 'kuidamos_pixel_frontend'. (DDB-72)
+  Processing 'resize_nn_core'
+ Implement Synthetic for 'resize_nn_core'.
+Information: Added key list 'DesignWare' to design 'resize_nn_core'. (DDB-72)
+  Processing 'crop_core'
+ Implement Synthetic for 'crop_core'.
+Information: Added key list 'DesignWare' to design 'crop_core'. (DDB-72)
+  Processing 'grayscale_core'
+ Implement Synthetic for 'grayscale_core'.
+  Processing 'threshold_core'
+ Implement Synthetic for 'threshold_core'.
+Information: Added key list 'DesignWare' to design 'threshold_core'. (DDB-72)
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'PMT3_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'PMT2_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'PMT1_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT3_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT2_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT1_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Mapping Optimizations  (Ultra High effort)
+  -------------------------------
+Information: Added key list 'DesignWare' to design 'grayscale_core'. (DDB-72)
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:05    4044.4      0.00       0.0      72.5                           319957760.0000
+    0:00:05    4044.4      0.00       0.0      72.5                           319957760.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Constant Register Removal
+  -----------------------------------
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Isolate Ports
+  -----------------------
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:00:05    3542.0      0.00       0.0      58.0                           183734512.0000
+    0:00:05    3542.0      0.00       0.0      58.0                           183734512.0000
+    0:00:05    3542.0      0.00       0.0      58.0                           183734512.0000
+    0:00:06    3542.0      0.00       0.0      58.0                           183734512.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+    0:00:06    3541.0      0.00       0.0      54.1                           183722160.0000
+    0:00:06    3541.0      0.00       0.0      54.1                           183722160.0000
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:00:06    3527.3      0.00       0.0      42.7                           178850848.0000
+    0:00:06    3527.3      0.00       0.0      42.7                           178850848.0000
+    0:00:06    3527.3      0.00       0.0      42.7                           178850848.0000
+    0:00:06    3527.3      0.00       0.0      42.7                           178850848.0000
+    0:00:06    3527.3      0.00       0.0      42.7                           178850848.0000
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+
+
+  Beginning Design Rule Fixing  (max_capacitance)
+  ----------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:06    3521.9      0.00       0.0      42.7                           177401648.0000
+  Global Optimization (Phase 31)
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+    0:00:06    3523.5      0.00       0.0       0.0                           177777952.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+    0:00:06    3523.5      0.00       0.0       0.0                           172040688.0000
+Loading db file '/opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Information: Total number of MV cells in the design.
+----------------------------------------------------------------------------------------------------
+ MV Cells                                           Total Number                                   
+----------------------------------------------------------------------------------------------------
+ Level Shifter:                                     0                                             
+ Enable Level Shifter:                              0                                             
+ Isolation Cell:                                    0                                             
+ Retention Cell:                                    0                                             
+ Retention Clamp Cell:                              0                                             
+ Switch Cell:                                       0                                             
+ Always-On Cell:                                    0                                             
+ Repeater Cell:                                     0                                             
+
+----------------------------------------------------------------------------------------------------
+Unmapped MV Cells 
+----------------------------------------------------------------------------------------------------
+0 Isolation Cells are unmapped 
+0 Retention Clamp Cells are unmapped 
+----------------------------------------------------------------------------------------------------
+change_names -rules verilog -hierarchy
+1
+# -----------------------------------------------------------------------------
+# 6. Post-Synthesis Reports (QoR, Area, Timing, Power, DRC, Latches)
+# -----------------------------------------------------------------------------
+redirect "$RPT_DIR/qor.rpt"            { report_qor }
+redirect "$RPT_DIR/area.rpt"           { report_area -nosplit }
+redirect "$RPT_DIR/area_hierarchy.rpt" { report_area -hierarchy -designware -nosplit }
+redirect "$RPT_DIR/timing_max.rpt"     { report_timing -delay_type max -max_paths 20 -input_pins -nets -transition_time -capacitance -nosplit }
+redirect "$RPT_DIR/timing_min.rpt"     { report_timing -delay_type min -max_paths 20 -input_pins -nets -nosplit }
+redirect "$RPT_DIR/power.rpt"          { report_power -analysis_effort medium -hierarchy -nosplit }
+redirect "$RPT_DIR/constraints.rpt"    { report_constraint -all_violators -nosplit }
+redirect "$RPT_DIR/resources.rpt"      { report_resources -hierarchy -nosplit }
+redirect "$RPT_DIR/registers.rpt"      { report_register -level_sensitive -nosplit }
+redirect "$RPT_DIR/references.rpt"     { report_reference -hierarchy -nosplit }
+# -----------------------------------------------------------------------------
+# 7. Export Unversioned Gate-Level Artifacts (for M9 DFT & Post-Synth Flow)
+# -----------------------------------------------------------------------------
+write -format ddc     -hierarchy -output "$OUT_DIR/${TOP_MODULE}_mapped.ddc"
+Writing ddc file '/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/kuidamos_pixel_frontend_mapped.ddc'.
+1
+write -format verilog -hierarchy -output "$OUT_DIR/${TOP_MODULE}_mapped.v"
+Writing verilog file '/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/kuidamos_pixel_frontend_mapped.v'.
+1
+write_sdc -nosplit "$OUT_DIR/${TOP_MODULE}_mapped.sdc"
+1
+write_sdf "$OUT_DIR/${TOP_MODULE}_mapped.sdf"
+Information: Annotated 'cell' delays are assumed to include load delay. (UID-282)
+Information: Writing timing information to file '/Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/kuidamos_pixel_frontend_mapped.sdf'. (WT-3)
+1
+set_svf -off
+1
+puts "======================================================================"
+======================================================================
+puts " KUIDAMOS 6C — Synthesis Completed Successfully"
+ KUIDAMOS 6C ? Synthesis Completed Successfully
+puts " Reports Dir  : $RPT_DIR"
+ Reports Dir  : /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/synthesis/reports
+puts "======================================================================"
+======================================================================
+exit 0
+
+Memory usage for this session 237 Mbytes.
+Memory usage for this session including child processes 237 Mbytes.
+CPU usage for this session 57 seconds ( 0.02 hours ).
+Elapsed time for this session 64 seconds ( 0.02 hours ).
+
+Thank you...
+

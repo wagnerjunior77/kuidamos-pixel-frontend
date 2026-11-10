@@ -1,0 +1,30 @@
+Command: /Users/thigs/Documents/synopsys/kuidamos-pixel-frontend/outputs/vcs/simv -exitstatus +VECTOR_DIR=vectors/m2 -k outputs/vcs/ucli.key -l outputs/vcs/vcs_sim.log
+Chronologic VCS simulator copyright 1991-2025
+Contains Synopsys proprietary information.
+Compiler version X-2025.06-SP2_Full64; Runtime version X-2025.06-SP2_Full64;  Nov  8 09:05 2026
+====================================================================================
+ KUIDAMOS Pixel Front-End (Group 6C) — Functional Verification & Scoreboard (M3–M7)
+====================================================================================
+--- [Suite 1] Official M2 Vector Scenarios (vectors/m2) ---
+[PASS] 01_minimo_1x1                        | cycles=   3 in_valid=   1 out_reg=   1 out_cons=   1 cfg_err=0
+[PASS] 02_primarias_4x4                     | cycles=  18 in_valid=  16 out_reg=  16 out_cons=  16 cfg_err=0
+[PASS] 03_centro_f12_t0                     | cycles=  66 in_valid=  64 out_reg=   8 out_cons=   8 cfg_err=0
+[PASS] 04_borda_f21_t255                    | cycles=  66 in_valid=  64 out_reg=   8 out_cons=   8 cfg_err=0
+[PASS] 05_impar_f22_t128_bolhas             | cycles=  22 in_valid=  15 out_reg=   2 out_cons=   2 cfg_err=0
+[PASS] 06_aleatorio_16x16                   | cycles= 258 in_valid= 256 out_reg= 256 out_cons= 256 cfg_err=0
+[PASS] 07_config_e_quadros_consecutivos     | cycles=  34 in_valid=  32 out_reg=  32 out_cons=  32 cfg_err=0
+[PASS] 08_reset_e_recuperacao               | cycles=  35 in_valid=  32 out_reg=  19 out_cons=  18 cfg_err=0
+[PASS] 09_invalidos_e_recuperacao           | cycles=  20 in_valid=  18 out_reg=   1 out_cons=   1 cfg_err=2
+--- [Suite 2] Directed M7 Edge-Case Scenarios (docs/spec_v1.md §7) ---
+[PASS] m7_01_roi_1x1_discard_first_last     | cycles=  18 in_valid=  16 out_reg=   1 out_cons=   1 cfg_err=0
+[PASS] m7_02_threshold_neighborhood         | cycles=   5 in_valid=   3 out_reg=   3 out_cons=   3 cfg_err=0
+[PASS] m7_03_max_dim_2047_and_12bit_sum     | cycles=2052 in_valid=2050 out_reg=1023 out_cons=1023 cfg_err=3
+[PASS] m7_04_zero_input_dims                | cycles=   5 in_valid=   3 out_reg=   1 out_cons=   1 cfg_err=2
+[PASS] m7_05_unexpected_sof_recovery        | cycles=   6 in_valid=   4 out_reg=   4 out_cons=   4 cfg_err=0
+[PASS] m7_06_bubbles_all_positions          | cycles=  10 in_valid=   4 out_reg=   4 out_cons=   4 cfg_err=0
+====================================================================================
+ SUMMARY: cases_passed=15/15 | cycles_checked=2618 | scoreboard_mismatches=0 | sva_errors=0 (sva_checks=2617)
+====================================================================================
+OVERALL RESULT: PASS
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 26176000 ps

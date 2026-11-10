@@ -25,7 +25,9 @@ chmod +x scripts/synthesis/run_dc.sh
 - `CLOCK_PERIOD_NS`: período de clock em nanossegundos (padrão: `10.0`, equivalente a `100 MHz`).
 - `OUT_DIR`: diretório de saída para logs, relatórios e artefatos mapeados (padrão: `outputs/synthesis`).
 
-## Relatórios e Artefatos Gerados (em `outputs/synthesis/`, fora do Git)
+## Relatórios e artefatos gerados em `outputs/synthesis/`
+
+O repositório inclui os relatórios `.rpt` e o log `dc_compile.log`. Os artefatos mapeados para DFT são gerados localmente.
 
 - `outputs/synthesis/dc_compile.log`: log completo da sessão do `dc_shell`.
 - `outputs/synthesis/reports/qor.rpt`: resumo de Quality of Results (timing, células, área e violadores).

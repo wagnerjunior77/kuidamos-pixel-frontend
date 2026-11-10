@@ -1,0 +1,50 @@
+Information: Propagating switching activity (medium effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort medium
+Design : kuidamos_pixel_frontend
+Version: X-2025.06-SP2
+Date   : Mon Nov  9 00:30:46 2026
+****************************************
+
+
+Library(s) Used:
+
+    saed32rvt_ss0p95v125c (File: /opt/synopsys/saed32/DBs/saed32rvt_ss0p95v125c.db)
+
+
+Operating Conditions: ss0p95v125c   Library: saed32rvt_ss0p95v125c
+Wire Load Model Mode: enclosed
+
+Design        Wire Load Model            Library
+------------------------------------------------
+kuidamos_pixel_frontend 8000             saed32rvt_ss0p95v125c
+grayscale_core         8000              saed32rvt_ss0p95v125c
+crop_core              8000              saed32rvt_ss0p95v125c
+resize_nn_core         8000              saed32rvt_ss0p95v125c
+threshold_core         ForQA             saed32rvt_ss0p95v125c
+
+
+Global Operating Voltage = 0.95 
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1pW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+kuidamos_pixel_frontend                  10.746   93.325 1.63e+08  267.267 100.0
+  u_threshold_core (threshold_core)       0.524    0.885 2.00e+06    3.406   1.3
+  u_resize_nn_core (resize_nn_core)       1.030    2.191 1.91e+07   22.292   8.3
+  u_crop_core (crop_core)                 1.353    2.359 1.95e+07   23.218   8.7
+  u_grayscale_core (grayscale_core)       4.856   14.045 2.21e+07   41.030  15.4
+1

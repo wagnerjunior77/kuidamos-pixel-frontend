@@ -1,0 +1,110 @@
+Information: Checking out the license 'DesignWare'. (SEC-104)
+Information: Changed wire load model for 'threshold_core' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'resize_nn_core' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'crop_core' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'grayscale_core' from '(none)' to 'ForQA'. (OPT-170)
+Module: DW01_add_width12, Ports: 38, Input: 25, Output: 13, Inout: 0
+Module: DW01_add_width12, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_cmp2_width11, Ports: 26, Input: 24, Output: 2, Inout: 0
+Module: DW01_cmp2_width11, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_cmp2_width12, Ports: 28, Input: 26, Output: 2, Inout: 0
+Module: DW01_cmp2_width12, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_dec_width11, Ports: 22, Input: 11, Output: 11, Inout: 0
+Module: DW01_dec_width11, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_cmp6_width11, Ports: 29, Input: 23, Output: 6, Inout: 0
+Module: DW01_cmp6_width11, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_inc_width11, Ports: 22, Input: 11, Output: 11, Inout: 0
+Module: DW01_inc_width11, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Changed wire load model for 'alt1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'apparch' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'alt1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'apparch' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'alt1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'apparch' from '(none)' to 'ForQA'. (OPT-170)
+Module: DW01_add_width16, Ports: 50, Input: 33, Output: 17, Inout: 0
+Module: DW01_add_width16, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_sub_width11, Ports: 35, Input: 23, Output: 12, Inout: 0
+Module: DW01_sub_width11, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Module: DW01_cmp2_width8, Ports: 20, Input: 18, Output: 2, Inout: 0
+Module: DW01_cmp2_width8, Registers: 0, Async set/reset: 0, Sync set/reset: 0
+Information: Changed wire load model for 'DW01_inc_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_11_1_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_inc_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_11_1_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_dec_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*SUB_UNS_OP_11_1_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_dec_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*SUB_UNS_OP_11_1_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_add_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_11_11_12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_add_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_11_11_12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp6_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*EQ_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp6_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*EQ_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width8' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*GEQ_UNS_OP_8_8_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_dec_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*SUB_UNS_OP_11_1_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_dec_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*SUB_UNS_OP_11_1_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp6_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*EQ_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp6_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*EQ_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LT_UNS_OP_11_12_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LT_UNS_OP_11_12_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_sub_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*SUB_UNS_OP_11_11_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_sub_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*SUB_UNS_OP_11_11_11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_add_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_11_11_12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_add_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_11_11_12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LT_UNS_OP_11_12_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*GEQ_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LT_UNS_OP_11_12_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*GEQ_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_add_width16' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_16_13_16' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_add_width16' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*ADD_UNS_OP_15_16_16' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW02_mult' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*MULT_UNS_OP_5_8_13' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW02_mult' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*MULT_UNS_OP_8_8_16' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW02_mult' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*MULT_UNS_OP_7_8_15' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LEQ_UNS_OP_12_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width12' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LEQ_UNS_OP_12_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LT_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for 'DW01_cmp2_width11' from '(none)' to 'ForQA'. (OPT-170)
+Information: Changed wire load model for '*LT_UNS_OP_11_11_1' from '(none)' to 'ForQA'. (OPT-170)
+Information: Updating design information... (UID-85)
+Warning: Design 'kuidamos_pixel_frontend' contains 1 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+
+Information: Checking generated_clocks...
+
+Information: Checking loops...
+
+Information: Checking no_input_delay...
+
+Information: Checking unconstrained_endpoints...
+
+Information: Checking pulse_clock_cell_type...
+
+Information: Checking no_driving_cell...
+
+Information: Checking partial_input_delay...
+1

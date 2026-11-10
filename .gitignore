@@ -63,7 +63,6 @@ verdiLog/
 # Produtos de ferramentas e bibliotecas potencialmente proprietarias
 work/
 build/
-outputs/
 results/
 # Fotografia local usada no experimento; não é um vetor versionado.
 /docs/assets/input/carro.jpeg
@@ -88,3 +87,16 @@ pdk/
 pdks/
 technology/
 libraries/
+
+# Evidências de verificação e síntese compartilhadas no repositório.
+/outputs/*
+!/outputs/synthesis/
+!/outputs/vcs/
+/outputs/synthesis/*
+!/outputs/synthesis/reports/
+!/outputs/synthesis/dc_compile.log
+/outputs/synthesis/reports/*
+!/outputs/synthesis/reports/*.rpt
+/outputs/vcs/*
+!/outputs/vcs/vcs_compile.log
+!/outputs/vcs/vcs_sim.log
