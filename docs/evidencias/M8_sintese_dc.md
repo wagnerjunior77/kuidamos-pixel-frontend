@@ -129,7 +129,7 @@ Estimativa obtida no corner `ss0p95v125c` ($V_{DD} = 0,95\text{ V}$, $T = 125\te
 ## 7. Observações Estruturais (`check_design.rpt`) e Artefatos para M9 (DFT)
 
 - O relatório `check_design.rpt` não apontou erros estruturais. Os avisos informativos `LINT-28` (`in_sol` e `in_eol` sem carga interna) e `LINT-2` (saídas diagnósticas `x_out`, `y_out`, `out_width`, `out_height` de `u_resize_nn_core` não conectadas a pinos externos do topo) refletem fielmente a decisão da especificação V1 ([`docs/spec_v1.md`](../spec_v1.md) §10), segundo a qual o IP reconstrói as coordenadas internamente a partir de `in_sof`, `pixel_valid`, `cfg_in_width` e `cfg_in_height`.
-- Os artefatos pós-síntese para a etapa seguinte de **DFT / Scan Insertion (Marco M9)** foram gerados em `outputs/synthesis/` (fora do versionamento Git):
+- Os artefatos pós-síntese para a etapa seguinte de **DFT / Scan Insertion (Marco M9)** estão versionados em `outputs/synthesis/`:
   - `outputs/synthesis/kuidamos_pixel_frontend_mapped.ddc`
   - `outputs/synthesis/kuidamos_pixel_frontend_mapped.v`
   - `outputs/synthesis/kuidamos_pixel_frontend_mapped.sdc`

@@ -5,7 +5,8 @@
 #   Reproducible logic synthesis and static timing/area/power analysis flow
 #   for Synopsys Design Compiler (dc_shell).
 #   All generated netlists, databases, and tool reports are written inside
-#   OUT_DIR (default: outputs/synthesis). Git tracks the reports and compile log.
+#   OUT_DIR (default: outputs/synthesis). Git tracks the reports, compile log,
+#   and the five exported design artifacts for M9.
 # -----------------------------------------------------------------------------
 
 set TOP_MODULE "kuidamos_pixel_frontend"

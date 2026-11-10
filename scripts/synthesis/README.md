@@ -27,7 +27,7 @@ chmod +x scripts/synthesis/run_dc.sh
 
 ## Relatórios e artefatos gerados em `outputs/synthesis/`
 
-O repositório inclui os relatórios `.rpt` e o log `dc_compile.log`. Os artefatos mapeados para DFT são gerados localmente.
+O repositório inclui os relatórios `.rpt`, o log `dc_compile.log` e os cinco artefatos pós-síntese listados abaixo para o M9.
 
 - `outputs/synthesis/dc_compile.log`: log completo da sessão do `dc_shell`.
 - `outputs/synthesis/reports/qor.rpt`: resumo de Quality of Results (timing, células, área e violadores).
@@ -36,4 +36,5 @@ O repositório inclui os relatórios `.rpt` e o log `dc_compile.log`. Os artefat
 - `outputs/synthesis/reports/power.rpt`: estimativa de potência dinâmica (switching + internal) e leakage por hierarquia.
 - `outputs/synthesis/reports/constraints.rpt`: verificação de violadores de timing/DRC (`-all_violators`).
 - `outputs/synthesis/reports/check_design.rpt` e `registers.rpt`: verificação estrutural e comprovação de ausência de latches.
-- `outputs/synthesis/kuidamos_pixel_frontend_mapped.{ddc,v,sdc,sdf}`: banco de dados e netlist gate-level prontos para a etapa de DFT (M9).
+- `outputs/synthesis/kuidamos_pixel_frontend_mapped.{ddc,v,sdc,sdf}`: banco de dados, netlist gate-level, restrições e atrasos pós-síntese.
+- `outputs/synthesis/kuidamos_pixel_frontend.svf`: arquivo de orientação de equivalência formal gerado durante a síntese.

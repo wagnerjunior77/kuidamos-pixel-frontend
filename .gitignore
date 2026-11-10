@@ -88,13 +88,18 @@ pdks/
 technology/
 libraries/
 
-# Evidências de verificação e síntese compartilhadas no repositório.
+# Evidências de verificação, síntese e artefatos do IP para DFT.
 /outputs/*
 !/outputs/synthesis/
 !/outputs/vcs/
 /outputs/synthesis/*
 !/outputs/synthesis/reports/
 !/outputs/synthesis/dc_compile.log
+!/outputs/synthesis/kuidamos_pixel_frontend_mapped.ddc
+!/outputs/synthesis/kuidamos_pixel_frontend_mapped.v
+!/outputs/synthesis/kuidamos_pixel_frontend_mapped.sdc
+!/outputs/synthesis/kuidamos_pixel_frontend_mapped.sdf
+!/outputs/synthesis/kuidamos_pixel_frontend.svf
 /outputs/synthesis/reports/*
 !/outputs/synthesis/reports/*.rpt
 /outputs/vcs/*
