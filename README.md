@@ -39,33 +39,39 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M0 | Especificação | Concluído internamente; resize sujeito à validação do professor |
 | M1 | Golden Model Python | Implementação inicial e testes executados |
 | M2 | Vetores funcionais e temporais | Validados localmente; revisão de Thiago pendente |
-| M3 | RTL pass-through e grayscale | Não iniciado |
-| M4 | RTL crop | Não iniciado |
-| M5 | RTL resize nearest-neighbor | Não iniciado |
-| M6 | Threshold e integração | Não iniciado |
-| M7 | Testbench, scoreboard, SVA e regressão | Não iniciado |
-| M8 | Síntese e análise de timing | Não executado |
+| M3 | RTL pass-through e grayscale | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M4 | RTL crop | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M5 | RTL resize nearest-neighbor | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M6 | Threshold e integração | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
+| M7 | Testbench, scoreboard, SVA e regressão | Validado no Synopsys VCS (15/15 cenários, 2.618 ciclos, 0 falhas) |
+| M8 | Síntese e análise de timing | Validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET com slack `+3,21 ns`) |
 | M9 | DFT e scan | Não executado |
 | M10 | Implementação física | Não executado |
 | M11 | Documentação final | Não iniciado |
 
-Na última regressão registrada, **32 testes Python passaram** e os **28 arquivos de referência M2 foram reproduzidos byte a byte**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md) e de [M2](docs/evidencias/M2_vetores.md). VCS, síntese, DFT e físico ainda não foram executados. A referência inicial de 100 MHz (10 ns) é uma restrição de análise, não uma garantia de fechamento de timing. PDK, bibliotecas, versões e licenças do ambiente CIExpert ainda precisam ser identificados.
+Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte**, a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 falhas)** e a **síntese lógica M8 no Synopsys Design Compiler `X-2025.06-SP2` (SAED32 `saed32rvt_ss0p95v125c.db`) fechou timing em 100 MHz (10,0 ns) com folga de setup `+3,21 ns`, folga de hold `+0,16 ns`, 0 latches e 0 violações de DRC**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md), da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md) e da [síntese lógica M8 no Design Compiler](docs/evidencias/M8_sintese_dc.md). DFT (TestMAX — M9) e implementação física (Fusion Compiler — M10) ainda não foram executados.
 
 ## Estrutura atual
 
 ```text
 .
 ├── AGENTS.md                    # instruções para ferramentas de desenvolvimento
+├── constraints/                 # restrições SDC para síntese lógica (100 MHz / 10 ns)
 ├── docs/
 │   ├── spec_v1.md              # especificação funcional e temporal
 │   ├── CONTEXTO_TECNICO_6C.md  # nota técnica de apoio
 │   ├── DECISOES_E_PENDENCIAS.md
 │   ├── plano_de_execucao.md
-│   ├── evidencias/             # resultados de M1 e M2
+│   ├── evidencias/             # resultados de M1, M2, M3–M7 (VCS) e M8 (DC)
 │   ├── experimentos/           # relatório e imagens do experimento real
 │   ├── imagens/m1/             # demonstração visual sintética
 │   └── referencias/            # documento oficial
 ├── model/                       # Golden Model, geradores e testes Python
+├── rtl/                         # Módulos RTL SystemVerilog sintetizáveis (M3–M6)
+├── scripts/
+│   ├── synthesis/              # Scripts TCL e wrapper Synopsys Design Compiler (M8)
+│   └── verification/           # Script de compilação e regressão Synopsys VCS (M3–M7)
+├── tb/                          # Testbench, Scoreboard e SVA SystemVerilog (M3–M7)
 ├── vectors/m2/                  # referências funcionais e temporais
 ├── .gitattributes
 └── .gitignore
