@@ -160,3 +160,46 @@ A regressão completa de verificação funcional e temporal dos marcos **M3 a M7
 ## Execução da Síntese Lógica e Análise de Timing M8 no Synopsys Design Compiler (Etapa 5) — 2026-11-09
 
 Foram implementados `constraints/kuidamos_pixel_frontend.sdc`, `scripts/synthesis/dc_synth.tcl`, `scripts/synthesis/run_dc.sh` e `scripts/synthesis/README.md`, e executada a síntese lógica do IP `kuidamos_pixel_frontend` no **Synopsys Design Compiler (`dc_shell` `X-2025.06-SP2`, Build Date `Aug 27, 2025`)** em `ciexpert-rocky8`, utilizando a biblioteca padrão **SAED32 (32/28 nm)** no corner conservador `saed32rvt_ss0p95v125c.db` (`0,95 V`, `125 °C`) e restrição de clock de `100 MHz` (`10,0 ns`). O design foi sintetizado com `compile_ultra -no_autoungroup` sem erros (`exit code = 0`), resultando em `1.256` células folha (`1.141` combinacionais e `115` flip-flops `DFFX1_RVT`, `0` latches inferidos), área de células de `3.523,45` $\mu\text{m}^2$ (`4.376,85` $\mu\text{m}^2$ com interconexão estimada), **fechamento de timing em `10,0 ns` com folga de setup `WNS = +3,21 ns` (`TNS = 0,00 ns`, 39 níveis lógicos no caminho crítico `in_sof -> u_crop_core -> u_resize_nn_core -> out_eof_reg/D`) e folga de hold `WNS = +0,16 ns` (`0` caminhos violados)**, `0` violações de DRC (`max_transition` / `max_capacitance`) e potência total estimada de `267,27` $\mu\text{W}$ (`104,07` $\mu\text{W}$ dinâmica + `163,20` $\mu\text{W}$ leakage a `125 °C`). Os artefatos mapeados (`.ddc`, `.v`, `.sdc`, `.sdf`, `.svf`) e relatórios brutos permanecem em `outputs/synthesis/` (fora do versionamento Git), e a evidência completa está registrada em `docs/evidencias/M8_sintese_dc.md`. As etapas de DFT/Scan (M9) e implementação física (M10) permanecem **NÃO EXECUTADAS**.
+
+
+## M9 — importação, protocolo e pré-DFT DRC — 2026-11-20
+
+Por autorização do usuário, foi criada a branch `feat/m9-dft-scan` a partir da
+`main` limpa, baseline `831812e`, e implementado `scripts/dft/`. Thiago é o
+responsável por RTL/síntese e Wagner por DFT, conforme confirmação nesta sessão.
+Os artefatos M8 estão versionados desde os commits de 2026-11-10; referências
+anteriores a esses artefatos como não versionados são históricas.
+
+Execução real: Fusion Compiler `X-2025.06-SP2` no Rocky Linux 8.10, usando SAED32
+RVT `ss0p95v125c` (slow/0,99, 0,95 V, 125 °C), confirmada no PVT efetivo das
+1.256 células. Netlist e SDC importados sem edição; 115 `DFFX1_RVT`, todos em
+`clk`, nenhuma referência não resolvida. O reset síncrono ativo baixo é mantido
+inativo no protocolo, sem alterar o cenário funcional. Células `SDFFX1_RVT` e
+`SDFFX2_RVT` estão disponíveis e sem `dont_use`.
+
+**Resultado pré-scan:** `dft_drc -verbose` executado, 115 FFs elegíveis/traced,
+zero elementos excluídos e zero violações de scan. O relatório completo registra
+94 avisos de build/modelagem (B10=44, B7=45, B8=4, N20=1). `check_design` registra
+136 warnings e zero erros; `check_timing -all` registra 1.256 warnings TCK-014.
+Os slacks +3,24 ns/+0,16 ns foram calculados com atraso zero de interconexão:
+não representam fechamento físico ou pós-scan. Nenhum aviso foi silenciado.
+
+Uma cadeia sem compressão e três portas dedicadas foram configuradas somente
+como hipótese na base derivada. A escolha é motivada pelos 115 FFs, clock único
+e ausência de clock gating; arquitetura final ainda depende de revisão e preview.
+Protocolo de teste de 100 ns, com bordas 45/55 ns. O SPF é preliminar, sem cadeia
+implementada. Não se declara cobertura ATPG nem M9 concluído.
+
+Licenças observadas nesta execução: `Fusion-Compiler-NX` e
+`Fusion-Compiler-FE-NX`, sem impedimento para pré-DFT. Replacement/insertion e
+ATPG ainda requerem validação operacional própria. **Scan replacement, preview,
+scan insertion, ATPG e físico NÃO EXECUTADOS**, conforme o limite solicitado.
+
+Evidência: [M9_pre_dft_fc.md](evidencias/M9_pre_dft_fc.md). Execução final local:
+`outputs/dft/runs/20261120T133126Z-TW0Czt/`, códigos de saída 0, manifests de
+RTL/M8 idênticos antes/depois. Scripts, resumo e quatro casos negativos de
+integridade/incompletude foram verificados. Nenhum commit/push realizado.
+
+Próximo passo: revisar B7/B8/B10/N20 e limitações de timing, validar as
+precondições de replacement com o FC em uma nova cópia do checkpoint e somente
+então executar replacement, novo DRC, preview e insertion em etapa separada.
