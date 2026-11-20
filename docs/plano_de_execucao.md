@@ -14,7 +14,7 @@ Atualização em 2026-11-08: **Verificação funcional de M3–M7 executada e ap
 
 Atualização em 2026-11-09: **Síntese lógica e análise de timing (M8) executadas e aprovadas no Synopsys Design Compiler (`dc_shell` `X-2025.06-SP2`)** com a biblioteca padrão **SAED32 (`saed32rvt_ss0p95v125c.db`)** e restrições SDC de `100 MHz` (`10,0 ns`) em `constraints/kuidamos_pixel_frontend.sdc` e `scripts/synthesis/`. O circuito mapeou `1.256` células folha (`1.141` combinacionais + `115` flip-flops `DFFX1_RVT`, `0` latches), área total de células de `3.523,45` $\mu\text{m}^2$ (`4.376,85` $\mu\text{m}^2$ incluindo interconexão estimada), fechando timing em `10,0 ns` com folga de setup **`+3,21 ns` (MET)**, folga de hold **`+0,16 ns` (MET)**, `0` violações de DRC e potência total estimada de `267,27` $\mu\text{W}$ a `125 °C`. Evidência completa registrada em `docs/evidencias/M8_sintese_dc.md`. DFT (M9) e implementação física (M10) permanecem **NÃO EXECUTADOS**.
 
-Atualização em 2026-11-20: **M9 pré-DFT executado no Fusion Compiler X-2025.06-SP2**, importando a netlist/SDC de M8 sem modificá-los. Foram identificados 115 FFs elegíveis, zero violações de scan e 94 avisos de build/modelagem. Há avisos estruturais e limitações de timing sem parasitas físicos. Scan replacement, preview, insertion, ATPG e físico **não executados**. Evidência: [M9_pre_dft_fc.md](evidencias/M9_pre_dft_fc.md); reprodução: [scripts/dft/README.md](../scripts/dft/README.md). O usuário confirmou Thiago como responsável por RTL/síntese e Wagner por DFT.
+Atualização em 2026-11-20: **M9 concluído no escopo de scan** no Fusion Compiler `X-2025.06-SP2`. Uma cadeia conecta os 115 `SDFFX1_RVT` sem exclusões. O DFT DRC pós-scan registra zero violações no resumo e 91 avisos detalhados. O VCS passou 15/15 cenários funcionais e verificou 460 pulsos de shift, incluindo captura e extração. ATPG e M10 continuam pendentes. Thiago responde por RTL/síntese e Wagner por DFT. [Resultado final de M9](evidencias/M9_resultado_final.md).
 
 ## Dependências e evidências
 
@@ -32,7 +32,7 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 | M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | RTL implementado em `rtl/` e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
 | M7 | Thiago (RTL), com apoio de Wagner | TB/Scoreboard/SVA implementados em `tb/` e validados no Synopsys VCS (15/15 PASS) |
 | M8 | Thiago (RTL/síntese), conforme confirmação de 2026-11-20 | Implementado e validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET) |
-| M9 | Wagner (DFT) | Pré-DFT executado com avisos; scan replacement/insertion pendentes |
+| M9 | Wagner (DFT) | Concluído no escopo de scan. Cadeia validada estruturalmente e no VCS. |
 | M10 | Wagner e Thiago | A realizar |
 | M11 | Wagner e Thiago | A realizar |
 
@@ -49,7 +49,7 @@ As atribuições de revisão descrevem a proposta de organização; não afirmam
 | M6 — threshold e integração — VALIDADO EM VCS | `rtl/threshold_core.sv` e topo integrado | `./scripts/verification/run_vcs.sh`; PASS = T=0/255, vizinhança `T-1/T/T+1`, bypass e quadros consecutivos | `docs/evidencias/M3_M7_verificacao_vcs.md` |
 | M7 — verificação consolidada — VALIDADO EM VCS | `tb/` com scoreboard, SVA concorrente/procedural e `scripts/verification/run_vcs.sh` | `./scripts/verification/run_vcs.sh` no Synopsys VCS `X-2025.06-SP2_Full64`; PASS = 15/15 cenários, 2.618 ciclos, 0 divergências e 0 erros SVA | `docs/evidencias/M3_M7_verificacao_vcs.md` |
 | M8 — síntese/timing — VALIDADO EM DC | `scripts/synthesis/`, `constraints/kuidamos_pixel_frontend.sdc`, relatórios DC | `./scripts/synthesis/run_dc.sh` no `dc_shell X-2025.06-SP2` (`saed32rvt_ss0p95v125c.db`); PASS = 0 erros, 0 latches, 0 violações DRC, setup slack `+3,21 ns` e hold slack `+0,16 ns` em `10,0 ns` | `docs/evidencias/M8_sintese_dc.md` |
-| M9 — DFT/scan | `scripts/dft/`, `outputs/dft/` local e evidência pré-DFT; depende M8 e ambiente | `run_pre_dft.sh` executado: importação, checks, protocolo e `dft_drc`; zero violações de scan, 94 avisos de build/modelagem; não é aceite global de M9 | `docs/evidencias/M9_pre_dft_fc.md`; replacement, preview e insertion ainda não executados. ATPG/pattern sim são extensão condicionada a escopo/licença |
+| M9 — DFT/scan | `scripts/dft/` e artefatos locais em `outputs/dft/` | Pré-DFT, replacement, preview e inserção validados. Um caminho de 115 SDFFs, 15/15 cenários funcionais e 460 pulsos de shift verificados | [Resultado, rastreabilidade e avisos](evidencias/M9_resultado_final.md). ATPG é extensão condicionada a escopo e licença. |
 | M10 — físico | `physical/`, relatórios Fusion Compiler; depende M9 e tecnologia disponível | Fluxo `fc_shell` documentado conforme ambiente; PASS = execução reproduzível até onde suportado e relatórios disponíveis de área/timing/potência, com restrições e falhas | Logs, versões, constraints, PDK/biblioteca identificados e relatórios permitidos |
 | M11 — documentação | Manual de execução e resultados, `docs/DECISOES_E_PENDENCIAS.md`; depende M7–M10 ou limitações justificadas | Outra pessoa reproduz etapas possíveis com comandos e dependências registrados; PASS = evidências e limitações auditáveis | Documentação, inventário de artefatos, registros de revisão e resultados reais |
 

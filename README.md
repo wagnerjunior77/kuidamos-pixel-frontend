@@ -45,11 +45,13 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M6 | Threshold e integração | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
 | M7 | Testbench, scoreboard, SVA e regressão | Validado no Synopsys VCS (15/15 cenários, 2.618 ciclos, 0 falhas) |
 | M8 | Síntese e análise de timing | Validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET com slack `+3,21 ns`) |
-| M9 | DFT e scan | Pré-DFT executado no FC: 115 FFs elegíveis, 0 violações de scan e 94 avisos de build/modelagem; replacement/insertion pendentes |
+| M9 | DFT e scan | **Concluído no escopo de scan**. Uma cadeia de 115 SDFFs, DFT DRC pós-scan e testes funcional e de shift no VCS. |
 | M10 | Implementação física | Não executado |
 | M11 | Documentação final | Não iniciado |
 
-Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte**, a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 falhas)** e a **síntese lógica M8 no Synopsys Design Compiler `X-2025.06-SP2` (SAED32 `saed32rvt_ss0p95v125c.db`) fechou timing em 100 MHz (10,0 ns) com folga de setup `+3,21 ns`, folga de hold `+0,16 ns`, 0 latches e 0 violações de DRC**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md), da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md) e da [síntese lógica M8 no Design Compiler](docs/evidencias/M8_sintese_dc.md). A [etapa pré-DFT de M9](docs/evidencias/M9_pre_dft_fc.md) foi executada no Fusion Compiler em 2026-11-20; scan replacement/insertion, ATPG e implementação física permanecem não executados.
+Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte**, a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 falhas)** e a **síntese lógica M8 no Synopsys Design Compiler `X-2025.06-SP2` (SAED32 `saed32rvt_ss0p95v125c.db`) fechou timing em 100 MHz (10,0 ns) com folga de setup `+3,21 ns`, folga de hold `+0,16 ns`, 0 latches e 0 violações de DRC**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md), da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md) e da [síntese lógica M8 no Design Compiler](docs/evidencias/M8_sintese_dc.md).
+
+O M9 conectou uma cadeia de 115 SDFFs no Fusion Compiler. O DRC pós-scan registrou zero violações no resumo e 91 avisos detalhados. A regressão funcional passou 15/15 cenários e a simulação de shift verificou 460 pulsos. ATPG e implementação física permanecem pendentes. [Resultado e revisão dos avisos de M9](docs/evidencias/M9_resultado_final.md).
 
 ## Estrutura atual
 
@@ -62,13 +64,14 @@ Na última regressão registrada, **32 testes Python passaram**, os **28 arquivo
 │   ├── CONTEXTO_TECNICO_6C.md  # nota técnica de apoio
 │   ├── DECISOES_E_PENDENCIAS.md
 │   ├── plano_de_execucao.md
-│   ├── evidencias/             # resultados de M1, M2, M3–M7 (VCS) e M8 (DC)
+│   ├── evidencias/             # evidências de M1–M9
 │   ├── experimentos/           # relatório e imagens do experimento real
 │   ├── imagens/m1/             # demonstração visual sintética
 │   └── referencias/            # documento oficial
 ├── model/                       # Golden Model, geradores e testes Python
 ├── rtl/                         # Módulos RTL SystemVerilog sintetizáveis (M3–M6)
 ├── scripts/
+│   ├── dft/                    # Fluxo M9 de DFT e scan
 │   ├── synthesis/              # Scripts TCL e wrapper Synopsys Design Compiler (M8)
 │   └── verification/           # Script de compilação e regressão Synopsys VCS (M3–M7)
 ├── tb/                          # Testbench, Scoreboard e SVA SystemVerilog (M3–M7)
@@ -77,7 +80,7 @@ Na última regressão registrada, **32 testes Python passaram**, os **28 arquivo
 └── .gitignore
 ```
 
-Os artefatos selecionados de M8 e os logs de VCS estão versionados em `outputs/synthesis/` e `outputs/vcs/`. Os resultados de M9 em `outputs/dft/` permanecem locais e ignorados pelo Git. O fluxo pré-DFT está em [scripts/dft](scripts/dft/README.md), com [evidência de execução e avisos](docs/evidencias/M9_pre_dft_fc.md).
+Os artefatos selecionados de M8 e os logs de VCS estão versionados em `outputs/synthesis/` e `outputs/vcs/`. Os resultados de M9 em `outputs/dft/` permanecem locais e ignorados pelo Git. Os comandos de reprodução e verificação pós-scan estão no [guia do fluxo DFT](scripts/dft/README.md).
 
 ## Executar os testes Python
 

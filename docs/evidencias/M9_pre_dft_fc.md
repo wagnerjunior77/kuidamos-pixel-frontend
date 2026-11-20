@@ -191,7 +191,7 @@ partir de uma cópia da base `pre_dft_protocol`. O primeiro passo técnico é o
 precheck documentado de `compile_fusion` com `compile.seqmap.scan=true`, limitado
 a `initial_map`→`logic_opto`, para determinar se a base gate-level atende às
 precondições de replacement. Não executar otimização física implicitamente.
-As condições e a sequência planejada estão no [README do fluxo](../../scripts/dft/README.md#próxima-execução-ainda-não-realizada).
+As condições e a sequência adotada depois desta etapa estão no [README do fluxo](../../scripts/dft/README.md#replacement-inserção-e-simulações).
 
 Somente após replacement comprovado, comparação funcional e novo DRC, executar
 `preview_dft`, revisar a arquitetura e então `insert_dft`, com DRC pós-scan e
