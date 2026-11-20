@@ -160,3 +160,108 @@ A regressão completa de verificação funcional e temporal dos marcos **M3 a M7
 ## Execução da Síntese Lógica e Análise de Timing M8 no Synopsys Design Compiler (Etapa 5) — 2026-11-09
 
 Foram implementados `constraints/kuidamos_pixel_frontend.sdc`, `scripts/synthesis/dc_synth.tcl`, `scripts/synthesis/run_dc.sh` e `scripts/synthesis/README.md`, e executada a síntese lógica do IP `kuidamos_pixel_frontend` no **Synopsys Design Compiler (`dc_shell` `X-2025.06-SP2`, Build Date `Aug 27, 2025`)** em `ciexpert-rocky8`, utilizando a biblioteca padrão **SAED32 (32/28 nm)** no corner conservador `saed32rvt_ss0p95v125c.db` (`0,95 V`, `125 °C`) e restrição de clock de `100 MHz` (`10,0 ns`). O design foi sintetizado com `compile_ultra -no_autoungroup` sem erros (`exit code = 0`), resultando em `1.256` células folha (`1.141` combinacionais e `115` flip-flops `DFFX1_RVT`, `0` latches inferidos), área de células de `3.523,45` $\mu\text{m}^2$ (`4.376,85` $\mu\text{m}^2$ com interconexão estimada), **fechamento de timing em `10,0 ns` com folga de setup `WNS = +3,21 ns` (`TNS = 0,00 ns`, 39 níveis lógicos no caminho crítico `in_sof -> u_crop_core -> u_resize_nn_core -> out_eof_reg/D`) e folga de hold `WNS = +0,16 ns` (`0` caminhos violados)**, `0` violações de DRC (`max_transition` / `max_capacitance`) e potência total estimada de `267,27` $\mu\text{W}$ (`104,07` $\mu\text{W}$ dinâmica + `163,20` $\mu\text{W}$ leakage a `125 °C`). Os artefatos mapeados (`.ddc`, `.v`, `.sdc`, `.sdf`, `.svf`) e relatórios brutos permanecem em `outputs/synthesis/` (fora do versionamento Git), e a evidência completa está registrada em `docs/evidencias/M8_sintese_dc.md`. As etapas de DFT/Scan (M9) e implementação física (M10) permanecem **NÃO EXECUTADAS**.
+
+
+## M9 — importação, protocolo e pré-DFT DRC — 2026-11-20
+
+Por autorização do usuário, foi criada a branch `feat/m9-dft-scan` a partir da
+`main` limpa, baseline `831812e`, e implementado `scripts/dft/`. Thiago é o
+responsável por RTL/síntese e Wagner por DFT, conforme confirmação nesta sessão.
+Os artefatos M8 estão versionados desde os commits de 2026-11-10; referências
+anteriores a esses artefatos como não versionados são históricas.
+
+Execução real: Fusion Compiler `X-2025.06-SP2` no Rocky Linux 8.10, usando SAED32
+RVT `ss0p95v125c` (slow/0,99, 0,95 V, 125 °C), confirmada no PVT efetivo das
+1.256 células. Netlist e SDC importados sem edição; 115 `DFFX1_RVT`, todos em
+`clk`, nenhuma referência não resolvida. O reset síncrono ativo baixo é mantido
+inativo no protocolo, sem alterar o cenário funcional. Células `SDFFX1_RVT` e
+`SDFFX2_RVT` estão disponíveis e sem `dont_use`.
+
+**Resultado pré-scan:** `dft_drc -verbose` executado, 115 FFs elegíveis/traced,
+zero elementos excluídos e zero violações de scan. O relatório completo registra
+94 avisos de build/modelagem (B10=44, B7=45, B8=4, N20=1). `check_design` registra
+136 warnings e zero erros; `check_timing -all` registra 1.256 warnings TCK-014.
+Os slacks +3,24 ns/+0,16 ns foram calculados com atraso zero de interconexão:
+não representam fechamento físico ou pós-scan. Nenhum aviso foi silenciado.
+
+Uma cadeia sem compressão e três portas dedicadas foram configuradas somente
+como hipótese na base derivada. A escolha é motivada pelos 115 FFs, clock único
+e ausência de clock gating; arquitetura final ainda depende de revisão e preview.
+Protocolo de teste de 100 ns, com bordas 45/55 ns. O SPF é preliminar, sem cadeia
+implementada. Não se declara cobertura ATPG nem M9 concluído.
+
+Licenças observadas nesta execução: `Fusion-Compiler-NX` e
+`Fusion-Compiler-FE-NX`, sem impedimento para pré-DFT. Replacement/insertion e
+ATPG ainda requerem validação operacional própria. **Scan replacement, preview,
+scan insertion, ATPG e físico NÃO EXECUTADOS**, conforme o limite solicitado.
+
+Evidência: [M9_pre_dft_fc.md](evidencias/M9_pre_dft_fc.md). Execução final local:
+`outputs/dft/runs/20261120T133126Z-TW0Czt/`, códigos de saída 0, manifests de
+RTL/M8 idênticos antes/depois. Scripts, resumo e quatro casos negativos de
+integridade/incompletude foram verificados. Nenhum commit/push realizado.
+
+Próximo passo: revisar B7/B8/B10/N20 e limitações de timing, validar as
+precondições de replacement com o FC em uma nova cópia do checkpoint e somente
+então executar replacement, novo DRC, preview e insertion em etapa separada.
+
+## M9 — precheck de scan replacement — 2026-11-20
+
+`compile_fusion -check_only -from initial_map -to logic_opto` concluiu no
+Fusion Compiler `X-2025.06-SP2`, em uma cópia de `pre_dft_protocol`, com
+`compile.seqmap.scan=true`. O FC retornou `1` e o processo saiu com código
+`0`. Os 115 DFFs permaneceram intactos. O precheck identificou avisos de
+site rows e direção de roteamento, sem bloqueio nesta checagem lógica.
+A substituição efetiva fica para uma execução separada. A classificação de
+B7, B8, B10 e N20 e os detalhes do teste constam na
+[evidência complementar](evidencias/M9_scan_replacement_precheck.md).
+
+## M9 — substituição por células scan — 2026-11-20
+
+O FC substituiu os 115 `DFFX1_RVT` por 115 `SDFFX1_RVT` em uma cópia
+de `pre_dft_protocol` com `set_reference -pin_rebind safe`. O mapeamento
+direto foi adotado após `initial_map` alterar a lógica combinacional e o
+scoreboard rejeitar a sua saída. O candidato manteve 1.141 combinacionais,
+o clock funcional de 10 ns e as conexões D/CLK/Q/QN. Com SE/SI em zero,
+o VCS aprovou 15/15 cenários e o pré-DFT DRC manteve 115 elementos rastreados,
+zero violações de scan e 94 avisos de build/modelagem. A área lógica cresceu
+6,64% e o setup reportado caiu de +3,2354 para +3,1652 ns, com atraso zero
+na interconexão. A base candidata tem zero cadeias. O próximo passo é
+`preview_dft` em uma cópia do candidato.
+[Evidência e reprodução](evidencias/M9_scan_replacement_fc.md).
+
+## M9 — preview da cadeia de scan — 2026-11-20
+
+Em uma cópia de `replacement_candidate`, o FC previu uma cadeia sem
+compressão de 115 `SDFFX1_RVT`, sem exclusões, de `scan_in` a `scan_out`,
+com `scan_enable` ativo em 1 e clock `clk`. O fluxo reaproveitou as células
+existentes e liberou explicitamente os 230 pinos SE/SI da constante
+`m9_scan_disabled`. As conexões funcionais e o inventário coincidiram antes
+e depois. O DRC reportou zero violações no resumo e 324 avisos detalhados,
+incluindo 230 B12 esperados pelos pinos liberados. A base continuou sem
+cadeias conectadas. A próxima etapa é repetir essa preparação em nova cópia
+e validar a conexão efetiva durante a inserção.
+[Evidência e reprodução](evidencias/M9_preview_dft_fc.md).
+
+## M9 — inserção e validação da cadeia — 2026-11-20
+
+O Fusion Compiler executou `insert_dft` em uma cópia de
+`replacement_candidate`, com proteção temporária das 1.141 células
+combinacionais. A cadeia real conecta os 115 SDFFs, sem exclusões, com 114
+enlaces internos, as duas pontas e 115 SEs verificados. O DRC pós-scan
+registrou zero violações no resumo e 91 avisos detalhados
+(B7=44, B8=2, B10=44, N20=1 e B12=0). O VCS passou 15/15 cenários
+funcionais e 460 pulsos de shift, incluindo captura e extração. A área
+lógica ficou em 3.757,2649 µm². Setup e hold diagnósticos foram +3,1652 ns
+e +0,2239 ns. Os artefatos pós-scan foram verificados em conjunto. Revisão
+dos avisos e validações de ATPG/físico seguem separadas desta entrega.
+[Evidência e reprodução](evidencias/M9_scan_insertion_fc.md).
+
+## M9 — revisão técnica e entrega de scan — 2026-11-20
+
+A revisão conferiu os artefatos exportados, os hashes das entradas e os
+resultados VCS já gravados. B7, B8 e B10 não afetam a cadeia. N20 ocorre no
+UDP gerado para `SDFFX1_RVT`, na borda de subida com SE desconhecido.
+O aviso não impediu o scan validado com SE definido. Seu efeito sobre
+ATPG permanece em aberto. M9 fica concluído no escopo de inserção e
+validação lógica de scan. M10, análise temporal física e ATPG ficam
+pendentes em seus escopos. [Revisão e rastreabilidade](evidencias/M9_resultado_final.md).
