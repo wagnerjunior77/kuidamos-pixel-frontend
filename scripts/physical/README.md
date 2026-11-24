@@ -64,6 +64,21 @@ no novo diretório local. A conexão física das células e a avaliação do
 acesso real às portas ficam para depois do placement.
 [Resultado do power planning](../../docs/evidencias/M10_power_planning.md)
 
+## Verificar a prontidão para placement
+
+Use uma execução validada de power planning e o SPF pós-scan de M9:
+
+```bash
+./scripts/physical/run_placement_precheck.sh \
+  /caminho/da/execucao-de-powerplan /caminho/scan_protocol.spf
+```
+
+O wrapper verifica a referência RVT, consulta os frames, analisa três
+modos de STA em dois corners e preserva a base PG. A execução registra
+as folgas e lacunas de cobertura sem alterar os checkpoints de origem.
+A confirmação da política de taps e a configuração de endcaps continuam
+pendentes. [Pré-verificação e condição para avançar](../../docs/evidencias/M10_placement_inicial.md)
+
 ## Sequência planejada
 
 | Etapa futura | Preparação e controles | Relatórios e métricas |

@@ -298,3 +298,14 @@ preservadas. A conexão física por célula depende de placement.
 Antes de aceitar placement, definir a política de células físicas e
 completar os cenários de shift e captura.
 [Evidência](evidencias/M10_power_planning.md).
+
+## M10 — pré-verificação de placement — 2026-11-24
+
+A análise confirmou `DCAP_RVT` como endcap e encontrou ties e fillers.
+A NDM RVT não apresentou taps dedicados nem views de layout para
+demonstrar contatos integrados. A política de tap e a orientação de
+endcaps continuam pendentes com a referência tecnológica. Placement
+não foi acionado. O FC ensaiou em memória os modos funcional, shift
+e captura estática em dois corners. Cobertura de I/O de teste e
+sequência de captura permanecem incompletas.
+[Evidência](evidencias/M10_placement_inicial.md).
