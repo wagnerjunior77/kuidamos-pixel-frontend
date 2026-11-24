@@ -48,6 +48,22 @@ salva e reabre `floorplan_initial`, compara a netlist com M9 e valida
 a geometria contra o DEF. Consulte `validation.txt` e `floorplan.svg`
 no diretório da execução. [Resultado do floorplan](../../docs/evidencias/M10_floorplan_inicial.md)
 
+## Executar o power planning inicial
+
+Use o diretório de uma execução validada de floorplan, com
+`kuidamos_preview.dlib:floorplan_initial.design`:
+
+```bash
+./scripts/physical/run_powerplan.sh /caminho/da/execucao-de-floorplan
+```
+
+O wrapper copia o checkpoint, executa PG, salva `powerplan_initial` e
+reabre a base em uma segunda sessão. Confere DRC, continuidade, geometria
+PG e integridade do floorplan. Consulte `validation.txt` e `powerplan.svg`
+no novo diretório local. A conexão física das células e a avaliação do
+acesso real às portas ficam para depois do placement.
+[Resultado do power planning](../../docs/evidencias/M10_power_planning.md)
+
 ## Sequência planejada
 
 | Etapa futura | Preparação e controles | Relatórios e métricas |

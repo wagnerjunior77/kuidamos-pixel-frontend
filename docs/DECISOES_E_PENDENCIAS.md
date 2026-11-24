@@ -287,3 +287,14 @@ restrições de borda e camada. A conectividade dos 115 SDFFs foi
 preservada. As checagens reportaram zero erros, com os avisos
 residuais documentados. O próximo passo é power planning e validação
 de PG/STA antes de placement. [Evidência](evidencias/M10_floorplan_inicial.md).
+
+## M10 — power planning inicial — 2026-11-24
+
+O FC salvou e reabriu `powerplan_initial` com dois anéis M7/M8,
+24 straps M5/M6, 53 rails M1, 1.766 vias e quatro terminais M7.
+PG DRC registrou zero erros e cada rede ficou contínua, sem
+objetos flutuantes. As 52 rows e a cadeia de 115 SDFFs foram
+preservadas. A conexão física por célula depende de placement.
+Antes de aceitar placement, definir a política de células físicas e
+completar os cenários de shift e captura.
+[Evidência](evidencias/M10_power_planning.md).
