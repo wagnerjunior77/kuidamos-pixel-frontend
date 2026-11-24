@@ -265,3 +265,25 @@ O aviso não impediu o scan validado com SE definido. Seu efeito sobre
 ATPG permanece em aberto. M9 fica concluído no escopo de inserção e
 validação lógica de scan. M10, análise temporal física e ATPG ficam
 pendentes em seus escopos. [Revisão e rastreabilidade](evidencias/M9_resultado_final.md).
+
+## M10 — preparação física — 2026-11-20
+
+O PR #2 integrou o M9. A branch local `feat/m10-physical-design` parte
+desse merge. O FC abriu uma cópia de `scan_inserted`, validou o handoff
+da cadeia e obteve checkout `Fusion-Compiler-BE-NX`. O precheck de
+floorplan terminou com zero erros e 139 avisos estruturais. A SAED32
+forneceu site, metais, vias e RC; a preparação confirmou a convenção de
+direções das camadas e o limite M9. O floorplan exploratório é a próxima
+execução. Definir PG físico, completar MMMC de teste e validar hold de
+shift antes da otimização. Floorplan, placement, CTS e routing ainda não
+foram executados. [Evidência M10](evidencias/M10_preparacao_physical.md).
+
+## M10 — floorplan inicial — 2026-11-24
+
+O FC salvou e reabriu `floorplan_initial`, derivado de `scan_inserted`.
+O core mede 86,488 × 86,944 µm, com utilização calculada de 49,9662%,
+margem de 6,688 µm e 52 site rows verificadas. As 126 portas receberam
+restrições de borda e camada. A conectividade dos 115 SDFFs foi
+preservada. As checagens reportaram zero erros, com os avisos
+residuais documentados. O próximo passo é power planning e validação
+de PG/STA antes de placement. [Evidência](evidencias/M10_floorplan_inicial.md).
