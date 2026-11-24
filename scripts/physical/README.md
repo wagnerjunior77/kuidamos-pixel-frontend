@@ -122,6 +122,30 @@ Os relatórios, DEF, netlist e SVG ficam na execução local. Veja as folgas
 com clock propagado, os DRVs e os limites de cobertura na
 [evidência de pinos e CTS](../../docs/evidencias/M10_cts_inicial.md).
 
+## Executar routing exploratório e extração
+
+Use uma execução CTS validada e o inventário de scan de M9. Mantenha
+`fc_shell` X-2025.06-SP2 e `vcs` no PATH e exporte `SAED32_REF_ROOT`
+para a referência RVT instalada.
+
+```bash
+./scripts/physical/run_routing.sh \
+  /caminho/da/execucao-cts-validada /caminho/actual_chain.tsv
+```
+
+O wrapper deriva `clock_routed`, faz routing global, track assignment
+e detailed routing, aplica ECOs, extrai Cmin/Cmax e verifica scan e
+a netlist no VCS. A promoção para `routing_initial` exige as
+verificações físicas e lógicas. O readback repete os checks. DEF,
+Scan DEF, netlist, SPEF, SDF, SVG e relatórios ficam em
+`outputs/physical/runs/`.
+
+Use `probe_routing_sdf.sh <execução de routing> <SDF>` para diagnosticar
+a anotação SDF no VCS. Use `--normalize-bus` em um segundo ensaio para
+converter os seletores de bits em uma cópia local do SDF. O código 4
+indica erro ou aviso de anotação. O diagnóstico usa pinos estáticos.
+[Resultados e cobertura do routing](../../docs/evidencias/M10_routing_inicial.md)
+
 ## Sequência do fluxo
 
 | Etapa | Preparação e controles | Relatórios e métricas |

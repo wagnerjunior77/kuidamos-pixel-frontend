@@ -344,3 +344,16 @@ VCS passaram 15/15 cenários funcionais e 460 pulsos de shift. O checkpoint
 DRVs remanescentes orientam a preparação do routing. A cobertura MMMC,
 os parasitas pós-route, taps/endcaps, latch-up, IR/EM e signoff físico
 permanecem pendentes. [Evidência](evidencias/M10_cts_inicial.md)
+
+## M10 — routing exploratório e extração — 2026-11-24
+
+A topologia de CTS foi roteada em seis redes. O fluxo de sinais
+roteou 1.485 das 1.487 redes lógicas, com duas entradas sem cargas,
+zero opens, zero DRC interno e zero PG DRC. O `route_opt` preservou
+os enlaces diretos protegidos e o ECO trocou nove SDFFs pela variante
+X2 sem alterar sua ordem. A regressão funcional VCS passou 15/15
+cenários e o shift verificou 460 pulsos. O fluxo extraiu quatro SPEFs
+Cmin/Cmax, reabriu `routing_initial` e confirmou o handoff. Permanecem
+duas violações de transição e quatro de capacitância por cenário,
+limites de MMMC e de anotação SDF, ATPG, taps/endcaps, latch-up,
+IR/EM e signoff independente. [Evidência](evidencias/M10_routing_inicial.md)
