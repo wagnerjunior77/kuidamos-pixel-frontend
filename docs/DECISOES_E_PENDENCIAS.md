@@ -309,3 +309,25 @@ não foi acionado. O FC ensaiou em memória os modos funcional, shift
 e captura estática em dois corners. Cobertura de I/O de teste e
 sequência de captura permanecem incompletas.
 [Evidência](evidencias/M10_placement_inicial.md).
+
+## M10 — placement exploratório bloqueado no PG DRC — 2026-11-24
+
+Em cópia da rede PG, o FC posicionou e legalizou as 1.256 células,
+com zero sobreposições. A malha continuou conectada a todos os pinos
+PG checados, mas o DRC colocado reportou 5.892 erros de espaçamento
+em M1. Os rails de 0,152 µm aparecem diretamente em 5.399 ocorrências.
+A tentativa mantém a cadeia de 115 SDFFs e os 52 sites rows. Corrigir
+a compatibilidade célula–rail em base derivada e repetir a verificação
+antes de CTS. A política de tap e endcap segue pendente para signoff.
+[Evidência](evidencias/M10_placement_inicial.md#segunda-execução--placement-exploratório).
+
+## M10 — correção M1 e placement validado — 2026-11-24
+
+Em cópia do power plan, os 53 rails M1 foram reduzidos de 0,152
+para 0,060 µm, com eixos, malha superior e 1.766 vias preservados.
+A nova colocação legalizou as 1.256 células, com PG DRC zero e
+contato físico de todos os pinos VDD/VSS. As 52 rows e a cadeia
+de 115 SDFFs conferiram. `powerplan_corrected` e `placement_initial`
+foram salvos e reabertos. Liberada a preparação de CTS exploratório,
+com acesso a pinos, DRVs, MMMC de teste e política de taps/endcaps
+pendentes. [Evidência](evidencias/M10_correcao_pg_placement.md).

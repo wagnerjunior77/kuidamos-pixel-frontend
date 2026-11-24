@@ -43,7 +43,7 @@ check_protected() {
 }
 trap check_protected EXIT
 
-sha256sum "$scripts"/{run_placement_precheck.sh,placement_precheck.tcl} "$spf" > inputs.sha256
+sha256sum "$scripts"/{run_placement_precheck.sh,placement_precheck.tcl,placement_timing.tcl} "$spf" > inputs.sha256
 cp -a -- "$checkpoint" .
 cp -- "$spf" protocol.spf
 timeout -k 5s 30s "$fc" -version > version.log 2>&1

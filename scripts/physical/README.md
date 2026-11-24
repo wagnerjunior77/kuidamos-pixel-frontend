@@ -79,6 +79,31 @@ as folgas e lacunas de cobertura sem alterar os checkpoints de origem.
 A confirmação da política de taps e a configuração de endcaps continuam
 pendentes. [Pré-verificação e condição para avançar](../../docs/evidencias/M10_placement_inicial.md)
 
+## Executar placement geométrico exploratório
+
+Use o mesmo power plan validado e o SPF pós-scan:
+
+```bash
+./scripts/physical/run_placement.sh \
+  /caminho/da/execucao-de-powerplan /caminho/scan_protocol.spf
+```
+
+O wrapper copia o checkpoint PG, posiciona, legaliza e confere o
+DEF, a netlist e a conectividade. O código 4 indica que o diagnóstico
+terminou e o PG DRC bloqueou o aceite. Nesse caso, DEF, SVG e
+relatórios são preservados no diretório local da tentativa.
+[Resultado do ensaio](../../docs/evidencias/M10_placement_inicial.md#segunda-execução--placement-exploratório)
+
+## Executar a correção M1 e validar placement
+
+Use o mesmo comando de placement exploratório com a opção
+`--correct-m1` após o argumento do SPF. O fluxo corrige os
+rails na cópia da base, posiciona e valida. Em caso de sucesso,
+reabre `powerplan_corrected` e `placement_initial` em outra sessão
+e cruza o DEF, a netlist e o PG. As instruções de auditoria
+dos marcadores M1 estão na evidência.
+[Correção M1 e checks](../../docs/evidencias/M10_correcao_pg_placement.md)
+
 ## Sequência planejada
 
 | Etapa futura | Preparação e controles | Relatórios e métricas |
