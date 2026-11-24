@@ -331,3 +331,16 @@ de 115 SDFFs conferiram. `powerplan_corrected` e `placement_initial`
 foram salvos e reabertos. Liberada a preparação de CTS exploratório,
 com acesso a pinos, DRVs, MMMC de teste e política de taps/endcaps
 pendentes. [Evidência](evidencias/M10_correcao_pg_placement.md).
+
+## M10 — pinos e CTS exploratório — 2026-11-24
+
+Foram validadas 126 portas em M3/M4, com zero violações no check de pinos.
+O ensaio inicial de CTS preservava 115 cargas diretamente na porta
+ideal. Foi escolhido um driver RVT na raiz para distribuir a carga com
+buffers internos. A topologia de cinco buffers e 115 sinks passou nos
+checks de legalização, PG e scan. A ordem M9 conferiu, e as simulações
+VCS passaram 15/15 cenários funcionais e 460 pulsos de shift. O checkpoint
+`cts_initial` foi reaberto. O hold funcional fast de +0,0644 ns e os
+DRVs remanescentes orientam a preparação do routing. A cobertura MMMC,
+os parasitas pós-route, taps/endcaps, latch-up, IR/EM e signoff físico
+permanecem pendentes. [Evidência](evidencias/M10_cts_inicial.md)

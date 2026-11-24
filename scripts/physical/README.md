@@ -104,9 +104,27 @@ e cruza o DEF, a netlist e o PG. As instruções de auditoria
 dos marcadores M1 estão na evidência.
 [Correção M1 e checks](../../docs/evidencias/M10_correcao_pg_placement.md)
 
-## Sequência planejada
+## Posicionar pinos e executar CTS exploratório
 
-| Etapa futura | Preparação e controles | Relatórios e métricas |
+Use o placement validado e a ordem real da cadeia M9, com `fc_shell`
+X-2025.06-SP2 e `vcs` disponíveis. A variável `SAED32_REF_ROOT`
+indica o diretório `ref` para o modelo Verilog do VCS.
+
+```bash
+./scripts/physical/run_cts.sh \
+  /caminho/da/execucao-de-placement-validada /caminho/actual_chain.tsv
+```
+
+O fluxo gera uma cópia da DLIB em `outputs/physical/runs/`, salva
+`pins_initial`, sintetiza e legaliza a árvore de clock, verifica PG e
+scan e executa as regressões VCS. Depois promove e reabre `cts_initial`.
+Os relatórios, DEF, netlist e SVG ficam na execução local. Veja as folgas
+com clock propagado, os DRVs e os limites de cobertura na
+[evidência de pinos e CTS](../../docs/evidencias/M10_cts_inicial.md).
+
+## Sequência do fluxo
+
+| Etapa | Preparação e controles | Relatórios e métricas |
 |---|---|---|
 | Floorplan e PG | Derivar novo checkpoint de `scan_inserted`. Configurar direções de camada e RC, usar o site `unit`, definir die/core e margens, planejar pinos por interface e trilhos/mesh `VDD`/ `VSS`. Confirmar regra de tap/endcap da referência. Começar com núcleo aproximadamente quadrado e densidade nominal de 50% como hipótese de exploração. | Dimensões de die/core, área, utilização, site rows/tracks, acesso aos pinos, conectividade e DRC de PG, log e checkpoint. |
 | Placement | Executar após validação de PG e da cobertura MMMC funcional e de teste. Manter a ordem M9 na primeira passagem e controlar a opção de reordenação. Verificar legalização. | Posicionadas/não posicionadas, `check_legality`, densidade, congestionamento, área, WNS/TNS, endpoints violados e DRVs por cenário, inventário e ordem de scan. |
