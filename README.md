@@ -47,7 +47,7 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M8 | Síntese e análise de timing | Validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET com slack `+3,21 ns`) |
 | M9 | DFT e scan | **Concluído no escopo de scan**. Uma cadeia de 115 SDFFs, DFT DRC pós-scan e testes funcional e de shift no VCS. |
 | M10 | Implementação física | **Concluído no escopo acadêmico.** Routing, extração, STA pós-route e estimativa de potência documentados. Signoff e regressão temporal com SDF pendentes. |
-| M11 | Documentação final | Não iniciado |
+| M11 | Documentação final | [Relatório 0.1](docs/m11/relatorio_tecnico_final.md) e [manual](docs/m11/manual_reproducao.md) prontos para revisão humana. |
 
 Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte**, a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 falhas)** e a **síntese lógica M8 no Synopsys Design Compiler `X-2025.06-SP2` (SAED32 `saed32rvt_ss0p95v125c.db`) fechou timing em 100 MHz (10,0 ns) com folga de setup `+3,21 ns`, folga de hold `+0,16 ns`, 0 latches e 0 violações de DRC**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md), da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md) e da [síntese lógica M8 no Design Compiler](docs/evidencias/M8_sintese_dc.md).
 

@@ -370,3 +370,25 @@ O escopo acadêmico de M10 foi atendido. Permanecem pendentes a
 regressão temporal com anotação SDF completa, ATPG, MMMC integral
 de teste, células físicas de signoff, latch-up, antena, IR/EM e
 verificação independente. [Resultado final e reprodução](evidencias/M10_resultado_final.md)
+
+## M11 — planejamento da documentação final — 2026-11-25
+
+O M10 foi integrado pelo PR #3. O merge `3fb7875` é a base da
+branch local `docs/m11-final-documentation`. O M11 começou com o
+inventário da documentação, a matriz de requisitos oficiais e
+o roteiro dos 13 capítulos. O recorte do resize V1 ainda requer
+registro de validação do professor. O experimento de imagem real
+tem evidência no Golden Model e a regressão RTL registrada usa
+estímulos sintéticos. Permanecem a redação, o manual consolidado
+e a revisão dos responsáveis. [Matriz](m11/matriz_rastreabilidade.md) · [Plano do relatório](m11/plano_relatorio_final.md)
+
+### Demonstração complementar e versão 0.1 — 2026-11-25
+
+O caso de imagem real passou no RTL e na netlist de `physical_final`.
+Cada execução comparou 5.035 pixels, com zero divergências de valor,
+ordem ou marcador. A captura do DUT gerou a imagem reconstruída e
+o mapa de diferenças. Os comparativos fotográficos ficaram locais
+porque a autoria e a licença não constam das fontes do repositório.
+O relatório de 13 capítulos, a matriz atualizada e o manual estão
+prontos para revisão humana. A validação do recorte de resize pelo
+professor permanece pendente. [Evidência VCS](evidencias/M11_imagem_real_vcs.md) · [Relatório 0.1](m11/relatorio_tecnico_final.md)
