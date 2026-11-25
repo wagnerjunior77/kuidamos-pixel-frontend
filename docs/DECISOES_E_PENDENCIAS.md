@@ -415,3 +415,12 @@ permanecem na cópia local. O aceite do professor sobre o recorte de
 resize segue pendente, assim como a revisão dos integrantes e o
 registro de autoria e licença da fotografia.
 [Relatório 0.2](m11/relatorio_tecnico_final.md) · [Manual](m11/manual_reproducao.md) · [Checklist](m11/checklist_revisao.md)
+
+### Autorização de publicação do PDF M11 — 2026-11-25
+
+O responsável pela entrega autorizou expressamente a publicação no GitHub
+do [relatório técnico de 14 páginas](m11/KUIDAMOS_6C_relatorio_tecnico.pdf)
+na branch `docs/m11-final-documentation`, no PR #4. O arquivo foi copiado
+byte a byte do pacote local. A licença da fotografia incluída no relatório
+ainda não foi identificada. A autorização registrada se refere a este PDF.
+As montagens avulsas permanecem no pacote local.
