@@ -265,3 +265,108 @@ O aviso não impediu o scan validado com SE definido. Seu efeito sobre
 ATPG permanece em aberto. M9 fica concluído no escopo de inserção e
 validação lógica de scan. M10, análise temporal física e ATPG ficam
 pendentes em seus escopos. [Revisão e rastreabilidade](evidencias/M9_resultado_final.md).
+
+## M10 — preparação física — 2026-11-20
+
+O PR #2 integrou o M9. A branch local `feat/m10-physical-design` parte
+desse merge. O FC abriu uma cópia de `scan_inserted`, validou o handoff
+da cadeia e obteve checkout `Fusion-Compiler-BE-NX`. O precheck de
+floorplan terminou com zero erros e 139 avisos estruturais. A SAED32
+forneceu site, metais, vias e RC; a preparação confirmou a convenção de
+direções das camadas e o limite M9. O floorplan exploratório é a próxima
+execução. Definir PG físico, completar MMMC de teste e validar hold de
+shift antes da otimização. Floorplan, placement, CTS e routing ainda não
+foram executados. [Evidência M10](evidencias/M10_preparacao_physical.md).
+
+## M10 — floorplan inicial — 2026-11-24
+
+O FC salvou e reabriu `floorplan_initial`, derivado de `scan_inserted`.
+O core mede 86,488 × 86,944 µm, com utilização calculada de 49,9662%,
+margem de 6,688 µm e 52 site rows verificadas. As 126 portas receberam
+restrições de borda e camada. A conectividade dos 115 SDFFs foi
+preservada. As checagens reportaram zero erros, com os avisos
+residuais documentados. O próximo passo é power planning e validação
+de PG/STA antes de placement. [Evidência](evidencias/M10_floorplan_inicial.md).
+
+## M10 — power planning inicial — 2026-11-24
+
+O FC salvou e reabriu `powerplan_initial` com dois anéis M7/M8,
+24 straps M5/M6, 53 rails M1, 1.766 vias e quatro terminais M7.
+PG DRC registrou zero erros e cada rede ficou contínua, sem
+objetos flutuantes. As 52 rows e a cadeia de 115 SDFFs foram
+preservadas. A conexão física por célula depende de placement.
+Antes de aceitar placement, definir a política de células físicas e
+completar os cenários de shift e captura.
+[Evidência](evidencias/M10_power_planning.md).
+
+## M10 — pré-verificação de placement — 2026-11-24
+
+A análise confirmou `DCAP_RVT` como endcap e encontrou ties e fillers.
+A NDM RVT não apresentou taps dedicados nem views de layout para
+demonstrar contatos integrados. A política de tap e a orientação de
+endcaps continuam pendentes com a referência tecnológica. Placement
+não foi acionado. O FC ensaiou em memória os modos funcional, shift
+e captura estática em dois corners. Cobertura de I/O de teste e
+sequência de captura permanecem incompletas.
+[Evidência](evidencias/M10_placement_inicial.md).
+
+## M10 — placement exploratório bloqueado no PG DRC — 2026-11-24
+
+Em cópia da rede PG, o FC posicionou e legalizou as 1.256 células,
+com zero sobreposições. A malha continuou conectada a todos os pinos
+PG checados, mas o DRC colocado reportou 5.892 erros de espaçamento
+em M1. Os rails de 0,152 µm aparecem diretamente em 5.399 ocorrências.
+A tentativa mantém a cadeia de 115 SDFFs e os 52 sites rows. Corrigir
+a compatibilidade célula–rail em base derivada e repetir a verificação
+antes de CTS. A política de tap e endcap segue pendente para signoff.
+[Evidência](evidencias/M10_placement_inicial.md#segunda-execução--placement-exploratório).
+
+## M10 — correção M1 e placement validado — 2026-11-24
+
+Em cópia do power plan, os 53 rails M1 foram reduzidos de 0,152
+para 0,060 µm, com eixos, malha superior e 1.766 vias preservados.
+A nova colocação legalizou as 1.256 células, com PG DRC zero e
+contato físico de todos os pinos VDD/VSS. As 52 rows e a cadeia
+de 115 SDFFs conferiram. `powerplan_corrected` e `placement_initial`
+foram salvos e reabertos. Liberada a preparação de CTS exploratório,
+com acesso a pinos, DRVs, MMMC de teste e política de taps/endcaps
+pendentes. [Evidência](evidencias/M10_correcao_pg_placement.md).
+
+## M10 — pinos e CTS exploratório — 2026-11-24
+
+Foram validadas 126 portas em M3/M4, com zero violações no check de pinos.
+O ensaio inicial de CTS preservava 115 cargas diretamente na porta
+ideal. Foi escolhido um driver RVT na raiz para distribuir a carga com
+buffers internos. A topologia de cinco buffers e 115 sinks passou nos
+checks de legalização, PG e scan. A ordem M9 conferiu, e as simulações
+VCS passaram 15/15 cenários funcionais e 460 pulsos de shift. O checkpoint
+`cts_initial` foi reaberto. O hold funcional fast de +0,0644 ns e os
+DRVs remanescentes orientam a preparação do routing. A cobertura MMMC,
+os parasitas pós-route, taps/endcaps, latch-up, IR/EM e signoff físico
+permanecem pendentes. [Evidência](evidencias/M10_cts_inicial.md)
+
+## M10 — routing exploratório e extração — 2026-11-24
+
+A topologia de CTS foi roteada em seis redes. O fluxo de sinais
+roteou 1.485 das 1.487 redes lógicas, com duas entradas sem cargas,
+zero opens, zero DRC interno e zero PG DRC. O `route_opt` preservou
+os enlaces diretos protegidos e o ECO trocou nove SDFFs pela variante
+X2 sem alterar sua ordem. A regressão funcional VCS passou 15/15
+cenários e o shift verificou 460 pulsos. O fluxo extraiu quatro SPEFs
+Cmin/Cmax, reabriu `routing_initial` e confirmou o handoff. Permanecem
+duas violações de transição e quatro de capacitância por cenário,
+limites de MMMC e de anotação SDF, ATPG, taps/endcaps, latch-up,
+IR/EM e signoff independente. [Evidência](evidencias/M10_routing_inicial.md)
+
+## M10 — fechamento acadêmico — 2026-11-25
+
+O ECO final zerou transição e capacitância nos seis cenários, com
+zero opens, DRC interno e PG DRC. A topologia e geometria da árvore
+de clock e a ordem dos 115 SDFFs conferiram. O VCS passou 15/15
+cenários e 460 pulsos de shift sobre a netlist final. A estimativa
+pós-route com SAIF foi 358,3551 µW a 0,95 V e 125 °C. O
+`physical_final` foi reaberto e os artefatos têm hashes registrados.
+O escopo acadêmico de M10 foi atendido. Permanecem pendentes a
+regressão temporal com anotação SDF completa, ATPG, MMMC integral
+de teste, células físicas de signoff, latch-up, antena, IR/EM e
+verificação independente. [Resultado final e reprodução](evidencias/M10_resultado_final.md)

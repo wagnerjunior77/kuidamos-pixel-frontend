@@ -1,0 +1,185 @@
+# M10 — preparação para implementação física no Fusion Compiler
+
+O diagnóstico usa a versão `X-2025.06-SP2` e uma cópia do handoff M9.
+Os resultados observados e o estado das licenças estão na
+[evidência de preparação](../../docs/evidencias/M10_preparacao_physical.md).
+
+## Executar o diagnóstico
+
+Carregue o ambiente Synopsys já configurado e execute na raiz do repositório.
+
+```bash
+export SAED32_REF_ROOT=/caminho/da/instalacao/ref
+./scripts/physical/run_readiness.sh /caminho/da/execucao-de-insercao-m9
+```
+
+Use como argumento o diretório de inserção criado por `insert_scan.tcl`,
+com `kuidamos_preview.dlib/scan_inserted` e os relatórios de M9. O guia de
+M9 contém a receita de regeneração. A DLIB registra o caminho da NDM
+referenciada. Se a biblioteca foi movida, regenere o handoff com o novo
+caminho ou restabeleça a referência em uma cópia de trabalho. [Guia do M9](../dft/README.md)
+
+O wrapper usa Bash, GNU coreutils, Python 3 e `fc_shell`. `FC_SHELL`
+permite indicar o executável e `M10_TIMEOUT_SECONDS` define o timeout
+(padrão 180 s). Cada execução cria um diretório novo ignorado pelo Git
+em `outputs/physical/runs/`, copia a DLIB, valida netlist, SPF, Scan DEF e
+inventário M9, e confere os hashes das entradas após o FC. O Tcl abre
+`scan_inserted`, testa as licenças, examina tecnologia e PG, e ensaia
+direções, RC e cenário de shift em memória. A cópia original do M9
+permanece como fonte. O Tcl termina sem salvar as configurações do ensaio.
+
+Consulte `fc.log`, `handoff.log`, `tool_exit_code.txt` e `reports/`.
+`M10_READINESS_CHECKS_COMPLETED` significa que o diagnóstico chegou ao
+fim. Os relatórios ainda mostram avisos e as lacunas de STA. O Scan DEF é
+lido com `-syntax_only`. Os arquivos completos de tecnologia, DLIB, netlist,
+SPF, Scan DEF e logs ficam no ambiente local.
+
+## Executar o floorplan inicial
+
+Com o mesmo ambiente e diretório de inserção M9:
+
+```bash
+./scripts/physical/run_floorplan.sh /caminho/da/execucao-de-insercao-m9
+```
+
+O Tcl deriva o contorno para aproximadamente 50% de utilização, cria
+as rows, gera as trilhas e define as restrições das portas. O wrapper
+salva e reabre `floorplan_initial`, compara a netlist com M9 e valida
+a geometria contra o DEF. Consulte `validation.txt` e `floorplan.svg`
+no diretório da execução. [Resultado do floorplan](../../docs/evidencias/M10_floorplan_inicial.md)
+
+## Executar o power planning inicial
+
+Use o diretório de uma execução validada de floorplan, com
+`kuidamos_preview.dlib:floorplan_initial.design`:
+
+```bash
+./scripts/physical/run_powerplan.sh /caminho/da/execucao-de-floorplan
+```
+
+O wrapper copia o checkpoint, executa PG, salva `powerplan_initial` e
+reabre a base em uma segunda sessão. Confere DRC, continuidade, geometria
+PG e integridade do floorplan. Consulte `validation.txt` e `powerplan.svg`
+no novo diretório local. A conexão física das células e a avaliação do
+acesso real às portas ficam para depois do placement.
+[Resultado do power planning](../../docs/evidencias/M10_power_planning.md)
+
+## Verificar a prontidão para placement
+
+Use uma execução validada de power planning e o SPF pós-scan de M9:
+
+```bash
+./scripts/physical/run_placement_precheck.sh \
+  /caminho/da/execucao-de-powerplan /caminho/scan_protocol.spf
+```
+
+O wrapper verifica a referência RVT, consulta os frames, analisa três
+modos de STA em dois corners e preserva a base PG. A execução registra
+as folgas e lacunas de cobertura sem alterar os checkpoints de origem.
+A confirmação da política de taps e a configuração de endcaps continuam
+pendentes. [Pré-verificação e condição para avançar](../../docs/evidencias/M10_placement_inicial.md)
+
+## Executar placement geométrico exploratório
+
+Use o mesmo power plan validado e o SPF pós-scan:
+
+```bash
+./scripts/physical/run_placement.sh \
+  /caminho/da/execucao-de-powerplan /caminho/scan_protocol.spf
+```
+
+O wrapper copia o checkpoint PG, posiciona, legaliza e confere o
+DEF, a netlist e a conectividade. O código 4 indica que o diagnóstico
+terminou e o PG DRC bloqueou o aceite. Nesse caso, DEF, SVG e
+relatórios são preservados no diretório local da tentativa.
+[Resultado do ensaio](../../docs/evidencias/M10_placement_inicial.md#segunda-execução--placement-exploratório)
+
+## Executar a correção M1 e validar placement
+
+Use o mesmo comando de placement exploratório com a opção
+`--correct-m1` após o argumento do SPF. O fluxo corrige os
+rails na cópia da base, posiciona e valida. Em caso de sucesso,
+reabre `powerplan_corrected` e `placement_initial` em outra sessão
+e cruza o DEF, a netlist e o PG. As instruções de auditoria
+dos marcadores M1 estão na evidência.
+[Correção M1 e checks](../../docs/evidencias/M10_correcao_pg_placement.md)
+
+## Posicionar pinos e executar CTS exploratório
+
+Use o placement validado e a ordem real da cadeia M9, com `fc_shell`
+X-2025.06-SP2 e `vcs` disponíveis. A variável `SAED32_REF_ROOT`
+indica o diretório `ref` para o modelo Verilog do VCS.
+
+```bash
+./scripts/physical/run_cts.sh \
+  /caminho/da/execucao-de-placement-validada /caminho/actual_chain.tsv
+```
+
+O fluxo gera uma cópia da DLIB em `outputs/physical/runs/`, salva
+`pins_initial`, sintetiza e legaliza a árvore de clock, verifica PG e
+scan e executa as regressões VCS. Depois promove e reabre `cts_initial`.
+Os relatórios, DEF, netlist e SVG ficam na execução local. Veja as folgas
+com clock propagado, os DRVs e os limites de cobertura na
+[evidência de pinos e CTS](../../docs/evidencias/M10_cts_inicial.md).
+
+## Executar routing exploratório e extração
+
+Use uma execução CTS validada e o inventário de scan de M9. Mantenha
+`fc_shell` X-2025.06-SP2 e `vcs` no PATH e exporte `SAED32_REF_ROOT`
+para a referência RVT instalada.
+
+```bash
+./scripts/physical/run_routing.sh \
+  /caminho/da/execucao-cts-validada /caminho/actual_chain.tsv
+```
+
+O wrapper deriva `clock_routed`, faz routing global, track assignment
+e detailed routing, aplica ECOs, extrai Cmin/Cmax e verifica scan e
+a netlist no VCS. A promoção para `routing_initial` exige as
+verificações físicas e lógicas. O readback repete os checks. DEF,
+Scan DEF, netlist, SPEF, SDF, SVG e relatórios ficam em
+`outputs/physical/runs/`.
+
+Use `probe_routing_sdf.sh <execução de routing> <SDF>` para diagnosticar
+a anotação SDF no VCS. Use `--normalize-bus` em um segundo ensaio para
+converter os seletores de bits em uma cópia local do SDF. O código 4
+indica erro ou aviso de anotação. O diagnóstico usa pinos estáticos.
+[Resultados e cobertura do routing](../../docs/evidencias/M10_routing_inicial.md)
+
+## Fechar a entrega física acadêmica
+
+Com o routing validado, reutilize o inventário real de scan. O fluxo
+usa `fc_shell` X-2025.06-SP2 e `vcs` no PATH. A variável
+`SAED32_REF_ROOT` aponta para a referência RVT usada na simulação.
+
+```bash
+./scripts/physical/run_physical_final.sh \
+  /caminho/da/execucao-de-routing /caminho/actual_chain.tsv
+```
+
+O fluxo aplica o ECO, testa PG, rotas, scan e STA, exporta os
+parasitas e gera SAIF no teste funcional. A análise de potência
+usa uma cópia específica do mesmo candidato. A promoção para
+`physical_final` vem após os checks e as regressões VCS. O
+readback repete as verificações físicas e estruturais.
+[Resultado final de M10](../../docs/evidencias/M10_resultado_final.md).
+
+## Sequência do fluxo
+
+| Etapa | Preparação e controles | Relatórios e métricas |
+|---|---|---|
+| Floorplan e PG | Derivar novo checkpoint de `scan_inserted`. Configurar direções de camada e RC, usar o site `unit`, definir die/core e margens, planejar pinos por interface e trilhos/mesh `VDD`/ `VSS`. Confirmar regra de tap/endcap da referência. Começar com núcleo aproximadamente quadrado e densidade nominal de 50% como hipótese de exploração. | Dimensões de die/core, área, utilização, site rows/tracks, acesso aos pinos, conectividade e DRC de PG, log e checkpoint. |
+| Placement | Executar após validação de PG e da cobertura MMMC funcional e de teste. Manter a ordem M9 na primeira passagem e controlar a opção de reordenação. Verificar legalização. | Posicionadas/não posicionadas, `check_legality`, densidade, congestionamento, área, WNS/TNS, endpoints violados e DRVs por cenário, inventário e ordem de scan. |
+| CTS | Confirmar referências de buffer/inversor e restrições em `clk`. Medir `scan_enable` como sinal de controle de alto fanout. Reavaliar hold de shift antes e depois de propagar clocks. | `report_clock_qor`, sinks, skew, latência, transição, área inserida, WNS/TNS e hold funcional e de teste. |
+| Routing | Validar vias, regras e camadas, executar roteamento incremental e extrair RC para análise. Verificar continuidade e preservar pinos seriais/SE. | `check_routes`, DRC do roteador, opens/shorts, comprimento/vias, SPEF, área e WNS/TNS/DRV por corner e modo. |
+| Verificações finais | Fechar coerência de netlist, Scan DEF e SPF. Se houver reordenação, reexportar e comparar a ordem, reconferir cadeia/DRC e rodar shift com a ordem final. Verificar metodologia, runsets e ferramentas de signoff conforme o ambiente. | Timing com parasitas, cobertura SDC, integridade de PG, hierarquia e scan. Potência com atividade e condições registradas. Distinguir verificação interna do FC de signoff independente. |
+
+A referência funcional é 10 ns em `ss0p95v125c`. O modo funcional deve
+fixar `scan_enable=0`. Para shift, o SPF fornece `clk` de 100 ns com
+bordas 45/55 ns, `scan_enable=1` e reset síncrono inativo. Os delays/cargas
+externos de `scan_in` e `scan_out` e as condições de captura ainda
+precisam de especificação. Para análise min/max, selecionar PVT fast/slow
+compatíveis com as bibliotecas e RC, revisar incertezas e medir cobertura.
+Período de shift longo reduz pressão de setup, mas hold depende de skew,
+caminhos curtos e parasitas. Congestionamento nas bordas, acesso ao PG e
+carga de SE/clock devem orientar as primeiras iterações.

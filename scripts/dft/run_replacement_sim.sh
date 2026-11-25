@@ -25,6 +25,7 @@ cd -- "$sim_run"
 sha256sum "$model" "$netlist" "$root/tb/tb_kuidamos_pixel_frontend.sv" > inputs.sha256
 
 python3 - "$root/tb/tb_kuidamos_pixel_frontend.sv" "$variant" <<'PY'
+import os
 import re
 import sys
 from pathlib import Path
@@ -44,6 +45,20 @@ if sys.argv[2] != "m8":
     source = source.replace(anchor, anchor + "        .scan_enable (1'b0),\n"
                             "        .scan_in (1'b0),\n"
                             "        .scan_out (),\n")
+if os.environ.get("KUIDAMOS_ACTIVITY_SAIF") == "1":
+    anchor = "    kuidamos_pixel_frontend u_dut (\n"
+    finish = '            $display("OVERALL RESULT: PASS");'
+    if source.count(anchor) != 1 or source.count(finish) != 1:
+        sys.exit("Não foi possível instrumentar a regressão para SAIF.")
+    source = source.replace(anchor, """    initial begin
+        $set_toggle_region(u_dut);
+        $toggle_start;
+    end
+
+""" + anchor)
+    source = source.replace(finish, """            $toggle_stop;
+            $toggle_report("activity.saif", 1.0e-9, u_dut);
+""" + finish)
 Path("tb_gate.sv").write_text(source)
 PY
 
@@ -54,3 +69,7 @@ timeout -k 10s 180s vcs -full64 -sverilog +notimingcheck \
 timeout -k 10s 120s ./simv -exitstatus "+VECTOR_DIR=$root/vectors/m2" -l simulation.log
 rg -q 'cases_passed=15/15 .*cycles_checked=2618 .*scoreboard_mismatches=0' simulation.log
 rg -q '^OVERALL RESULT: PASS$' simulation.log
+if [[ ${KUIDAMOS_ACTIVITY_SAIF:-0} == 1 ]]; then
+    [[ -s activity.saif ]]
+    printf 'SAIF_FILE %s\n' "$PWD/activity.saif"
+fi
