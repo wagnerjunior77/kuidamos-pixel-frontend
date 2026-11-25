@@ -16,6 +16,8 @@ Atualização em 2026-11-09: **Síntese lógica e análise de timing (M8) execut
 
 Atualização em 2026-11-20: **M9 concluído no escopo de scan** no Fusion Compiler `X-2025.06-SP2`. Uma cadeia conecta os 115 `SDFFX1_RVT` sem exclusões. O DFT DRC pós-scan registra zero violações no resumo e 91 avisos detalhados. O VCS passou 15/15 cenários funcionais e verificou 460 pulsos de shift, incluindo captura e extração. ATPG e M10 continuam pendentes. Thiago responde por RTL/síntese e Wagner por DFT. [Resultado final de M9](evidencias/M9_resultado_final.md).
 
+Atualização em 2026-11-25. **M10 concluído no escopo acadêmico da seção 6C.** O Fusion Compiler executou a implementação física e as análises pós-route, incluindo área, STA e estimativa de potência com SAIF da regressão. Os checks internos, os DRVs e o handoff de scan foram validados. Anotação temporal completa, ATPG e signoff independente permanecem pendentes. [Resultado final de M10](evidencias/M10_resultado_final.md).
+
 ## Dependências e evidências
 
 `M0 especificação → M1 modelo → M2 vetores → M3 passagem/grayscale → M4 crop → M5 resize → M6 threshold/integração → M7 regressão → M8 síntese → M9 DFT → M10 físico → M11 documentação`. Scoreboard e assertions crescem desde M3; M7 consolida. Diagnóstico de ferramentas pode ocorrer cedo, sem pressupor licenças ou bibliotecas. Cada marco registra versões, comando, data, configurações, código de saída, logs e limitações; dados protegidos ficam fora do versionamento.
@@ -33,7 +35,7 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 | M7 | Thiago (RTL), com apoio de Wagner | TB/Scoreboard/SVA implementados em `tb/` e validados no Synopsys VCS (15/15 PASS) |
 | M8 | Thiago (RTL/síntese), conforme confirmação de 2026-11-20 | Implementado e validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET) |
 | M9 | Wagner (DFT) | Concluído no escopo de scan. Cadeia validada estruturalmente e no VCS. |
-| M10 | Wagner e Thiago | A realizar |
+| M10 | Wagner e Thiago | Entrega acadêmica consolidada |
 | M11 | Wagner e Thiago | A realizar |
 
 As atribuições de revisão descrevem a proposta de organização; não afirmam que a revisão já ocorreu.
@@ -50,9 +52,9 @@ As atribuições de revisão descrevem a proposta de organização; não afirmam
 | M7 — verificação consolidada — VALIDADO EM VCS | `tb/` com scoreboard, SVA concorrente/procedural e `scripts/verification/run_vcs.sh` | `./scripts/verification/run_vcs.sh` no Synopsys VCS `X-2025.06-SP2_Full64`; PASS = 15/15 cenários, 2.618 ciclos, 0 divergências e 0 erros SVA | `docs/evidencias/M3_M7_verificacao_vcs.md` |
 | M8 — síntese/timing — VALIDADO EM DC | `scripts/synthesis/`, `constraints/kuidamos_pixel_frontend.sdc`, relatórios DC | `./scripts/synthesis/run_dc.sh` no `dc_shell X-2025.06-SP2` (`saed32rvt_ss0p95v125c.db`); PASS = 0 erros, 0 latches, 0 violações DRC, setup slack `+3,21 ns` e hold slack `+0,16 ns` em `10,0 ns` | `docs/evidencias/M8_sintese_dc.md` |
 | M9 — DFT/scan | `scripts/dft/` e artefatos locais em `outputs/dft/` | Pré-DFT, replacement, preview e inserção validados. Um caminho de 115 SDFFs, 15/15 cenários funcionais e 460 pulsos de shift verificados | [Resultado, rastreabilidade e avisos](evidencias/M9_resultado_final.md). ATPG é extensão condicionada a escopo e licença. |
-| M10 — físico | `physical/`, relatórios Fusion Compiler; depende M9 e tecnologia disponível | Fluxo `fc_shell` documentado conforme ambiente; PASS = execução reproduzível até onde suportado e relatórios disponíveis de área/timing/potência, com restrições e falhas | Logs, versões, constraints, PDK/biblioteca identificados e relatórios permitidos |
+| M10 — físico | `scripts/physical/` e relatórios Fusion Compiler; depende M9 e tecnologia disponível | Fluxo `fc_shell` documentado conforme ambiente; PASS = execução reproduzível até onde suportado e relatórios disponíveis de área/timing/potência, com restrições e falhas | Logs, versões, constraints, PDK/biblioteca identificados e relatórios permitidos |
 | M11 — documentação | Manual de execução e resultados, `docs/DECISOES_E_PENDENCIAS.md`; depende M7–M10 ou limitações justificadas | Outra pessoa reproduz etapas possíveis com comandos e dependências registrados; PASS = evidências e limitações auditáveis | Documentação, inventário de artefatos, registros de revisão e resultados reais |
 
-Em M8–M10 uma etapa não executada por falta de ambiente é **NÃO EXECUTADA/BLOQUEADA**, não PASS. Os ambientes e comandos já executados estão nas evidências M8 e M9; os resultados de outro computador não comprovam disponibilidade local. A restrição 10 ns não prova timing fechado; potência só será reportada quando calculada com metodologia e dados disponíveis. Não versionar licença, tokens, PDK ou netlists restritos.
+Em M8–M10 uma etapa não executada por falta de ambiente é **NÃO EXECUTADA/BLOQUEADA**, não PASS. Os ambientes e comandos já executados estão nas evidências M8, M9 e M10; os resultados de outro computador não comprovam disponibilidade local. A restrição 10 ns não prova timing fechado; potência só será reportada quando calculada com metodologia e dados disponíveis. Não versionar licença, tokens, PDK ou netlists restritos.
 
 Sequenciamento sugerido: mês 1 M0–M2; mês 2 M3–M4; mês 3 M5–M7; mês 4 M8–M9; mês 5 M10–M11 e contingência. Estimativa de planejamento, não compromisso de prazo nem garantia de acesso às ferramentas.

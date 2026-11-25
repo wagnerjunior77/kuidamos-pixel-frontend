@@ -146,6 +146,24 @@ converter os seletores de bits em uma cópia local do SDF. O código 4
 indica erro ou aviso de anotação. O diagnóstico usa pinos estáticos.
 [Resultados e cobertura do routing](../../docs/evidencias/M10_routing_inicial.md)
 
+## Fechar a entrega física acadêmica
+
+Com o routing validado, reutilize o inventário real de scan. O fluxo
+usa `fc_shell` X-2025.06-SP2 e `vcs` no PATH. A variável
+`SAED32_REF_ROOT` aponta para a referência RVT usada na simulação.
+
+```bash
+./scripts/physical/run_physical_final.sh \
+  /caminho/da/execucao-de-routing /caminho/actual_chain.tsv
+```
+
+O fluxo aplica o ECO, testa PG, rotas, scan e STA, exporta os
+parasitas e gera SAIF no teste funcional. A análise de potência
+usa uma cópia específica do mesmo candidato. A promoção para
+`physical_final` vem após os checks e as regressões VCS. O
+readback repete as verificações físicas e estruturais.
+[Resultado final de M10](../../docs/evidencias/M10_resultado_final.md).
+
 ## Sequência do fluxo
 
 | Etapa | Preparação e controles | Relatórios e métricas |

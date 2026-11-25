@@ -357,3 +357,16 @@ Cmin/Cmax, reabriu `routing_initial` e confirmou o handoff. Permanecem
 duas violações de transição e quatro de capacitância por cenário,
 limites de MMMC e de anotação SDF, ATPG, taps/endcaps, latch-up,
 IR/EM e signoff independente. [Evidência](evidencias/M10_routing_inicial.md)
+
+## M10 — fechamento acadêmico — 2026-11-25
+
+O ECO final zerou transição e capacitância nos seis cenários, com
+zero opens, DRC interno e PG DRC. A topologia e geometria da árvore
+de clock e a ordem dos 115 SDFFs conferiram. O VCS passou 15/15
+cenários e 460 pulsos de shift sobre a netlist final. A estimativa
+pós-route com SAIF foi 358,3551 µW a 0,95 V e 125 °C. O
+`physical_final` foi reaberto e os artefatos têm hashes registrados.
+O escopo acadêmico de M10 foi atendido. Permanecem pendentes a
+regressão temporal com anotação SDF completa, ATPG, MMMC integral
+de teste, células físicas de signoff, latch-up, antena, IR/EM e
+verificação independente. [Resultado final e reprodução](evidencias/M10_resultado_final.md)

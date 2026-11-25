@@ -214,6 +214,11 @@ proc route_signal_stage {} {
     save_lib
 }
 
+# Carrega os procedimentos de validação em outros estágios físicos.
+if {[info exists ::m10_routing_procedures_only] && $::m10_routing_procedures_only} {
+    return
+}
+
 if {[catch {
     file mkdir reports
     foreach feature {Fusion-Compiler-NX Fusion-Compiler-FE-NX Fusion-Compiler-BE-NX} {

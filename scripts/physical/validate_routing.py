@@ -83,9 +83,9 @@ def validate_netlist(original, routed, chain_file, report=None):
     prev = "scan_in"
     for row in chain:
         key = (top, row["instance"])
-        ref, pins = after[key]
+        _, pins = after[key]
         baseline_pins = before[key][1]
-        require(before[key][0] == "SDFFX1_RVT" and all(
+        require(before[key][0] in {"SDFFX1_RVT", "SDFFX2_RVT"} and all(
             pins.get(pin) == baseline_pins.get(pin) for pin in ("CLK", "SI", "SE", "Q", "QN")
         ), f"Scan ou CLK mudou: {key[1]}")
         require(pins["SI"] == prev and pins["SE"] == "scan_enable", f"Enlace de scan incorreto: {key[1]}")
@@ -200,6 +200,12 @@ def validate(run, baseline, chain, stage):
     nets = records(routed, "NETS")
     clocks = {name for name, data in nets.items() if "CLOCK" in data}
     require(len(clocks) == 6, "Quantidade de redes de clock divergente")
+    original_nets = records(original_def, "NETS")
+    if all("ROUTED" in original_nets.get(name, ()) for name in clocks):
+        require(all(nets[name] == original_nets[name] and
+                    specials.get(name) == old_power.get(name) for name in clocks),
+                "Geometria do clock já roteado mudou")
+        print("ROUTED_CLOCK_GEOMETRY_MATCH")
     routed_nets = {name for name, data in nets.items() if
                    {"ROUTED", "FIXED", "COVER"} & set(data + specials.get(name, []))}
     require(clocks <= routed_nets, "Clock sem rota gravada")
@@ -221,8 +227,9 @@ def validate(run, baseline, chain, stage):
         require(instances(netlist) == instances((final_reports / "netlist.v").read_text()), "Netlist mudou no readback")
         print("ROUTING_READBACK_VALIDATED")
     else:
-        kinds = {name: "pg" if name in old_power else "clock" if name in clocks else "signal"
-                 for name in nets.keys() | old_power.keys()}
+        power = {"VDD", "VSS"}
+        kinds = {name: "pg" if name in power else "clock" if name in clocks else "signal"
+                 for name in nets.keys() | power}
         draw(run / f"{stage}_layout.svg", routed, kinds, clock_only=(stage == "clock"))
         if stage == "signals":
             verify_exports(reports)
