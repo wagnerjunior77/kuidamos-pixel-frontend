@@ -1,0 +1,64 @@
+@page {
+  size: A4;
+  margin: 16mm 18mm 16mm;
+  @bottom-left { content: "KUIDAMOS 6C  /  Relatório técnico"; color: #456071; font: 8pt sans-serif; }
+  @bottom-right { content: counter(page); color: #264756; font: bold 9pt sans-serif; }
+}
+@page cover {
+  @bottom-left { content: none; }
+  @bottom-right { content: none; }
+}
+* { box-sizing: border-box; }
+body {
+  color: #182d3c;
+  margin: 0;
+  font: 11pt/1.42 "Liberation Serif", serif;
+  print-color-adjust: exact;
+}
+.sheet + .sheet { break-before: page; }
+.cover { page: cover; padding-top: 27mm; }
+.cover .band { border-top: 2.2mm solid #124f61; margin: 0 0 28mm; }
+.cover h1 { font-size: 34pt; line-height: 1.04; margin: 7mm 0; color: #163441; }
+.cover .subtitle { color: #456071; font: 14pt/1.45 sans-serif; }
+.cover .authors {
+  margin-top: 26mm;
+  border-left: 2px solid #74a4ad;
+  padding: 1mm 0 1mm 5mm;
+}
+.cover .authors p { margin: 0 0 4mm; }
+.cover .authors p:last-child { margin-bottom: 0; }
+.cover .date { margin-top: 22mm; }
+.kicker { font: bold 8.5pt sans-serif; color: #246171; text-transform: uppercase; letter-spacing: .1em; }
+h1, h2, h3 { font-family: "Liberation Sans", sans-serif; break-after: avoid; }
+h2 { font-size: 19pt; line-height: 1.13; margin: 0 0 4mm; color: #143e4c; }
+h2:not(:first-child) { margin-top: 7mm; }
+h3 { font-size: 12pt; line-height: 1.2; margin: 3mm 0 2mm; }
+p { margin: 0 0 3mm; }
+ul, ol { padding-left: 5mm; margin: 2mm 0 4mm; }
+li { margin-bottom: 2mm; }
+li p { margin: 0; }
+a { color: #195d72; text-decoration: none; }
+code { font-family: "Liberation Mono", monospace; font-size: .87em; overflow-wrap: anywhere; }
+table { width: 100%; border-collapse: collapse; font: 9.3pt/1.23 "Liberation Sans", sans-serif; margin: 3mm 0; }
+thead { background: #dfecef; color: #173f4d; }
+th, td { border-bottom: 1px solid #cbd7de; padding: 1.6mm 2mm; overflow-wrap: anywhere; vertical-align: top; }
+th { text-align: left; }
+tbody tr:nth-child(even) { background: #f3f7f8; }
+tr, figure { break-inside: avoid; }
+.toc { list-style: none; padding: 0; margin-top: 4mm; }
+.toc li { margin: 0; }
+.toc a { display: flex; justify-content: space-between; border-bottom: 1px dotted #b4c6cd; padding: 1.3mm 0; }
+figure { margin: 4mm 0 0; }
+img { display: block; max-width: 100%; max-height: 155mm; margin: 0 auto; object-fit: contain; }
+figcaption { font: 9.3pt/1.4 "Liberation Sans", sans-serif; margin-top: 2mm; color: #38576a; }
+.image-caption { font: 9.3pt/1.4 "Liberation Sans", sans-serif; color: #38576a; }
+.stage img { width: 100%; max-height: 200mm; }
+.native img { image-rendering: pixelated; }
+.detail img { width: 88%; }
+.physical { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 2mm; }
+.physical img { width: 100%; max-height: 88mm; }
+.section-label { border-top: 1px solid #849eaa; padding-top: 2.4mm; margin: 0 0 3mm; }
+.metrics table { font-size: 9pt; margin: 2mm 0; }
+.metrics th, .metrics td { padding: 1.25mm 2mm; }
+.rtl table th:first-child { width: 30%; }
+img[src$="/threshold_sintetico.png"] { width: 45mm; image-rendering: pixelated; }

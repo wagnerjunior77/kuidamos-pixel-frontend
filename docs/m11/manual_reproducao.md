@@ -1,7 +1,7 @@
 # Manual consolidado de reprodução
 
-Baseline técnico M0–M10 na `main` do merge `3fb7875`. O caso
-complementar e os documentos de M11 estão na branch de documentação.
+Baseline técnico M0–M10 na `main` do merge `3fb7875`. Os ensaios
+complementares e os documentos de M11 estão na branch de documentação.
 Use o commit correspondente à evidência ao reproduzir uma etapa.
 Os registros de versões, relatórios e manifests identificam a
 execução que sustentou cada resultado.
@@ -192,6 +192,45 @@ logs, PNGs e resultados. Confira **5.035 pixels** e zero divergências
 para o estímulo documentado. O diagnóstico gate-level executa
 comparação funcional, e o RTL mantém o monitor SVA.
 [Dados e comandos do M11](../evidencias/M11_imagem_real_vcs.md)
+
+Para repetir a demonstração de detalhe em 576 × 1024, execute:
+
+```bash
+"$PYTHON_BIN" -m scripts.verification.m11_image_detail \
+  docs/experimentos/estacionamento/carro.jpeg
+```
+
+O script gera as referências para fatores (1,1) e (2,2), os cinco
+limiares, seis casos RTL e comparativos em `outputs/m11/visual-detail-*/`.
+Confira os seis resultados e o `summary.json`.
+[Demonstração de detalhe](../evidencias/M11_imagem_real_detalhe.md)
+
+## Montagem do pacote M11 a partir das evidências existentes
+
+A montagem editorial usa Python 3.11, `markdown-it-py` 3.0.0, Chrome
+headless e `pdftotext` (Poppler). A versão de referência do Chrome é
+148.0.7778.167. O comando lê as figuras já geradas e verifica se as
+páginas indicadas no sumário contêm os respectivos capítulos.
+Escolha um diretório de saída novo dentro de `outputs/m11/`.
+
+```bash
+"$PYTHON_BIN" -m pip install -r scripts/documentation/requirements.txt
+physical_runs=outputs/physical/runs
+"$PYTHON_BIN" scripts/documentation/build_m11_package.py \
+  --photo-run outputs/m11/visual-detail-eim1agqf \
+  --floorplan "$physical_runs/20261124T180302Z-floorplan-n4qeIQ" \
+  --placement "$physical_runs/20261124T184151Z-placement-VPBjaK" \
+  --cts "$physical_runs/20261124T185502Z-cts-EVbYma" \
+  --routing "$physical_runs/20261125T172651Z-physical-final-gHPSc7" \
+  --output outputs/m11/entrega_final
+(cd outputs/m11/entrega_final && sha256sum -c SHA256SUMS)
+```
+
+Use `--chrome` se o navegador tiver outro nome ou caminho. O
+inventário associa cada figura à execução de origem. As cinco
+montagens da fotografia e o PDF completo ficam na cópia local
+para revisão. A autorização da fotografia permanece pendente.
+
 
 ## Problemas já observados
 

@@ -99,7 +99,7 @@ def comparison(vectors, out, actual, delta, mode):
         canvas.save(out / "comparativo.png")
 
 
-def verify(vectors, out, mode):
+def verify(vectors, out, mode, *, render_comparison=True):
     metadata = json.loads((vectors / "metadata.json").read_text())
     shape = tuple(reversed(metadata["output_size"]))
     expected = np.loadtxt(vectors / f"{CASE}.expect.txt", dtype=np.int64, ndmin=2)[:, :-1]
@@ -122,10 +122,11 @@ def verify(vectors, out, mode):
     diff_image = Image.fromarray(difference.astype(np.uint8) * 255)
     rtl_image.save(out / "dut.png")
     diff_image.save(out / "diferencas.png")
-    comparison(vectors, out, rtl_image, diff_image, mode)
+    if render_comparison:
+        comparison(vectors, out, rtl_image, diff_image, mode)
     result = {
         "mode": mode, "cycles": len(seen), "pixels": len(received),
-        "white_pixels": int(np.count_nonzero(actual_pixels)),
+        "white_pixels": int(np.count_nonzero(actual_pixels == 255)),
         "pixel_mismatches": int(np.count_nonzero(difference)),
         "marker_mismatches": int(np.count_nonzero(np.any(received[:, 1:] != reference[:, 1:], axis=1))),
         "cycle_mismatches": int(np.count_nonzero(np.any(seen != expected, axis=1))),

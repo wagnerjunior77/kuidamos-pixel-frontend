@@ -36,7 +36,7 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 | M8 | Thiago (RTL/síntese), conforme confirmação de 2026-11-20 | Implementado e validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET) |
 | M9 | Wagner (DFT) | Concluído no escopo de scan. Cadeia validada estruturalmente e no VCS. |
 | M10 | Wagner e Thiago | Entrega acadêmica consolidada |
-| M11 | Wagner e Thiago | Relatório 0.1, manual e matriz elaborados. Revisão humana pendente. |
+| M11 | Wagner e Thiago | [Relatório 0.2](m11/relatorio_tecnico_final.md), [manual](m11/manual_reproducao.md), [matriz](m11/matriz_rastreabilidade.md) e pacote local preparados. [Ensaio de detalhe](evidencias/M11_imagem_real_detalhe.md) com 6/6 configurações RTL. Revisão humana e aceite do recorte V1 pendentes. |
 
 As atribuições de revisão descrevem a proposta de organização; não afirmam que a revisão já ocorreu.
 

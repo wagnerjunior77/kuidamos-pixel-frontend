@@ -392,3 +392,26 @@ porque a autoria e a licença não constam das fontes do repositório.
 O relatório de 13 capítulos, a matriz atualizada e o manual estão
 prontos para revisão humana. A validação do recorte de resize pelo
 professor permanece pendente. [Evidência VCS](evidencias/M11_imagem_real_vcs.md) · [Relatório 0.1](m11/relatorio_tecnico_final.md)
+
+### Comparação visual com maior resolução — M11
+
+A foto foi preparada em 576 × 1024 com crop manual do carro.
+O grayscale com fator 1 preservou mais detalhes. A varredura
+incluiu cinco limiares, e os seis casos selecionados no RTL
+passaram com 937.248 pixels comparados e zero divergências.
+O ensaio de 144 × 256 permanece como evidência funcional. As
+montagens da foto em maior resolução permanecem locais.
+[Demonstração por estágio](evidencias/M11_imagem_real_detalhe.md)
+
+### Entrega local para revisão humana — 2026-11-25
+
+A versão 0.2 consolida os 13 capítulos e inclui as figuras de detalhe
+do M11, junto dos diagramas da V1 e do scan e das visualizações
+efetivamente extraídas dos checkpoints do M10. O PDF, o inventário,
+o manifesto e o material para revisão foram montados em
+`outputs/m11/entrega_final/` a partir das execuções existentes.
+O PDF com a fotografia e as visualizações físicas do laboratório
+permanecem na cópia local. O aceite do professor sobre o recorte de
+resize segue pendente, assim como a revisão dos integrantes e o
+registro de autoria e licença da fotografia.
+[Relatório 0.2](m11/relatorio_tecnico_final.md) · [Manual](m11/manual_reproducao.md) · [Checklist](m11/checklist_revisao.md)

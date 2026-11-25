@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 194" role="img">
+  <title>Datapath em streaming e controle de quadro</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10Z" fill="#245762"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="848" height="192" rx="14" fill="#f5f8fa" stroke="#d0dce4"/>
+  <g fill="#fff" stroke="#6a929f" stroke-width="1.5">
+    <rect x="30" y="36" width="105" height="44" rx="7"/>
+    <rect x="158" y="36" width="105" height="44" rx="7"/>
+    <rect x="286" y="36" width="100" height="44" rx="7"/>
+    <rect x="409" y="36" width="115" height="44" rx="7"/>
+    <rect x="547" y="36" width="117" height="44" rx="7"/>
+    <rect x="687" y="36" width="133" height="44" rx="7" fill="#e6f0f2"/>
+    <rect x="30" y="134" width="233" height="37" rx="7"/>
+    <rect x="286" y="134" width="238" height="37" rx="7" fill="#e6f0f2"/>
+    <rect x="547" y="134" width="273" height="37" rx="7"/>
+  </g>
+  <g fill="none" stroke="#245762" stroke-width="1.7" marker-end="url(#arrow)">
+    <path d="M135 58H158"/><path d="M263 58H286"/><path d="M386 58H409"/>
+    <path d="M524 58H547"/><path d="M664 58H687"/><path d="M263 153H286"/>
+    <path d="M524 153H547"/><path d="M336 134V80"/><path d="M467 134V80"/>
+    <path d="M467 111H604V80"/><path d="M753 134V80"/>
+  </g>
+  <g fill="#1d3443" font-family="sans-serif" font-size="17" text-anchor="middle">
+    <text x="82" y="64">RGB888</text><text x="210" y="64">Grayscale</text>
+    <text x="336" y="64">Crop</text><text x="466" y="64">Resize NN</text>
+    <text x="605" y="56">Threshold<tspan x="605" dy="17" font-size="14">ou bypass</tspan></text>
+    <text x="753" y="55">Registro de saída<tspan x="753" dy="17" font-size="14">8 bits + flags</tspan></text>
+    <text x="146" y="159">Configuração no SOF válido</text>
+    <text x="405" y="159">Controle de quadro e raster</text>
+    <text x="683" y="159">Regeneração de marcadores</text>
+  </g>
+</svg>

@@ -28,7 +28,7 @@ O IP não inclui câmera ou sensor, decodificação de vídeo, protocolos de red
 
 ## Experimento com imagem real
 
-O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação entre a saída em tons de cinza e cinco limiares. A imagem de origem foi reduzida externamente para respeitar o limite de entrada V1. O [relatório do experimento](docs/experimentos/analise_preprocessamento_imagens.md) apresenta parâmetros, imagens e resultados; essa demonstração não valida o RTL nem o desempenho de modelos de IA.
+O experimento em software compara tons de cinza e cinco limiares. No M11, o VCS comparou 5.035 pixels por execução no RTL e na netlist física. Uma segunda demonstração, com entrada de 576 × 1024, comparou 937.248 pixels em seis configurações RTL, com zero divergências e zero erros SVA. O crop em grayscale com fator (1,1) preservou melhor os detalhes da região examinada. As novas montagens fotográficas fazem parte do pacote local de revisão. [Experimento em software](docs/experimentos/analise_preprocessamento_imagens.md) · [RTL e gate-level](docs/evidencias/M11_imagem_real_vcs.md) · [Demonstração de detalhe](docs/evidencias/M11_imagem_real_detalhe.md)
 
 ![Comparação das etapas e dos cinco limiares aplicados à imagem de estacionamento](docs/experimentos/estacionamento/comparativo_thresholds.png)
 
@@ -47,7 +47,7 @@ O Golden Model foi aplicado a uma fotografia de estacionamento, com comparação
 | M8 | Síntese e análise de timing | Validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET com slack `+3,21 ns`) |
 | M9 | DFT e scan | **Concluído no escopo de scan**. Uma cadeia de 115 SDFFs, DFT DRC pós-scan e testes funcional e de shift no VCS. |
 | M10 | Implementação física | **Concluído no escopo acadêmico.** Routing, extração, STA pós-route e estimativa de potência documentados. Signoff e regressão temporal com SDF pendentes. |
-| M11 | Documentação final | [Relatório 0.1](docs/m11/relatorio_tecnico_final.md) e [manual](docs/m11/manual_reproducao.md) prontos para revisão humana. |
+| M11 | Documentação final | [Relatório 0.2](docs/m11/relatorio_tecnico_final.md), [manual](docs/m11/manual_reproducao.md), [matriz](docs/m11/matriz_rastreabilidade.md) e [checklist](docs/m11/checklist_revisao.md) prontos para revisão humana. PDF e figuras da fotografia ficam no pacote local. |
 
 Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte**, a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 falhas)** e a **síntese lógica M8 no Synopsys Design Compiler `X-2025.06-SP2` (SAED32 `saed32rvt_ss0p95v125c.db`) fechou timing em 100 MHz (10,0 ns) com folga de setup `+3,21 ns`, folga de hold `+0,16 ns`, 0 latches e 0 violações de DRC**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md), da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md) e da [síntese lógica M8 no Design Compiler](docs/evidencias/M8_sintese_dc.md).
 

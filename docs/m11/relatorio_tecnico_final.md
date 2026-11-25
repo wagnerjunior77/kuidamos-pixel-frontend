@@ -1,6 +1,6 @@
 # KUIDAMOS 6C — relatório técnico do front-end de pixels
 
-**Versão 0.1 para revisão humana · 25/11/2026**
+**Versão 0.2 para revisão humana · 25/11/2026**
 
 Wagner Cutrim Rabelo Junior — DFT · Thiago Fernandes Carvalho de Souza — RTL e síntese
 
@@ -49,21 +49,9 @@ professor. [Contrato completo da V1](../spec_v1.md)
 
 ## 3. Arquitetura e microarquitetura
 
-```mermaid
-flowchart LR
-    RGB["RGB888 e valid"] --> G["Grayscale inteiro"]
-    G --> C["Crop retangular"]
-    C --> R["Resize nearest-neighbor"]
-    R --> T["Threshold e bypass"]
-    T --> O["Registradores de saída"]
-    CFG["Configuração capturada no SOF"] --> CTRL["Controle de quadro e coordenadas"]
-    CTRL --> C
-    CTRL --> R
-    CTRL --> T
-    R --> F["Regeneração SOF SOL EOL EOF"]
-    F --> O
-    O --> OUT["Pixel de 8 bits e marcadores"]
-```
+![Datapath em streaming e controle de quadro](figuras/arquitetura.svg)
+
+*Figura 1 — Arquitetura lógica da V1.*
 
 Os núcleos de transformação são combinacionais. Os registradores
 armazenam estado de quadro, contadores, parâmetros de configuração e
@@ -87,7 +75,7 @@ conferidos byte a byte.
 
 ![Saída do exemplo sintético de threshold do Golden Model](../imagens/m1/05_threshold.png)
 
-*Figura 1 — Saída do exemplo sintético já documentado no M1. A
+*Figura 2 — Saída do exemplo sintético já documentado no M1. A
 montagem com fotografia e saída capturada do RTL tem rastreabilidade
 própria no capítulo 6.*
 [Modelo e figuras M1](../evidencias/M1_modelo_python.md) · [Vetores M2](../evidencias/M2_vetores.md)
@@ -121,7 +109,7 @@ propriedades concorrentes e verificações procedurais. Foram registradas
 Os testes negativos de scoreboard e assertion também foram
 exercitados no M7. [Relatório VCS M3–M7](../evidencias/M3_M7_verificacao_vcs.md)
 
-No complemento M11, uma fotografia já usada pelo Golden Model foi
+Com o VCS X-2025.06-SP2_Full64, uma fotografia já usada pelo modelo foi
 preparada externamente para **144 × 256** pixels. O fluxo usou
 grayscale, ROI de 107 × 191 em (18, 32), resize (2, 2) e threshold
 128. O RTL e a netlist `physical_final` emitiram **5.035 pixels**
@@ -138,6 +126,23 @@ indicando zero diferenças, e o PNG reconstruído foi idêntico
 ao esperado. A montagem fotográfica permanece no handoff local.
 [Evidência, hashes e reprodução M11](../evidencias/M11_imagem_real_vcs.md)
 
+O ensaio de detalhe preparou a mesma foto em **576 × 1024** pixels.
+A ROI de **376 × 264** começa em (88, 456). Com threshold em bypass,
+o crop em grayscale com fator (1,1) preservou melhor os contornos da
+placa nesta foto. Com fator (2,2), a saída de **188 × 132** retém um
+quarto das amostras e perde traços finos. Entre T=64, 96, 128, 160 e
+192, T=96 com fator (1,1) foi o destaque binário nesta cena.
+
+O VCS aprovou **6/6 configurações RTL** e comparou **937.248
+pixels**, sem divergências de valor, ordem ou marcadores e sem
+erros SVA. Em cada caso houve 589.829 ciclos e 589.828 checagens
+pós-borda. A varredura completa dos limiares veio do Golden Model.
+Os painéis marcados como RTL foram reconstruídos de pixels
+capturados do DUT. O zoom inteiro dos detalhes replica amostras.
+A demonstração avalia pré-processamento. Reconhecimento de
+caracteres está fora do escopo. [Evidência de detalhe e casos VCS](../evidencias/M11_imagem_real_detalhe.md)
+
+
 ## 7. Síntese lógica
 
 O Design Compiler X-2025.06-SP2 mapeou o RTL para SAED32 RVT no
@@ -150,25 +155,22 @@ DDC, SDF e outros relatórios. O setup de +3,21 ns e o hold de
 
 ## 8. DFT e scan insertion
 
-O fluxo importou a netlist e o SDC de M8 no Fusion Compiler. Foram
-feitos pré-DFT DRC, precheck, replacement, preview e inserção com o
-motor de DRC TestMAX integrado. O caminho funcional foi preservado
+O fluxo importou a netlist e o SDC de M8 no Fusion Compiler
+X-2025.06-SP2. O fluxo executou pré-DFT DRC, precheck, replacement,
+preview e inserção com o motor de DRC TestMAX integrado. O caminho funcional foi preservado
 e o protocolo de teste define `clk` a 100 ns, com bordas em 45 ns
 e 55 ns e reset síncrono inativo.
 
-```mermaid
-flowchart LR
-    SI["scan_in"] --> S["115 SDFFs em uma cadeia"]
-    S --> SO["scan_out"]
-    SE["scan_enable"] --> S
-    CK["clk comum"] --> S
-```
+![Cadeia única de scan e sinais de controle](figuras/dft.svg)
+
+*Figura 7 — Encadeamento lógico de scan e controles compartilhados.*
 
 O M9 conectou 114 enlaces internos, sem compressão e sem exclusões.
 O DFT DRC indicou zero violações no resumo e 91 avisos detalhados.
-O N20 aponta uma condição de SE desconhecido no modelo usado pelo
-checker. O funcional VCS passou **15/15 cenários** e o teste de shift
-conferiu **460 pulsos**. O M10 preservou a ordem e os enlaces, mesmo
+Os avisos foram B7 (44), B8 (2), B10 (44) e N20 (1). O N20 indica
+comportamento subespecificado no UDP de Q da SDFFX1 quando SE=X
+na subida de clock. O efeito em ATPG segue em aberto. O VCS aprovou
+**15/15 cenários funcionais** e conferiu **460 pulsos de shift**. O M10 preservou a ordem e os enlaces, mesmo
 após dez células passarem à variante X2. [Resultado e avisos M9](../evidencias/M9_resultado_final.md) · [Revalidação M10](../evidencias/M10_resultado_final.md)
 
 ## 9. Implementação física
@@ -186,6 +188,10 @@ roteadas**. As duas entradas sem carga ficaram sem rota. Os checks
 registraram zero opens, shorts, DRC interno, PG DRC, pinos PG
 desconectados e violações de transição ou capacitância. Os exports
 locais incluem DEF, Scan DEF, netlist, SPEF, SDF, SAIF e SVGs.
+O PDF local mostra o floorplan, o placement aceito após a correção
+dos rails, os objetos de CTS e a geometria exportada após routing.
+As linhas do CTS representam ligações lógicas entre objetos da
+árvore. A figura de routing deriva dos segmentos registrados no DEF.
 [Floorplan](../evidencias/M10_floorplan_inicial.md) · [Correção do PG](../evidencias/M10_correcao_pg_placement.md) · [Resultado final M10](../evidencias/M10_resultado_final.md)
 
 ## 10. Resultados de área, timing e potência
@@ -228,7 +234,7 @@ nas condições de análise registradas.
 A potência pós-route corresponde a SAED32 RVT slow, 0,95 V,
 125 °C e 100 MHz, usando RC extraído e SAIF dos 15 cenários
 funcionais do VCS. A atividade simulada alcançou **99,40% dos
-drivers**. M8 registrou 267,27 µW com atividade propagada pelo
+drivers** (1.479 de 1.488). M8 registrou 267,27 µW com atividade propagada pelo
 DC e carga de fios estimada. Atividade, modelo de interconexão
 e netlist variam entre os dois ensaios. A diferença entre os totais
 não isola o efeito da implementação física.
@@ -237,8 +243,8 @@ não isola o efeito da implementação física.
 ## 11. Manual de reprodução
 
 O [manual consolidado](manual_reproducao.md) lista dependências,
-versões, comandos e critérios de M1 a M10, e o caso complementar
-M11. Em uma instalação com acesso ao CIExpert, a sequência de
+versões, comandos e critérios de M1 a M10, os dois ensaios de
+imagem do M11 e a montagem do PDF a partir dos artefatos existentes. Em uma instalação com acesso ao CIExpert, a sequência de
 checkpoint parte do `scan_inserted`, passa pelo floorplan, PG,
 placement, CTS e routing e chega ao `physical_final`. Cada estágio
 usa sua própria pasta de trabalho. Os diretórios e manifests dos
@@ -261,10 +267,11 @@ licenças e referências tecnológicas disponíveis à pessoa revisora.
   latch-up e IR/EM exigem dados e regras adicionais. DRC/LVS e
   correlação independente da extração e do STA também permanecem
   pendentes. Os checks deste relatório são os internos do FC.
-- **Demonstração visual.** O M11 usa uma fotografia e uma
-  configuração. Os resultados medem concordância do pipeline nesse
-  ensaio. A cobertura mais ampla vem da regressão oficial e dos
-  testes do modelo.
+- **Demonstração visual.** Os dois ensaios usam a mesma fotografia.
+  O primeiro cobre RTL e gate-level funcional. O segundo compara
+  seis configurações RTL. O contexto visual e a escolha de limiar
+  são específicos da cena. Autoria e licença ainda precisam ser
+  confirmadas para disponibilizar as montagens externamente.
 
 ## 13. Conclusão
 
@@ -272,10 +279,21 @@ O Grupo 6C implementou e verificou um front-end de pixels em
 streaming com processamento bit-exato nos casos exercitados.
 As evidências incluem síntese a 100 MHz, uma cadeia de 115 SDFFs
 validada e implementação física com routing, extração e potência
-estimada. O caso complementar reconstruiu o quadro produzido pelo
-RTL e pela netlist, com zero divergências frente ao Golden Model.
+estimada. Os casos complementares conferiram o ensaio inicial no
+RTL e na netlist, e as seis configurações RTL da demonstração
+de detalhe. A escolha do crop em grayscale preservou melhor as
+informações visuais na região examinada.
 
-O M10 está consolidado no escopo acadêmico. Esta primeira versão
-do relatório oferece um roteiro reprodutível e resultados
-rastreáveis. O M11 fica em revisão, com o aceite do recorte da
-V1 e a revisão dos responsáveis ainda por registrar.
+O M10 está consolidado no escopo acadêmico. O pacote M11 reúne
+o relatório, o manual, a matriz e os artefatos de revisão.
+A revisão dos responsáveis e o aceite do recorte de resize
+da V1 pelo professor continuam pendentes.
+
+## Referências
+
+1. CIExpert. [Definição oficial do escopo do Grupo 6](../referencias/definicao_escopo_grupo_6_oficial.pdf), seção 6, Grupo 6C, pp. 11–20.
+2. Grupo 6C. [Especificação V1](../spec_v1.md) e [modelo de referência](../../model/README.md).
+3. Grupo 6C. [Regressão VCS de M3–M7](../evidencias/M3_M7_verificacao_vcs.md) e [síntese Design Compiler](../evidencias/M8_sintese_dc.md).
+4. Grupo 6C. [Resultado DFT M9](../evidencias/M9_resultado_final.md) e [implementação física M10](../evidencias/M10_resultado_final.md).
+5. Grupo 6C. [Ensaio de imagem RTL e gate-level](../evidencias/M11_imagem_real_vcs.md) e [demonstração em maior resolução](../evidencias/M11_imagem_real_detalhe.md).
+6. Grupo 6C. [Manual de reprodução](manual_reproducao.md) e [matriz de rastreabilidade](matriz_rastreabilidade.md).

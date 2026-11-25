@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 184" role="img">
+  <title>Cadeia única de scan com 115 SDFFs</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10Z" fill="#245762"/>
+    </marker>
+  </defs>
+  <rect x="1" y="1" width="848" height="182" rx="14" fill="#f5f8fa" stroke="#d0dce4"/>
+  <g fill="#e6f0f2" stroke="#6a929f" stroke-width="1.5">
+    <rect x="147" y="34" width="156" height="47" rx="7"/>
+    <rect x="345" y="34" width="160" height="47" rx="7"/>
+    <rect x="547" y="34" width="156" height="47" rx="7"/>
+  </g>
+  <g fill="none" stroke="#245762" stroke-width="2" marker-end="url(#arrow)">
+    <path d="M95 58H147"/><path d="M303 58H345"/><path d="M505 58H547"/><path d="M703 58H747"/>
+  </g>
+  <g fill="none" stroke="#71909d" stroke-width="2">
+    <path d="M135 115H645M206 115V82M405 115V82M606 115V82"/>
+    <path d="M135 145H660M245 145V82M445 145V82M645 145V82" stroke-dasharray="5 3"/>
+  </g>
+  <g fill="#1d3443" font-family="sans-serif" font-size="18" text-anchor="middle">
+    <text x="57" y="64">scan_in</text><text x="225" y="64">SDFF 1</text>
+    <text x="425" y="64">SDFF 2–114</text><text x="625" y="64">SDFF 115</text>
+    <text x="795" y="64">scan_out</text>
+  </g>
+  <g fill="#1d3443" font-family="sans-serif" font-size="15">
+    <text x="24" y="120">scan_enable</text><text x="24" y="150">clk</text>
+    <text x="678" y="130">KUIDAMOS_CHAIN</text><text x="678" y="151">114 enlaces internos</text>
+  </g>
+</svg>
