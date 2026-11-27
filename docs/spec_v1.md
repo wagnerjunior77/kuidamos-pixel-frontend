@@ -1,6 +1,6 @@
 # Especificação técnica V1 — Grupo 6C
 
-Data inicial: 2026-10-28; atualização: 2026-11-03. **Status: decisões de implementação V1 aprovadas internamente pelo responsável pelo projeto.** A restrição do resize permanece sujeita à validação do professor. Fonte primária: `referencias/definicao_escopo_grupo_6_oficial.pdf`, §§2–3 e 6.2–6.9. A nota `CONTEXTO_TECNICO_6C.md` é apoio, não substitui o PDF.
+Data inicial: 2026-10-28. Última atualização: 2026-11-27. **Status: especificação V1 consolidada no escopo acadêmico adotado.** Fonte primária: `referencias/definicao_escopo_grupo_6_oficial.pdf`, §§2–3 e 6.2–6.9. A nota `CONTEXTO_TECNICO_6C.md` é apoio, não substitui o PDF.
 
 ## 1. Proveniência e escopo
 
@@ -8,7 +8,7 @@ Data inicial: 2026-10-28; atualização: 2026-11-03. **Status: decisões de impl
 
 **Fora do escopo:** detecção ou identificação, IA/inferência/NPU, câmera/sensor, RTSP/RTP/Ethernet/MIPI, H.264/H.265, ISP/RAW/debayer, framebuffer/DRAM, upscale, interpolação bilinear/bicúbica e integração obrigatória entre grupos. 6A é multiplicação matricial; 6B é FFT de áudio.
 
-**DECISÕES INTERNAS V1:** escolhas de interface, limites e políticas abaixo foram aprovadas pelo responsável pelo projeto em 2026-11-03. O PDF não exige bypass de crop, fator 2 nem resolução máxima específica. A restrição a fatores 1 e 2 é escolha de escopo da V1, sujeita à validação do professor; não é limitação expressa pelo PDF. A microarquitetura e a latência inicial permanecem sujeitas aos resultados de timing.
+**DECISÕES INTERNAS V1.** O Grupo 6C definiu o bypass de crop, o limite de resolução e a seleção por eixo entre fatores 1 e 2. O escopo oficial descreve o mapeamento nearest-neighbor em termos das dimensões de entrada e saída. Na V1, derivar as dimensões a partir dos fatores simplifica o hardware. O fator 1 encaminha as amostras e o fator 2 usa deslocamentos, paridade e um limite de coordenadas, dispensando divisão genérica. Wagner ratificou a manutenção dessa interface para a entrega final em 2026-11-27.
 
 ```text
 RGB888 + marcadores -> grayscale -> crop -> resize NN -> threshold -> 8 bits + marcadores
@@ -46,7 +46,7 @@ Largura e altura de entrada em `[1, 2047]`; coordenadas válidas de 0 a 2046. Os
 
 - No SOF válido são amostrados atomicamente todos os campos de configuração. O primeiro pixel usa a configuração presente nessa mesma borda. Alterações posteriores nos sinais externos são ignoradas até o próximo SOF; não há exigência de estabilidade externa após a captura. Testar mudanças durante o quadro. Cada pixel em trânsito carrega os controles/metadados necessários: mudança no SOF seguinte não altera saídas anteriores.
 - Com crop habilitado: `1 <= crop_width <= in_width`, `1 <= crop_height <= in_height`, `x_start < in_width`, `y_start < in_height`, `x_start + crop_width <= in_width`, `y_start + crop_height <= in_height`. Comparações de soma usam 12 bits unsigned, sem wrap. Limites superiores são exclusivos. Com crop desabilitado, ROI efetiva é `(0,0,in_width,in_height)` e campos de ROI são ignorados, mesmo se inválidos.
-- Denote dimensões efetivas da ROI por `W,H`. Para cada eixo, fator `F=1` ou `2`; dimensão de saída é `floor(W/F)` ou `floor(H/F)`. Qualquer configuração que produza largura ou altura de saída zero é inválida, inclusive fator 2 em dimensão 1. Os fatores são independentes; identidade é bypass funcional do resize. Apenas as dimensões decorrentes destes fatores são suportadas; não há campos arbitrários `W_out/H_out` na V1. Esse recorte de interface permanece sujeito à validação do professor.
+- Denote dimensões efetivas da ROI por `W,H`. Para cada eixo, fator `F=1` ou `2`; dimensão de saída é `floor(W/F)` ou `floor(H/F)`. Qualquer configuração que produza largura ou altura de saída zero é inválida, inclusive fator 2 em dimensão 1. Os fatores são independentes; identidade é bypass funcional do resize. Apenas as dimensões decorrentes destes fatores são suportadas; não há campos arbitrários `W_out/H_out` na V1. A escolha da interface e sua implementação são decisões de engenharia da V1.
 - Parâmetros inválidos no SOF: emitir `cfg_error` por um ciclo, descartar integralmente o quadro e emitir zero pixels/marcadores para ele. Continuar aceitando a entrada; novo SOF inicia nova avaliação. Não há clipping, divisão por zero, frame vazio sinalizado nem deadlock. Nenhum `cfg_error` indica conclusão de processamento. Reset cancela o estado e o pulso. Frames válidos sempre geram ao menos um pixel.
 
 ## 4. Função bit-exata

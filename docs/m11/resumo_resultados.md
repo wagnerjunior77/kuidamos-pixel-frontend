@@ -18,8 +18,8 @@ com (2,2) gerou 188 × 132. A preferência por T=96 entre as alternativas
 binárias aplica-se à cena analisada.
 
 Wagner confirmou em 27/11/2026 que Thiago revisou o projeto e deu
-retorno positivo. O aceite do professor para o recorte de resize
-permanece pendente. Wagner autorizou a publicação do PDF. A licença da
-fotografia ainda não foi identificada. O escopo acadêmico validado tem
-limitações de MMMC de teste, SDF, ATPG, equivalência formal e signoff
-físico independente.
+retorno positivo e ratificou o resize V1 com fatores 1 e 2 por eixo
+para simplificar o hardware. M0–M11 estão concluídos no escopo acadêmico
+adotado. Wagner autorizou a publicação do PDF. A licença da fotografia
+ainda não foi identificada. Permanecem as limitações de MMMC de teste,
+SDF, ATPG, equivalência formal e signoff físico independente.

@@ -1,6 +1,6 @@
 # KUIDAMOS 6C — relatório técnico do front-end de pixels
 
-**Versão de entrega acadêmica · 27/11/2026**
+**Entrega acadêmica v1.0.0 · 27/11/2026**
 
 Wagner Cutrim Rabelo Junior — DFT · Thiago Fernandes Carvalho de Souza — RTL e síntese
 
@@ -42,10 +42,11 @@ O grayscale usa `floor((77R+150G+29B)/256)`. O crop mantém
 coordenadas dentro da ROI com limites superiores exclusivos.
 O resize aplica o mapeamento nearest-neighbor após o crop. A V1
 deriva as dimensões por piso e aceita fatores 1 e 2 independentes
-em X e Y. O threshold habilitado emite 255 quando `Y >= T` e
-zero abaixo do limiar. Em bypass, preserva a luminância. O recorte
-de resize foi aprovado internamente e aguarda confirmação do
-professor. [Contrato completo da V1](../spec_v1.md)
+em X e Y. Para simplificar o hardware, o fator 1 conserva as
+amostras e o fator 2 usa deslocamento e seleção por paridade com
+limite. O threshold habilitado emite 255 quando `Y >= T` e zero
+abaixo do limiar. Em bypass, preserva a luminância.
+[Contrato completo da V1](../spec_v1.md)
 
 ## 3. Arquitetura e microarquitetura
 
@@ -255,19 +256,19 @@ licenças e referências tecnológicas disponíveis à pessoa revisora.
 
 ## 12. Limitações e trabalhos futuros
 
-- **Resize V1.** Os fatores 1 e 2 por eixo estão implementados e
-  verificados. O aceite do recorte em relação à interface conceitual
-  do PDF aguarda manifestação do professor.
+- **Resize V1.** A interface foi delimitada aos fatores 1 e 2
+  independentes por eixo. As dimensões da saída são derivadas da ROI.
+  Razões arbitrárias e ampliação estão fora do escopo adotado.
 - **MMMC de teste.** Os cenários cobrem caminhos restringidos.
   Faltam parâmetros externos de I/O de teste e especificação de
   captura at-speed. A captura estática registrada não cobre esse caso.
 - **SDF, DFT e equivalência.** O VCS ignorou 15 interconexões na
   anotação diagnóstica. Regressão temporal completa, ATPG,
   cobertura de falhas e equivalência formal permanecem pendentes.
-- **Qualificação física.** Taps, endcaps, fillers, ties, antena,
-  latch-up e IR/EM exigem dados e regras adicionais. DRC/LVS e
-  correlação independente da extração e do STA também permanecem
-  pendentes. Os checks deste relatório são os internos do FC.
+- **Signoff físico.** Os checks executados são os internos do FC.
+  A qualificação independente ainda exige DRC/LVS, correlação de
+  extração e STA e validação de taps, endcaps, fillers, ties,
+  antena, latch-up e IR/EM.
 - **Demonstração visual.** Os dois ensaios usam a mesma fotografia.
   O primeiro cobre RTL e gate-level funcional. O segundo compara
   seis configurações RTL. O contexto visual e a escolha de limiar
@@ -285,11 +286,11 @@ RTL e na netlist, e as seis configurações RTL da demonstração
 de detalhe. A escolha do crop em grayscale preservou melhor as
 informações visuais na região examinada.
 
-O M10 está consolidado no escopo acadêmico. O pacote M11 reúne
-o relatório, o manual, a matriz e as evidências. Em 27/11/2026,
-Wagner confirmou que Thiago revisou o projeto e deu retorno
-positivo. A confirmação do professor sobre o recorte de
-resize da V1 permanece pendente.
+Os marcos M0–M11 estão concluídos no escopo acadêmico da V1.
+Wagner confirmou em 27/11/2026 o retorno positivo da revisão de
+Thiago e ratificou o resize com fatores 1 e 2 por eixo como decisão
+de engenharia da entrega. O pacote M11 reúne o relatório, o
+manual, a matriz de rastreabilidade e as evidências.
 
 ## Referências
 

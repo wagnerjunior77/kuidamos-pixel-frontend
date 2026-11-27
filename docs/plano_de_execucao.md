@@ -2,7 +2,7 @@
 
 Data: 2026-10-28. Horizonte aproximado de cinco meses, sujeito a revisão e disponibilidade do CIExpert. A especificação `spec_v1.md` é a base da V1. Caminhos de etapas futuras são sugestões; resultados executados estão identificados nas respectivas evidências.
 
-Atualização em 2026-11-03: **M0 concluído internamente**, por decisão explícita do responsável pelo projeto; restrição de resize sujeita à validação do professor. **M1 funcional executado**, com 18 testes Python aprovados e evidência em `docs/evidencias/M1_modelo_python.md`. O gerador oferece vetor funcional inicial; a ampliação e os vetores temporais pertencem a M2. As etapas EDA dependem de infraestrutura identificada e evidências reais.
+Atualização em 2026-11-03: **M0 concluído**, por decisão explícita do responsável pelo projeto. A V1 adotou fatores 1 e 2 independentes por eixo. **M1 funcional executado**, com 18 testes Python aprovados e evidência em `docs/evidencias/M1_modelo_python.md`. O gerador oferece vetor funcional inicial; a ampliação e os vetores temporais pertencem a M2. As etapas EDA dependem de infraestrutura identificada e evidências reais.
 
 Atualização em 2026-11-04: **M2 implementado e validado localmente** com nove cenários e 29 testes Python na regressão completa. Os arquivos, formato e limitações estão em `docs/evidencias/M2_vetores.md`. A integração com o futuro testbench e VCS ainda não foi executada; M3 não foi iniciado.
 
@@ -28,7 +28,7 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 
 | Marco | Responsável e colaboração | Situação |
 |---|---|---|
-| M0 | Wagner (DFT), com revisão de Thiago | Concluído internamente |
+| M0 | Wagner (DFT), com revisão de Thiago | Concluído no escopo V1 |
 | M1 | Wagner (DFT), com revisão de Thiago | Implementação inicial concluída |
 | M2 | Wagner, com revisão de Thiago | Implementado e validado localmente; integrado ao TB/VCS |
 | M3, M4, M5 e M6 | Thiago (RTL), com revisão de Wagner | RTL implementado em `rtl/` e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
@@ -36,13 +36,13 @@ Divisão interna proposta por Wagner, **pendente de alinhamento com Thiago**; n�
 | M8 | Thiago (RTL/síntese), conforme confirmação de 2026-11-20 | Implementado e validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET) |
 | M9 | Wagner (DFT) | Concluído no escopo de scan. Cadeia validada estruturalmente e no VCS. |
 | M10 | Wagner e Thiago | Entrega acadêmica consolidada |
-| M11 | Wagner e Thiago | [Relatório PDF](m11/KUIDAMOS_6C_relatorio_tecnico.pdf), [manual](m11/manual_reproducao.md), [matriz](m11/matriz_rastreabilidade.md) e pacote final preparados. Wagner confirmou revisão positiva de Thiago. O aceite do recorte de resize da V1 pelo professor permanece pendente. |
+| M11 | Wagner e Thiago | [Relatório PDF](m11/KUIDAMOS_6C_relatorio_tecnico.pdf), [manual](m11/manual_reproducao.md), [matriz](m11/matriz_rastreabilidade.md) e pacote final preparados. Wagner confirmou revisão positiva de Thiago. Entrega documental concluída. |
 
-As atribuições descrevem a organização do trabalho. As revisões confirmadas constam do registro de decisões.
+**M0–M11 concluídos no escopo acadêmico adotado em 27/11/2026.** Wagner ratificou os fatores 1 e 2 independentes por eixo como decisão de engenharia que simplifica o hardware. As atribuições descrevem a organização do trabalho. As revisões confirmadas constam do registro de decisões.
 
 | Marco | Entrega e dependência | Comando indicativo e PASS | Evidência esperada |
 |---|---|---|---|
-| M0 — especificação — CONCLUÍDO INTERNAMENTE | `docs/spec_v1.md`, registro de decisões e plano; definição dos limites e protocolo | Decisões internas V1 aprovadas pelo responsável pelo projeto | Decisões registradas em `docs/DECISOES_E_PENDENCIAS.md`; validação do professor para resize pendente |
+| M0 — especificação — CONCLUÍDO | `docs/spec_v1.md`, registro de decisões e plano; definição dos limites e protocolo | Decisões internas V1 aprovadas pelo responsável pelo projeto | Decisões de engenharia e limites da V1 registrados em `docs/DECISOES_E_PENDENCIAS.md` |
 | M1 — Golden Model | `model/golden.py`, `model/tests/`, `model/README.md`; operações inteiras e fórmula geral independente | `python -m unittest discover -s model/tests -v`; 18 testes passaram na execução registrada | `docs/evidencias/M1_modelo_python.md` |
 | M2 — vetores | `model/m2_vectors.py`, `model/tests/test_m2_vectors.py`, nove casos em `vectors/m2/` | `python -m model.m2_vectors --output-dir vectors/m2 --check` e regressão Python; 28 arquivos idênticos e 29 testes passaram localmente | `docs/evidencias/M2_vetores.md`; integrado e validado no VCS em M7 |
 | M3 — passagem e grayscale — VALIDADO EM VCS | `rtl/grayscale_core.sv`, `rtl/kuidamos_pixel_frontend.sv`, `tb/` | `./scripts/verification/run_vcs.sh`; PASS = compilação e scoreboard de valores, flags, latência, bolhas e reset | `docs/evidencias/M3_M7_verificacao_vcs.md` |

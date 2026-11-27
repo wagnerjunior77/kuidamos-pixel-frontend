@@ -1,7 +1,7 @@
 # Manual consolidado de reprodução
 
 Baseline técnico M0–M10 na `main` do merge `3fb7875`. Os ensaios
-complementares e os documentos de M11 estão na branch de documentação.
+complementares e os documentos de M11 foram integrados à `main`.
 Use o commit correspondente à evidência ao reproduzir uma etapa.
 Os registros de versões, relatórios e manifests identificam a
 execução que sustentou cada resultado.
@@ -202,7 +202,12 @@ Para repetir a demonstração de detalhe em 576 × 1024, execute:
 
 O script gera as referências para fatores (1,1) e (2,2), os cinco
 limiares, seis casos RTL e comparativos em `outputs/m11/visual-detail-*/`.
-Confira os seis resultados e o `summary.json`.
+Confira os seis resultados e o `summary.json`. O caso principal
+`crop_x1` usa crop de 376 × 264 na origem (88, 456), grayscale,
+resize (1,1) e threshold em bypass. Ele produz 99.264 pixels.
+O caso `resize_x2` mantém a mesma ROI e reduz a saída a 188 × 132
+para comparação. A V1 mantém os fatores 1 e 2 independentes por eixo
+para simplificar a seleção no hardware.
 [Demonstração de detalhe](../evidencias/M11_imagem_real_detalhe.md)
 
 ## Montagem do pacote M11 a partir das evidências existentes
@@ -211,7 +216,7 @@ A montagem editorial usa Python 3.11, `markdown-it-py` 3.0.0, Chrome
 headless e `pdftotext` (Poppler). A versão de referência do Chrome é
 148.0.7778.167. O comando lê as figuras já geradas e verifica se as
 páginas indicadas no sumário contêm os respectivos capítulos.
-Escolha um diretório de saída novo dentro de `outputs/m11/`.
+Escolha um diretório de saída novo dentro de `outputs/m11/`. A entrega usa a tag `v1.0.0` como referência dos links no PDF.
 
 ```bash
 "$PYTHON_BIN" -m pip install -r scripts/documentation/requirements.txt
@@ -222,8 +227,9 @@ physical_runs=outputs/physical/runs
   --placement "$physical_runs/20261124T184151Z-placement-VPBjaK" \
   --cts "$physical_runs/20261124T185502Z-cts-EVbYma" \
   --routing "$physical_runs/20261125T172651Z-physical-final-gHPSc7" \
-  --output outputs/m11/entrega_final
-(cd outputs/m11/entrega_final && sha256sum -c SHA256SUMS)
+  --reference v1.0.0 \
+  --output outputs/m11/entrega_reproduzida
+(cd outputs/m11/entrega_reproduzida && sha256sum -c SHA256SUMS)
 ```
 
 Use `--chrome` se o navegador tiver outro nome ou caminho. O

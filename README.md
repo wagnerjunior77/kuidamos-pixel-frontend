@@ -23,7 +23,7 @@ RGB888 → Grayscale → Crop → Resize nearest-neighbor → Threshold → saí
 
 - **Grayscale:** `Y = floor((77*R + 150*G + 29*B)/256)`, com canais unsigned de 8 bits.
 - **Crop:** região retangular configurável, com limites superiores exclusivos e bypass.
-- **Resize:** downscaling por seleção nearest-neighbor; a V1 adota fatores 1 ou 2 independentes em cada eixo. Essa restrição de escopo permanece sujeita à validação do professor.
+- **Resize:** seleção nearest-neighbor com fatores 1 e 2 independentes por eixo. O fator 1 preserva as amostras e o 2 usa deslocamento e seleção por paridade com limite, simplificando o hardware. As dimensões de saída são derivadas da ROI.
 - **Threshold:** saída 0 ou 255 conforme `pixel >= T`; o bypass preserva o valor cinza.
 - **Interface V1:** streaming com `pixel_valid`, sem `ready`, e marcadores SOF, SOL, EOL e EOF regenerados para os pixels produzidos. A meta inicial é um ciclo de latência; mudanças de pipeline exigem atualização do contrato e dos testes.
 
@@ -37,9 +37,11 @@ O experimento em software compara tons de cinza e cinco limiares. No M11, o VCS 
 
 ## Marcos e status
 
+**M0–M11 concluídos no escopo acadêmico da V1.**
+
 | Marco | Entrega | Status |
 |---|---|---|
-| M0 | Especificação | Concluído internamente; resize sujeito à validação do professor |
+| M0 | Especificação | Concluído. Escopo e interface V1 documentados |
 | M1 | Golden Model Python | Implementação inicial e testes executados |
 | M2 | Vetores funcionais e temporais | Validados localmente e integrados à regressão VCS |
 | M3 | RTL pass-through e grayscale | Implementado e validado no Synopsys VCS (`X-2025.06-SP2_Full64`) |
@@ -50,7 +52,7 @@ O experimento em software compara tons de cinza e cinco limiares. No M11, o VCS 
 | M8 | Síntese e análise de timing | Validado no Synopsys Design Compiler (`X-2025.06-SP2`, SAED32, 100 MHz MET com slack `+3,21 ns`) |
 | M9 | DFT e scan | **Concluído no escopo de scan**. Uma cadeia de 115 SDFFs, DFT DRC pós-scan e testes funcional e de shift no VCS. |
 | M10 | Implementação física | **Concluído no escopo acadêmico.** Routing, extração, STA pós-route e estimativa de potência documentados. Signoff e regressão temporal com SDF pendentes. |
-| M11 | Documentação final | [Relatório](docs/m11/relatorio_tecnico_final.md), [manual](docs/m11/manual_reproducao.md), [matriz](docs/m11/matriz_rastreabilidade.md) e [checklist](docs/m11/checklist_revisao.md) consolidados. Revisão interna positiva. Confirmação do professor sobre o recorte do resize pendente. |
+| M11 | Documentação final | [Relatório](docs/m11/relatorio_tecnico_final.md), [manual](docs/m11/manual_reproducao.md), [matriz](docs/m11/matriz_rastreabilidade.md) e [checklist](docs/m11/checklist_revisao.md) consolidados. Revisão interna positiva e entrega finalizada. |
 
 Na última regressão registrada, **32 testes Python passaram**, os **28 arquivos de referência M2 foram reproduzidos byte a byte**, a **regressão RTL M3–M7 passou integralmente no Synopsys VCS `X-2025.06-SP2_Full64` (15/15 cenários, 2.618 ciclos, 0 falhas)** e a **síntese lógica M8 no Synopsys Design Compiler `X-2025.06-SP2` (SAED32 `saed32rvt_ss0p95v125c.db`) fechou timing em 100 MHz (10,0 ns) com folga de setup `+3,21 ns`, folga de hold `+0,16 ns`, 0 latches e 0 violações de DRC**. Consulte as evidências de [M1](docs/evidencias/M1_modelo_python.md), do [teste com imagem real](docs/evidencias/M1_imagem_real.md), de [M2](docs/evidencias/M2_vetores.md), da [verificação funcional M3–M7 no VCS](docs/evidencias/M3_M7_verificacao_vcs.md) e da [síntese lógica M8 no Design Compiler](docs/evidencias/M8_sintese_dc.md).
 

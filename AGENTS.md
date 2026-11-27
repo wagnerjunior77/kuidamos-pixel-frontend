@@ -9,7 +9,7 @@
 3. `docs/DECISOES_E_PENDENCIAS.md`, registro vivo do que foi decidido, do que está aberto e das evidências de validação.
 4. Este `AGENTS.md` como instrução de execução. Se houver diferença entre **requisito oficialmente descrito** e **sugestão de engenharia**, não apague a distinção e não transforme sugestões em requisitos. Sinalize conflitos ao usuário.
 
-**Regra de precedência de conteúdo:** documento final aprovado/enviado ao professor > decisões posteriormente confirmadas explicitamente pelos responsáveis > notas e propostas deste repositório > preferências gerais do agente. Quando a especificação for omissa, recomende a solução mais simples e registre que ela está pendente de aprovação.
+**Regra de precedência de conteúdo:** escopo oficial para identificar os requisitos do projeto > decisões de engenharia confirmadas pelos responsáveis e registradas na especificação V1 > notas e propostas deste repositório > preferências gerais do agente. Quando a especificação for omissa, recomende a solução mais simples e registre as decisões em aberto.
 
 ## 2. Objetivo e escopo estrito
 

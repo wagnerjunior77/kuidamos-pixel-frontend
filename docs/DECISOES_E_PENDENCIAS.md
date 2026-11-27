@@ -115,13 +115,13 @@ Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde,
 
 ## Decisão interna M0 — 2026-11-03
 
-**M0 concluído internamente; decisões V1 aprovadas pelo responsável pelo projeto para implementação.** Evidência: aprovação explícita do usuário em conversa de 2026-11-03; especificação atualizada em `docs/spec_v1.md`. Histórico anterior preservado. A aprovação interna não comprova resultados de ferramentas nem substitui a validação do professor.
+**M0 concluído internamente; decisões V1 aprovadas pelo responsável pelo projeto para implementação.** Evidência: aprovação explícita do usuário em conversa de 2026-11-03; especificação atualizada em `docs/spec_v1.md`. Histórico anterior preservado.
 
 | Tema | Decisão aprovada para V1 | Pendência/limitação |
 |---|---|---|
 | Dimensões | 1–2047 por eixo; 11 bits; somas de limites com largura suficiente, no mínimo 12 bits | O PDF não fixa resolução máxima; custo e timing não medidos. |
 | Crop | `crop_enable`; bypass usa quadro integral, sem framebuffer ou duas imagens no IP | Bypass não é exigência explícita do PDF. |
-| Resize | Fatores 1 ou 2 independentes; saída `floor(N/F)`; mapeamento nearest conforme fórmula oficial | Restrição de fatores e interface derivada ainda sujeitas à validação do professor. |
+| Resize | Fatores 1 ou 2 independentes; saída `floor(N/F)`; mapeamento nearest conforme fórmula oficial | A V1 deriva dimensões de saída e usa seleção por paridade e deslocamento, sem divisor genérico. |
 | Fluxo e flags | `pixel_valid` sem `ready`; bolhas; SOF/SOL/EOL/EOF reconstruídos sobre pixels efetivos | Destino deve aceitar toda saída válida. |
 | Reset e latência | Reset síncrono ativo baixo; transferências somente com `reset_n=1`; aguardar SOF. Meta inicial: um ciclo | Se timing exigir pipeline, documentar e atualizar contrato e testes antes de alterar. |
 | Configuração | Captura no SOF, incluindo o primeiro pixel; cópia interna constante no quadro | Mudanças externas durante o quadro não alteram a configuração capturada. |
@@ -137,7 +137,7 @@ Para grayscale, foi verificada por cálculo a sequência preto, vermelho, verde,
 
 ## Progresso M2 — 2026-11-04
 
-Vetores funcionais e temporais gerados por `model/m2_vectors.py`, com valores e marcadores de quadro do Golden Model e associação independente às coordenadas de entrada; nove casos em `vectors/m2/`. A convenção por borda, inclusive saída pós-borda, transferência na borda seguinte e cancelamento pelo reset, está descrita em `docs/evidencias/M2_vetores.md` sem alteração da especificação V1. A regressão local registrou 29 testes Python aprovados e a comparação de 28 arquivos gerados idênticos. A integração dos vetores ao futuro testbench VCS, o RTL e as ferramentas Synopsys permanecem não executados. A restrição dos fatores de resize continua sujeita à validação do professor.
+Vetores funcionais e temporais gerados por `model/m2_vectors.py`, com valores e marcadores de quadro do Golden Model e associação independente às coordenadas de entrada; nove casos em `vectors/m2/`. A convenção por borda, inclusive saída pós-borda, transferência na borda seguinte e cancelamento pelo reset, está descrita em `docs/evidencias/M2_vetores.md` sem alteração da especificação V1. A regressão local registrou 29 testes Python aprovados e a comparação de 28 arquivos gerados idênticos. A integração dos vetores ao futuro testbench VCS, o RTL e as ferramentas Synopsys permanecem não executados.
 
 ## Teste complementar com imagem real — 2026-11-04
 
@@ -376,8 +376,7 @@ verificação independente. [Resultado final e reprodução](evidencias/M10_resu
 O M10 foi integrado pelo PR #3. O merge `3fb7875` é a base da
 branch local `docs/m11-final-documentation`. O M11 começou com o
 inventário da documentação, a matriz de requisitos oficiais e
-o roteiro dos 13 capítulos. O recorte do resize V1 ainda requer
-registro de validação do professor. O experimento de imagem real
+o roteiro dos 13 capítulos. O experimento de imagem real
 tem evidência no Golden Model e a regressão RTL registrada usa
 estímulos sintéticos. Permanecem a redação, o manual consolidado
 e a revisão dos responsáveis. [Matriz](m11/matriz_rastreabilidade.md) · [Plano do relatório](m11/plano_relatorio_final.md)
@@ -390,8 +389,7 @@ ordem ou marcador. A captura do DUT gerou a imagem reconstruída e
 o mapa de diferenças. Os comparativos fotográficos ficaram locais
 porque a autoria e a licença não constam das fontes do repositório.
 O relatório de 13 capítulos, a matriz atualizada e o manual estão
-prontos para revisão humana. A validação do recorte de resize pelo
-professor permanece pendente. [Evidência VCS](evidencias/M11_imagem_real_vcs.md) · [Relatório 0.1](m11/relatorio_tecnico_final.md)
+prontos para revisão humana. [Evidência VCS](evidencias/M11_imagem_real_vcs.md) · [Relatório 0.1](m11/relatorio_tecnico_final.md)
 
 ### Comparação visual com maior resolução — M11
 
@@ -410,10 +408,9 @@ do M11, junto dos diagramas da V1 e do scan e das visualizações
 efetivamente extraídas dos checkpoints do M10. O PDF, o inventário,
 o manifesto e o material para revisão foram montados em
 `outputs/m11/entrega_final/` a partir das execuções existentes.
-O PDF com a fotografia e as visualizações físicas do laboratório
-permanecem na cópia local. O aceite do professor sobre o recorte de
-resize segue pendente, assim como a revisão dos integrantes e o
-registro de autoria e licença da fotografia.
+A versão de revisão foi montada com a fotografia e as visualizações
+físicas do laboratório. A licença da fotografia ainda não foi
+identificada.
 [Relatório 0.2](m11/relatorio_tecnico_final.md) · [Manual](m11/manual_reproducao.md) · [Checklist](m11/checklist_revisao.md)
 
 ### Autorização de publicação do PDF M11 — 2026-11-25
@@ -436,7 +433,20 @@ comparação. O RTL mantém os fatores 1 e 2 por eixo, e as evidências
 dos ensaios anteriores foram preservadas.
 
 Wagner confirmou a autorização de publicação do PDF atualizado. A
-licença da fotografia ainda não foi identificada. A confirmação
-do professor sobre o recorte da interface de resize e as dimensões
-de saída derivadas continua pendente. A integração na main e a tag
-da entrega aguardam a liberação acadêmica. [Relatório PDF](m11/KUIDAMOS_6C_relatorio_tecnico.pdf) · [Checklist](m11/checklist_revisao.md) · [Evidência visual](evidencias/M11_imagem_real_detalhe.md)
+licença da fotografia ainda não foi identificada. O PR #4 integrou
+a documentação e o PDF à main mediante autorização de Wagner. [Relatório PDF](m11/KUIDAMOS_6C_relatorio_tecnico.pdf) · [Checklist](m11/checklist_revisao.md) · [Evidência visual](evidencias/M11_imagem_real_detalhe.md)
+
+### Encerramento acadêmico da V1 — 2026-11-27
+
+Wagner ratificou a manutenção dos fatores de resize 1 e 2 independentes
+por eixo. A V1 deriva as dimensões de saída da ROI. O fator 1 encaminha
+as amostras e o 2 usa deslocamentos e seleção por paridade com limite.
+Essa decisão reduz a complexidade do seletor de amostras e dispensa
+divisão genérica. A regressão registrada cobre as quatro combinações.
+A demonstração principal permanece em (1,1), com threshold em bypass.
+
+M0–M11 estão concluídos no escopo acadêmico adotado pelo Grupo 6C.
+A revisão de Thiago e a decisão de Wagner fundamentam o encerramento.
+Anotação temporal SDF completa, ATPG, MMMC de teste, equivalência formal
+e signoff físico independente permanecem como limitações ou extensões.
+[Especificação V1](spec_v1.md) · [Relatório da entrega](m11/KUIDAMOS_6C_relatorio_tecnico.pdf)

@@ -105,5 +105,4 @@ Um teste negativo alterou um único pixel em uma cópia da captura.
 O verificador retornou erro e contou exatamente uma divergência.
 Os 32 testes Python passaram, e a checagem confirmou os 28 arquivos
 M2 byte a byte. A comparação demonstra um quadro e uma configuração
-real de estímulo. A aprovação do recorte de resize pelo professor
-continua pendente.
+real de estímulo.

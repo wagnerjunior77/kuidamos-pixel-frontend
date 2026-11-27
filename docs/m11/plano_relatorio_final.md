@@ -30,7 +30,7 @@ complementam o inventário.
 | Capítulo | Conteúdo a preparar | Fonte principal e material a reaproveitar |
 |---|---|---|
 | 1. Introdução e objetivos | Contexto KUIDAMOS/CIExpert, problema, posição do IP a jusante da decodificação e objetivos acadêmicos | PDF §§6.1–6.2 e README. Apresentar a contribuição do grupo e a independência do IP |
-| 2. Especificação do IP | Formatos, sinais, reset, latência, configuração por SOF, geometria válida, rejeição e recuperação | Tabela de interface e exemplos da Spec V1. Registrar o aceite interno e a confirmação pendente do resize |
+| 2. Especificação do IP | Formatos, sinais, reset, latência, configuração por SOF, geometria válida, rejeição e recuperação | Tabela de interface e exemplos da Spec V1. Registrar a motivação de engenharia e o contrato dos fatores 1 e 2 por eixo |
 | 3. Arquitetura e microarquitetura | Caminho de dados, controle e contadores, aritmética inteira, retenção de configuração e regeneração dos marcadores | Diagrama textual do README e do contexto. Desdobrar em figura funcional e em um exemplo temporal anotado a partir da Spec V1 |
 | 4. Modelo de referência | Equações, origem dos índices, entradas, saídas, seeds e geração temporal. Experimento visual como caso complementar | Guias Python/M2 e comparativo de estacionamento. Mostrar uma figura de etapas e a condição do experimento |
 | 5. Implementação RTL | Módulos SystemVerilog, larguras, interfaces, contadores de 11 bits, somas de 12 bits e registradores de saída | RTL, guia RTL e Spec V1. Cruzar fórmulas e decisões da V1 com os nomes realmente implementados |
@@ -41,12 +41,12 @@ complementam o inventário.
 | 10. Resultados de área, timing e potência | Uma tabela M8/M9/M10 de área de células, STA por cenário, DRVs, cobertura e composição de potência M10 | Evidências finais com identificação de PVT, frequência, estimativa de carga, RC extraído, SAIF e limites. Manter o PVT e a metodologia na legenda |
 | 11. Manual de reprodução | Pré-requisitos, versões, comandos, diretórios de trabalho, dependências entre marcos, critérios de sucesso e hashes | Guias Python, vetores, RTL, VCS, síntese, DFT e físico. Indicar licença, referência SAED32 e uso de checkpoints em cópia |
 | 12. Limitações e trabalhos futuros | Restrições V1 e pendências de validação, DRC residual M9, SDF/MMMC, ATPG, equivalência e qualificação física | Matriz e evidências M9/M10. Explicar o impacto de cada limitação e a condição necessária para reavaliá-la |
-| 13. Conclusão | Retomar objetivos, resultados demonstrados, cobertura e fronteira da entrega acadêmica | Matriz já revisada e tabelas consolidadas. Registrar o aceite formal dos responsáveis quando disponível |
+| 13. Conclusão | Retomar objetivos, resultados demonstrados, cobertura e fronteira da entrega acadêmica | Matriz revisada, tabelas consolidadas e conclusão de M0–M11 no escopo acadêmico |
 
 ## Sequência de redação e revisão
 
 1. Fixar o baseline de revisão, as fontes oficiais e a tabela de resultados. Conferir unidades e condições de cada relatório, especialmente SAIF/RC do M10 e atividade estimada do M8.
-2. Resolver com os responsáveis o registro de aceite do resize V1. Conferir o ensaio inicial RTL e gate-level e os seis casos da demonstração de detalhe RTL. Confirmar a licença da foto antes de divulgar as montagens.
+2. Registrar a decisão de engenharia do resize V1 e a demonstração principal em (1,1). Conferir o ensaio inicial RTL e gate-level e os seis casos da demonstração de detalhe RTL. A licença da foto fica registrada como desconhecida.
 3. Redigir os capítulos e preparar legendas com origem, configuração e limite de cada figura. Manter o material restrito no handoff local com referências e hashes.
 4. Consolidar o manual do teste Python ao readback físico. Usar a ordem M0–M11 vigente. Marcar os pontos que exigem Synopsys, SAED32 e dados locais, incluindo a cadeia M9 para o fluxo M10.
 5. Fazer leitura cruzada da parte de RTL/síntese com Thiago e da parte de DFT com Wagner. Conferir conjuntamente as métricas físicas e revisar o alinhamento do texto com o PDF. A revisão do projeto relatada por Wagner está registrada no checklist.

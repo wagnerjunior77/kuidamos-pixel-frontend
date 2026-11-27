@@ -33,7 +33,7 @@ def arguments():
         parser.add_argument(f"--{name}", required=True, type=Path, help="diretório da execução")
     parser.add_argument("--output", required=True, type=Path, help="novo diretório dentro de outputs/m11")
     parser.add_argument("--chrome", default="google-chrome", help="executável do Chrome ou Chromium")
-    parser.add_argument("--reference", default="docs/m11-final-documentation", help="referência GitHub dos links")
+    parser.add_argument("--reference", default="main", help="referência GitHub dos links")
     return parser.parse_args()
 
 
@@ -139,7 +139,7 @@ def render_report(package, reference):
           <p><strong>Wagner Cutrim Rabelo Junior</strong><br>DFT</p>
           <p><strong>Thiago Fernandes Carvalho de Souza</strong><br>RTL e síntese</p>
         </div>
-        <p class="date"><strong>Versão de entrega acadêmica</strong><br>27 de novembro de 2026</p>
+        <p class="date"><strong>Entrega acadêmica v1.0.0</strong><br>27 de novembro de 2026</p>
         """),
         ("", f"""
         <h2>Resumo</h2>

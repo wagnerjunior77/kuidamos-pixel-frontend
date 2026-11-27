@@ -1,7 +1,8 @@
 # KUIDAMOS / CIExpert — Contexto técnico e plano completo do Grupo 6C
 
 **Versão desta nota:** 0.1 — 2026-10-28  
-**Status:** documento de apoio para implementação; **não substitui a proposta oficial**.  
+**Status:** nota de planejamento. A implementação entregue está descrita na [especificação V1](spec_v1.md).
+
 **Fonte primária:** `docs/referencias/definicao_escopo_grupo_6_oficial.pdf`, 20 páginas; foco nas páginas 11–20 (seção 6). Se existir `pre-planejamento.md` completo extraído fielmente do Overleaf, consultá-lo em paralelo.  
 **Público:** equipe do Grupo 6C e colaboradores técnicos.
 
@@ -112,11 +113,9 @@ y_src = floor(y_out * H_in / H_out)
 
 **Cuidado de interpretação:** na composição pipeline, `W_in/H_in` do resize se referem à dimensão **que sai do crop**, não necessariamente ao quadro RGB original. Se crop tiver bypass, entrada do resize é o quadro inteiro. Não usar as dimensões erradas.
 
-**[ENG]** Para *redução pura*, o IP pode emitir somente os pixels de entrada cujas coordenadas correspondem a posições-fonte selecionadas e descartar os demais, usando contadores e lógica de seleção. Isto é diferente de gerar todos os pixels na borda do clock; não deve emitir pixels duplicados nem linhas extras. É possível começar testando fator 2 (ex.: 8×8→4×4), mas fator 2 **é sugestão**, não requisito fechado.
+**[ENG]** Para *redução pura*, o IP pode emitir somente os pixels de entrada cujas coordenadas correspondem a posições-fonte selecionadas e descartar os demais, usando contadores e lógica de seleção. Isto é diferente de gerar todos os pixels na borda do clock; não deve emitir pixels duplicados nem linhas extras. A V1 implementou fatores 1 e 2 independentes por eixo. O fator 1 mantém as amostras e o fator 2 usa deslocamento, paridade e limite para reduzir a lógica de seleção.
 
-**[ABERTO]** Definir fatores suportados, dimensões máximas, tratamento de dimensões ímpares, redução não inteira, razão horizontal distinta da vertical, política de última linha/coluna, número de pixels de saída esperado, custo de divisões no hardware. Se aceitar razões genéricas, demonstrar arquitetura de counters/accumulators comparators realizável sem divisores caros, macros ou framebuffer completo.
-
-**[ENG]** Só a implementação do resize oferece risco de escopo: exigir todos os pares de resoluções ou upscale pode tornar o projeto grande. Formalizar subconjunto suportado e testar exatamente esse subconjunto.
+**[ENG]** Na V1, cada dimensão de saída é o piso da dimensão após o crop dividida pelo fator do eixo. O contrato de dimensões ímpares e seleção de coordenadas está na [especificação V1](spec_v1.md#3-configuração-e-geometria).
 
 ### 3.5 Threshold — limiar de luminância
 
@@ -146,7 +145,7 @@ O documento final é deliberadamente conceitual; por isso os pontos abaixo **nã
 | Largura de contadores e resolução máxima | Não | Propor e documentar limite viável |
 | Crop habilitado/desabilitado | Bypass de crop não explícito | Recomendar bypass, registrar como proposta |
 | Threshold habilitado/desabilitado | Sim | Definir comportamento bit-exato |
-| Resize fator 2 vs genérico | Prioridade downscale apenas | Comparar esforço/risco; propor milestone simples |
+| Resize e dimensões de saída | Prioridade a downscale nearest-neighbor | A V1 deriva as dimensões de fatores 1 e 2 independentes por eixo para simplificar a lógica |
 | FIFO/buffer/line buffer | Sem framebuffer ou macros; storage mínimo | Não criar armazenamento excessivo; justificar qualquer buffer |
 | Carga de configuração inválida | Não | Definir rejeição/erro/no-frame e testes |
 | Target 100 MHz | Referência inicial de análise | Criar 10 ns constraint quando ambiente conhecido |
