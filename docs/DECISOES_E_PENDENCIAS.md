@@ -424,3 +424,19 @@ na branch `docs/m11-final-documentation`, no PR #4. O arquivo foi copiado
 byte a byte do pacote local. A licença da fotografia incluída no relatório
 ainda não foi identificada. A autorização registrada se refere a este PDF.
 As montagens avulsas permanecem no pacote local.
+
+### Consolidação da entrega M11 — 2026-11-27
+
+Wagner informou que Thiago revisou o projeto e deu retorno positivo.
+Wagner confirmou como demonstração principal a entrada de 576 × 1024,
+crop de 376 × 264 na origem (88, 456), grayscale, resize (1,1) e
+threshold em bypass. Essa configuração preservou a resolução da ROI
+e os detalhes mais nítidos na fotografia. O ensaio (2,2) segue como
+comparação. O RTL mantém os fatores 1 e 2 por eixo, e as evidências
+dos ensaios anteriores foram preservadas.
+
+Wagner confirmou a autorização de publicação do PDF atualizado. A
+licença da fotografia ainda não foi identificada. A confirmação
+do professor sobre o recorte da interface de resize e as dimensões
+de saída derivadas continua pendente. A integração na main e a tag
+da entrega aguardam a liberação acadêmica. [Relatório PDF](m11/KUIDAMOS_6C_relatorio_tecnico.pdf) · [Checklist](m11/checklist_revisao.md) · [Evidência visual](evidencias/M11_imagem_real_detalhe.md)

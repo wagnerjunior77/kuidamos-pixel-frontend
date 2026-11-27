@@ -2,10 +2,11 @@
 
 M11 iniciado em 25/11/2026, a partir da `main` que integrou o M10 no
 commit `3fb7875bcb8b8384203fadbcdb11a5fa0fbd7e10`. Este roteiro
-registra o planejamento da redação e da revisão. A versão 0.2 e o
-manual consolidado estão disponíveis para revisão humana. O PDF local inclui
-os dois ensaios na análise e as figuras da execução de detalhe. A matriz liga cada capítulo
-à seção oficial e aos resultados medidos. [Matriz de rastreabilidade](matriz_rastreabilidade.md) · [Relatório 0.2](relatorio_tecnico_final.md) · [Manual](manual_reproducao.md)
+registra o planejamento da redação e da revisão. A versão de entrega
+inclui os resultados dos dois ensaios de imagem real e as figuras da
+execução de detalhe. Em 27/11/2026, Wagner confirmou o retorno positivo
+de Thiago. A matriz liga os requisitos oficiais aos resultados medidos.
+[Matriz de rastreabilidade](matriz_rastreabilidade.md) · [Relatório PDF](KUIDAMOS_6C_relatorio_tecnico.pdf) · [Manual](manual_reproducao.md)
 
 ## Inventário da documentação existente
 
@@ -48,5 +49,5 @@ complementam o inventário.
 2. Resolver com os responsáveis o registro de aceite do resize V1. Conferir o ensaio inicial RTL e gate-level e os seis casos da demonstração de detalhe RTL. Confirmar a licença da foto antes de divulgar as montagens.
 3. Redigir os capítulos e preparar legendas com origem, configuração e limite de cada figura. Manter o material restrito no handoff local com referências e hashes.
 4. Consolidar o manual do teste Python ao readback físico. Usar a ordem M0–M11 vigente. Marcar os pontos que exigem Synopsys, SAED32 e dados locais, incluindo a cadeia M9 para o fluxo M10.
-5. Fazer leitura cruzada da parte de RTL/síntese com Thiago e da parte de DFT com Wagner. Conferir conjuntamente as métricas físicas e revisar o alinhamento do texto com o PDF. As revisões ainda precisam ser registradas.
+5. Fazer leitura cruzada da parte de RTL/síntese com Thiago e da parte de DFT com Wagner. Conferir conjuntamente as métricas físicas e revisar o alinhamento do texto com o PDF. A revisão do projeto relatada por Wagner está registrada no checklist.
 6. Fechar o M11 quando os 13 capítulos, referências, matriz, manual e limitações estiverem conferidos e a revisão final estiver registrada.

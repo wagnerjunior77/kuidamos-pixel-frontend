@@ -229,7 +229,7 @@ physical_runs=outputs/physical/runs
 Use `--chrome` se o navegador tiver outro nome ou caminho. O
 inventário associa cada figura à execução de origem. O
 [PDF de 14 páginas](KUIDAMOS_6C_relatorio_tecnico.pdf) foi publicado
-mediante autorização expressa do responsável pela entrega. As cinco
+mediante autorização expressa de Wagner. As cinco
 montagens fotográficas avulsas ficam no pacote local. A licença da
 fotografia ainda não foi identificada.
 

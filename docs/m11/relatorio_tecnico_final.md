@@ -1,6 +1,6 @@
 # KUIDAMOS 6C — relatório técnico do front-end de pixels
 
-**Versão 0.2 para revisão humana · 25/11/2026**
+**Versão de entrega acadêmica · 27/11/2026**
 
 Wagner Cutrim Rabelo Junior — DFT · Thiago Fernandes Carvalho de Souza — RTL e síntese
 
@@ -126,14 +126,13 @@ indicando zero diferenças, e o PNG reconstruído foi idêntico
 ao esperado. A montagem fotográfica permanece no handoff local.
 [Evidência, hashes e reprodução M11](../evidencias/M11_imagem_real_vcs.md)
 
-O ensaio de detalhe preparou a mesma foto em **576 × 1024** pixels.
-A ROI de **376 × 264** começa em (88, 456). A configuração principal da demonstração visual é o crop em grayscale
-com resize (1,1) e threshold em bypass, que preserva a resolução da ROI
-(**376 × 264**) e mostrou melhor os contornos da placa nesta foto.
-O fator (2,2) permanece disponível no circuito e é apresentado apenas
-para comparação: a saída de **188 × 132** retém um quarto das amostras
-e perde traços finos. Entre T=64, 96, 128, 160 e
-192, T=96 com fator (1,1) foi o destaque binário nesta cena.
+Wagner selecionou como **demonstração principal** a entrada de
+**576 × 1024**, crop de **376 × 264** com origem **(88, 456)**,
+grayscale, resize **(1,1)** e threshold em **bypass**. A saída
+preserva a resolução da ROI e os contornos mais nítidos nesta foto.
+A comparação com (2,2) produz **188 × 132**, um quarto das
+amostras. A V1 mantém os fatores 1 e 2 por eixo. A varredura
+incluiu T=64, 96, 128, 160 e 192. T=96 em (1,1) foi o destaque binário.
 
 O VCS aprovou **6/6 configurações RTL** e comparou **937.248
 pixels**, sem divergências de valor, ordem ou marcadores e sem
@@ -272,8 +271,8 @@ licenças e referências tecnológicas disponíveis à pessoa revisora.
 - **Demonstração visual.** Os dois ensaios usam a mesma fotografia.
   O primeiro cobre RTL e gate-level funcional. O segundo compara
   seis configurações RTL. O contexto visual e a escolha de limiar
-  são específicos da cena. Autoria e licença ainda precisam ser
-  confirmadas para disponibilizar as montagens externamente.
+  são específicos da cena. Wagner autorizou a publicação deste PDF.
+  A licença da fotografia permanece sem identificação.
 
 ## 13. Conclusão
 
@@ -287,9 +286,10 @@ de detalhe. A escolha do crop em grayscale preservou melhor as
 informações visuais na região examinada.
 
 O M10 está consolidado no escopo acadêmico. O pacote M11 reúne
-o relatório, o manual, a matriz e os artefatos de revisão.
-A revisão dos responsáveis e o aceite do recorte de resize
-da V1 pelo professor continuam pendentes.
+o relatório, o manual, a matriz e as evidências. Em 27/11/2026,
+Wagner confirmou que Thiago revisou o projeto e deu retorno
+positivo. A confirmação do professor sobre o recorte de
+resize da V1 permanece pendente.
 
 ## Referências
 

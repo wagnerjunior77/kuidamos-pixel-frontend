@@ -1,4 +1,4 @@
-# KUIDAMOS 6C — resumo dos resultados para revisão
+# KUIDAMOS 6C — resumo dos resultados da entrega
 
 | Marco | Resultado documentado | Evidência |
 |---|---|---|
@@ -11,11 +11,15 @@
 | M10 | Área de células 3.878,9998 µm², utilização de 51,59%, setup funcional slow +1,8647 ns e hold funcional fast +0,0639 ns. Potência de 358,3551 µW a 100 MHz, com SAIF e RC extraído no cenário slow | [Área, STA e potência](../evidencias/M10_resultado_final.md) |
 | M11 | Imagem inicial com 5.035 pixels por execução em RTL e gate-level. Ensaio de detalhe com 937.248 pixels em 6/6 configurações RTL. Zero divergências e zero erros SVA nas execuções RTL | [Imagem inicial](../evidencias/M11_imagem_real_vcs.md) · [Imagem de detalhe](../evidencias/M11_imagem_real_detalhe.md) |
 
-O grayscale com crop e fator (1,1) preservou mais detalhes na fotografia.
-O fator (2,2) reduziu a saída de 376 × 264 para 188 × 132.
-A preferência visual por T=96 em (1,1) aplica-se à cena analisada.
+A demonstração principal usa entrada de 576 × 1024, crop de 376 × 264
+em (88, 456), grayscale, resize (1,1) e threshold em bypass. As
+99.264 amostras dessa saída conferiram com o Golden Model. A comparação
+com (2,2) gerou 188 × 132. A preferência por T=96 entre as alternativas
+binárias aplica-se à cena analisada.
 
-O aceite do professor para o recorte de resize, a revisão pelos
-integrantes e a autorização da fotografia para divulgação permanecem
-pendentes. O escopo acadêmico validado tem limitações de MMMC de teste,
-SDF, ATPG, equivalência formal e signoff físico independente.
+Wagner confirmou em 27/11/2026 que Thiago revisou o projeto e deu
+retorno positivo. O aceite do professor para o recorte de resize
+permanece pendente. Wagner autorizou a publicação do PDF. A licença da
+fotografia ainda não foi identificada. O escopo acadêmico validado tem
+limitações de MMMC de teste, SDF, ATPG, equivalência formal e signoff
+físico independente.

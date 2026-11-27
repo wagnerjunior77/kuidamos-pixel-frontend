@@ -1,14 +1,13 @@
-# KUIDAMOS 6C — checklist de revisão humana
+# KUIDAMOS 6C — checklist da entrega acadêmica
 
-- [ ] Conferir identificação dos integrantes e dos responsáveis na capa.
-- [ ] Confirmar os entregáveis e critérios da seção 6 do escopo oficial na matriz.
-- [ ] Conferir métricas, unidades e qualificadores de cenário contra as evidências M8–M10.
-- [ ] Conferir os 91 avisos de DFT e as limitações de MMMC, SDF, ATPG, equivalência formal e signoff independente.
-- [ ] Conferir reprodução e integridade pelos comandos do manual e pelo manifesto do pacote local.
-- [ ] Conferir legenda, legibilidade e procedência das figuras físicas e das capturas RTL e Golden Model.
-- [ ] Identificar a autoria e a licença da fotografia e confirmar a autorização para divulgar as montagens avulsas. A publicação deste PDF foi autorizada pelo responsável pela entrega.
-- [ ] Registrar a confirmação do professor sobre os fatores 1 e 2 e as dimensões de saída derivadas.
-- [ ] Registrar responsáveis, data, eventuais correções e decisão sobre a integração do PR.
+- [x] Registrar a revisão do projeto por Thiago e seu retorno positivo, conforme confirmação de Wagner em 27/11/2026.
+- [x] Registrar a configuração principal da demonstração aprovada por Wagner e manter o resize (2,2) como comparação.
+- [x] Registrar a autorização de Wagner para publicar o PDF do M11.
+- [ ] Registrar a confirmação do professor sobre o recorte do resize da V1, com fatores 1 e 2 por eixo e dimensões derivadas.
+- [ ] Identificar a autoria e a licença da fotografia. Confirmar a autorização antes de divulgar montagens avulsas.
+- [ ] Registrar a liberação acadêmica para integrar o PR e criar a tag de entrega.
 
-O PDF local destina-se à revisão. O checklist registra os itens que
-precisam de validação pelos responsáveis.
+A matriz vincula a documentação aos entregáveis e critérios da seção
+6 do escopo oficial. A inspeção da edição do PDF e a conferência de
+integridade do pacote complementam a revisão do projeto comunicada por
+Wagner. [Matriz](matriz_rastreabilidade.md) · [Decisões](../DECISOES_E_PENDENCIAS.md)

@@ -139,7 +139,7 @@ def render_report(package, reference):
           <p><strong>Wagner Cutrim Rabelo Junior</strong><br>DFT</p>
           <p><strong>Thiago Fernandes Carvalho de Souza</strong><br>RTL e síntese</p>
         </div>
-        <p class="date"><strong>Versão 0.2 para revisão humana</strong><br>25 de novembro de 2026</p>
+        <p class="date"><strong>Versão de entrega acadêmica</strong><br>27 de novembro de 2026</p>
         """),
         ("", f"""
         <h2>Resumo</h2>
@@ -151,7 +151,8 @@ def render_report(package, reference):
         as piores folgas registradas foram +1,8647 ns de setup no canto slow e +0,0639 ns de
         hold no canto fast. A potência estimada com atividade simulada e RC extraído foi
         358,3551 µW no cenário slow. Uma demonstração com fotografia comparou 937.248
-        pixels em seis configurações RTL, sem divergências. O relatório delimita a validação
+        pixels em seis configurações RTL, sem divergências. A demonstração principal usa crop
+        em grayscale com resize (1,1) e threshold em bypass. O relatório delimita a validação
         acadêmica e as verificações pendentes.</p>
         <p><strong>Palavras-chave.</strong> Pré-processamento de pixels, verificação RTL,
         Golden Model, scan, implementação física.</p>
@@ -160,16 +161,20 @@ def render_report(package, reference):
         ("", chapter(1) + chapter(2)),
         ("", chapter(3) + chapter(4)),
         ("rtl", chapter(5) + chapter(6)),
-        ("", gallery("Capítulo 6 · Demonstração") + "<h2>Do RGB ao crop e ao resize</h2>" + image(
+        ("", gallery("Capítulo 6 · Demonstração") + "<h2>Demonstração principal em grayscale</h2>"
+         + "<p><strong>Entrada de 576 × 1024, crop de 376 × 264 na origem (88, 456), "
+           "resize (1,1) e threshold em bypass.</strong></p>" + image(
             "comparativo_estagios.png",
             "Figura 3 — Entrada RGB com as regiões marcadas e saídas capturadas no RTL. "
-            "O crop (1,1) mantém 376 × 264 amostras em grayscale. O resize (2,2) reduz a região a 188 × 132.",
+            "A saída principal é o crop em grayscale (painel inferior esquerdo). "
+            "O painel inferior direito mostra (2,2), com 188 × 132 amostras.",
             "stage native",
         )),
         ("", gallery("Capítulo 6 · Demonstração") + "<h2>Concordância bit a bit e preservação de detalhes</h2>" + image(
             "comparativo_bit_a_bit_crop.png",
-            "Figura 4 — Referência Golden Model, captura RTL e mapa de diferenças do crop. "
-            "O mapa preto representa zero diferenças em 99.264 pixels.",
+            "Figura 4 — Golden Model, captura RTL e diferenças na demonstração principal "
+            "em grayscale, com (1,1) e threshold em bypass. O mapa preto indica zero "
+            "diferenças nos 99.264 pixels do crop.",
             "native",
         ) + image(
             "detalhe_placa_rtl.png",
@@ -249,8 +254,9 @@ def assemble(package, args):
     (package / "inventario.md").write_text("\n".join([
         "# KUIDAMOS 6C — inventário do pacote local M11",
         "",
-        "PDF com fotografia e visualizações físicas para revisão local.",
-        "As figuras da fotografia dependem de confirmação de autoria e licença para divulgação.",
+        "Pacote de entrega com o PDF e as figuras de referência.",
+        "Wagner autorizou a publicação do PDF. A licença da fotografia ainda não foi identificada.",
+        "As montagens fotográficas avulsas e os SVGs físicos ficam no pacote local.",
         "Os caminhos das origens são relativos à raiz do repositório.",
         "",
         "## Documentos", "", *files, "",
