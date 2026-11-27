@@ -127,10 +127,12 @@ ao esperado. A montagem fotográfica permanece no handoff local.
 [Evidência, hashes e reprodução M11](../evidencias/M11_imagem_real_vcs.md)
 
 O ensaio de detalhe preparou a mesma foto em **576 × 1024** pixels.
-A ROI de **376 × 264** começa em (88, 456). Com threshold em bypass,
-o crop em grayscale com fator (1,1) preservou melhor os contornos da
-placa nesta foto. Com fator (2,2), a saída de **188 × 132** retém um
-quarto das amostras e perde traços finos. Entre T=64, 96, 128, 160 e
+A ROI de **376 × 264** começa em (88, 456). A configuração principal da demonstração visual é o crop em grayscale
+com resize (1,1) e threshold em bypass, que preserva a resolução da ROI
+(**376 × 264**) e mostrou melhor os contornos da placa nesta foto.
+O fator (2,2) permanece disponível no circuito e é apresentado apenas
+para comparação: a saída de **188 × 132** retém um quarto das amostras
+e perde traços finos. Entre T=64, 96, 128, 160 e
 192, T=96 com fator (1,1) foi o destaque binário nesta cena.
 
 O VCS aprovou **6/6 configurações RTL** e comparou **937.248
