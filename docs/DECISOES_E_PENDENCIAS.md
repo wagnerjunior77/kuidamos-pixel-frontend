@@ -370,3 +370,73 @@ O escopo acadêmico de M10 foi atendido. Permanecem pendentes a
 regressão temporal com anotação SDF completa, ATPG, MMMC integral
 de teste, células físicas de signoff, latch-up, antena, IR/EM e
 verificação independente. [Resultado final e reprodução](evidencias/M10_resultado_final.md)
+
+## M11 — planejamento da documentação final — 2026-11-25
+
+O M10 foi integrado pelo PR #3. O merge `3fb7875` é a base da
+branch local `docs/m11-final-documentation`. O M11 começou com o
+inventário da documentação, a matriz de requisitos oficiais e
+o roteiro dos 13 capítulos. O recorte do resize V1 ainda requer
+registro de validação do professor. O experimento de imagem real
+tem evidência no Golden Model e a regressão RTL registrada usa
+estímulos sintéticos. Permanecem a redação, o manual consolidado
+e a revisão dos responsáveis. [Matriz](m11/matriz_rastreabilidade.md) · [Plano do relatório](m11/plano_relatorio_final.md)
+
+### Demonstração complementar e versão 0.1 — 2026-11-25
+
+O caso de imagem real passou no RTL e na netlist de `physical_final`.
+Cada execução comparou 5.035 pixels, com zero divergências de valor,
+ordem ou marcador. A captura do DUT gerou a imagem reconstruída e
+o mapa de diferenças. Os comparativos fotográficos ficaram locais
+porque a autoria e a licença não constam das fontes do repositório.
+O relatório de 13 capítulos, a matriz atualizada e o manual estão
+prontos para revisão humana. A validação do recorte de resize pelo
+professor permanece pendente. [Evidência VCS](evidencias/M11_imagem_real_vcs.md) · [Relatório 0.1](m11/relatorio_tecnico_final.md)
+
+### Comparação visual com maior resolução — M11
+
+A foto foi preparada em 576 × 1024 com crop manual do carro.
+O grayscale com fator 1 preservou mais detalhes. A varredura
+incluiu cinco limiares, e os seis casos selecionados no RTL
+passaram com 937.248 pixels comparados e zero divergências.
+O ensaio de 144 × 256 permanece como evidência funcional. As
+montagens da foto em maior resolução permanecem locais.
+[Demonstração por estágio](evidencias/M11_imagem_real_detalhe.md)
+
+### Entrega local para revisão humana — 2026-11-25
+
+A versão 0.2 consolida os 13 capítulos e inclui as figuras de detalhe
+do M11, junto dos diagramas da V1 e do scan e das visualizações
+efetivamente extraídas dos checkpoints do M10. O PDF, o inventário,
+o manifesto e o material para revisão foram montados em
+`outputs/m11/entrega_final/` a partir das execuções existentes.
+O PDF com a fotografia e as visualizações físicas do laboratório
+permanecem na cópia local. O aceite do professor sobre o recorte de
+resize segue pendente, assim como a revisão dos integrantes e o
+registro de autoria e licença da fotografia.
+[Relatório 0.2](m11/relatorio_tecnico_final.md) · [Manual](m11/manual_reproducao.md) · [Checklist](m11/checklist_revisao.md)
+
+### Autorização de publicação do PDF M11 — 2026-11-25
+
+O responsável pela entrega autorizou expressamente a publicação no GitHub
+do [relatório técnico de 14 páginas](m11/KUIDAMOS_6C_relatorio_tecnico.pdf)
+na branch `docs/m11-final-documentation`, no PR #4. O arquivo foi copiado
+byte a byte do pacote local. A licença da fotografia incluída no relatório
+ainda não foi identificada. A autorização registrada se refere a este PDF.
+As montagens avulsas permanecem no pacote local.
+
+### Consolidação da entrega M11 — 2026-11-27
+
+Wagner informou que Thiago revisou o projeto e deu retorno positivo.
+Wagner confirmou como demonstração principal a entrada de 576 × 1024,
+crop de 376 × 264 na origem (88, 456), grayscale, resize (1,1) e
+threshold em bypass. Essa configuração preservou a resolução da ROI
+e os detalhes mais nítidos na fotografia. O ensaio (2,2) segue como
+comparação. O RTL mantém os fatores 1 e 2 por eixo, e as evidências
+dos ensaios anteriores foram preservadas.
+
+Wagner confirmou a autorização de publicação do PDF atualizado. A
+licença da fotografia ainda não foi identificada. A confirmação
+do professor sobre o recorte da interface de resize e as dimensões
+de saída derivadas continua pendente. A integração na main e a tag
+da entrega aguardam a liberação acadêmica. [Relatório PDF](m11/KUIDAMOS_6C_relatorio_tecnico.pdf) · [Checklist](m11/checklist_revisao.md) · [Evidência visual](evidencias/M11_imagem_real_detalhe.md)
